@@ -132,7 +132,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		// TODO Auto-generated method stub
-//		LHLogger.logD("postSolve happen");
+		LHLogger.logD("postSolve happen");
 	}
 
 }

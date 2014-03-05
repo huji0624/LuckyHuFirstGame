@@ -19,7 +19,7 @@ public class MainBall extends LHGameObject{
 	public Circle circle;
 	private Vector2 mDirection;
 	private Body mBody;
-	private float mSpeed = 50;
+//	private float mSpeed = 400;
 	
 	public MainBall(World world){
 		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 20);
@@ -28,20 +28,18 @@ public class MainBall extends LHGameObject{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(circle.x, circle.y);
-		
 		mBody = world.createBody(bodyDef);
 		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(circle.radius);
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
-		fd.friction = 0;
-		fd.restitution = 1.0f;
+		fd.restitution =1.0f;
 		mBody.createFixture(fd);
 		
 		shape.dispose();
 		
-		Vector2 force = new Vector2(1000f, 1000f);
+		Vector2 force = new Vector2(0, 50f);
 		mBody.applyLinearImpulse(force, bodyDef.position,true);
 	}
 	
@@ -56,11 +54,16 @@ public class MainBall extends LHGameObject{
 		super.render(render, delta);
 		
 		circle.setPosition(mBody.getPosition());
+//		float dx =mSpeed*delta*mDirection.x;
+//		float dy =mSpeed*delta*mDirection.y;
 		
 		render.begin(ShapeType.Filled);
 		render.setColor(Color.WHITE);
 		render.circle(circle.x, circle.y, circle.radius);
 		render.end();
+		
+//		moveBy(dx, dy);
+//		mBody.setTransform(circle.x, circle.y, 0);
 	}
 
 	@Override
