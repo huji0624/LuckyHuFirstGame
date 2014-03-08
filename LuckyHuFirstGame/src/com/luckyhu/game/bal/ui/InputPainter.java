@@ -31,6 +31,9 @@ public class InputPainter extends InputAdapter {
 		if (Gdx.input.justTouched()) {
 			mStartP = new Vector2(Gdx.input.getX(), getTouchY());
 			mEndP = new Vector2(mStartP);
+			
+			if (mBody != null)
+				mWolrd.destroyBody(mBody);
 		}
 
 		if (Gdx.input.isTouched()) {
