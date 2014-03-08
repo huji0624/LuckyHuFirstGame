@@ -22,7 +22,8 @@ public class MainBall extends LHGameObject{
 //	private float mSpeed = 400;
 	
 	public MainBall(World world){
-		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 20);
+		super(world);
+		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 10);
 		mDirection = new Vector2(-1, 1);
 		
 		BodyDef bodyDef = new BodyDef();
@@ -54,16 +55,12 @@ public class MainBall extends LHGameObject{
 		super.render(render, delta);
 		
 		circle.setPosition(mBody.getPosition());
-//		float dx =mSpeed*delta*mDirection.x;
-//		float dy =mSpeed*delta*mDirection.y;
 		
 		render.begin(ShapeType.Filled);
 		render.setColor(Color.WHITE);
 		render.circle(circle.x, circle.y, circle.radius);
 		render.end();
 		
-//		moveBy(dx, dy);
-//		mBody.setTransform(circle.x, circle.y, 0);
 	}
 
 	@Override
@@ -76,6 +73,7 @@ public class MainBall extends LHGameObject{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		mWorld.destroyBody(mBody);
 	}
 
 }

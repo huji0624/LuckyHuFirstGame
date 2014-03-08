@@ -2,19 +2,21 @@ package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
@@ -36,10 +38,11 @@ public class LHMainScreen implements Screen, ContactListener {
 
 		mPainter.render(mSRender, delta, mMainBall);
 
-		// mObjectEngine.renderObject(null, delta);
+		mObjectEngine.renderObject(mSRender, delta);
 		mMainBall.render(mSRender, delta);
 
 		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		
 	}
 
 	@Override
@@ -69,7 +72,7 @@ public class LHMainScreen implements Screen, ContactListener {
 		
 		EdgeShape shape = new EdgeShape();
 		float halfW = 400;
-		float halfH = 200;
+		float halfH = 300;
 		shape.set( - halfW,  - halfH ,  - halfW,  + halfH);
 		body.createFixture(shape, 0);
 		
@@ -83,7 +86,10 @@ public class LHMainScreen implements Screen, ContactListener {
 		body.createFixture(shape, 0);
 		shape.dispose();
 		
-		
+		//Debug
+		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(400, 200, 100, 20), 1.9f));
+		float ves[] = {100,100,110,180,200,200,200,100,150,50};
+		mObjectEngine.addObject(new LHPolygonObject(mWorld, ves));
 	}
 
 	@Override
