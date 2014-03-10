@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -53,8 +54,9 @@ public class LHMainScreen implements Screen, ContactListener {
 	
 	private float mOffset;
 	private Label mLabel;
-	private int currentGenBlock=0;
-	private Body mEdgeBodBody;
+	private int currentGenBlock=1;
+	
+	private LHEdgeBox mEdgeBox;
 
 	@Override
 	public void render(float delta) {
@@ -67,7 +69,7 @@ public class LHMainScreen implements Screen, ContactListener {
         
         mWorld.step(delta, 10, 10);
 
-		mPainter.render(mSRender, delta, mMainBall);
+		mPainter.render(mSRender, delta);
 
 		mObjectEngine.renderObject(mSRender, delta);
 		mMainBall.render(mSRender, delta);
@@ -75,21 +77,24 @@ public class LHMainScreen implements Screen, ContactListener {
 		mStage.act(delta);
 		mStage.draw();
 		
-		if(mMainBall.getPositionY()-mOffset>400){
-			mOffset += delta*500;
+		float dd = 100;
+		
+		if(mOffset+mStage.getHeight()-mMainBall.getPositionY()<dd){
+			mOffset += dd;
 			mLabel.setText(""+((int)mOffset));
 			
 			int pg =(int) (mOffset/mStage.getHeight());
-			if(pg>=currentGenBlock){
+			if(pg>=currentGenBlock-2){
 				genBlock();
 			}
-			
-			if(mOffset>mCamera.position.y){
-				mCamera.position.y+=100*delta;
-				mEdgeBodBody.setTransform(Gdx.graphics.getWidth()/2, mEdgeBodBody.getPosition().y+100*delta, 0);
-			}
-			
+				
 			mPainter.setOffset(mOffset);
+		}
+		
+		if(mOffset>mCamera.position.y-Gdx.graphics.getHeight()/2){
+			float ms = 1000;
+			mCamera.position.y+=ms*delta;
+			mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth()/2, mEdgeBox.getBody().getPosition().y+ms*delta, 0);
 		}
 		
 		debugRender.render(mWorld, mSRender.getProjectionMatrix());
@@ -134,27 +139,7 @@ public class LHMainScreen implements Screen, ContactListener {
 		mPainter = new InputPainter(mWorld);
 		mPainter.mainBall = mMainBall;
 		
-		//the box
-		BodyDef bd = new BodyDef();
-		bd.type = BodyType.StaticBody;
-		bd.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		mEdgeBodBody = mWorld.createBody(bd);
-		
-		EdgeShape shape = new EdgeShape();
-		float halfW = Gdx.graphics.getWidth()/2-5;
-		float halfH = Gdx.graphics.getHeight()/2-25;
-		shape.set( - halfW,  - halfH ,  - halfW,  + halfH);
-		mEdgeBodBody.createFixture(shape, 0);
-		
-//		shape.set( - halfW,  + halfH ,  + halfW,  + halfH);
-//		body.createFixture(shape, 0);
-
-		shape.set( + halfW,  + halfH ,  + halfW,  - halfH);
-		mEdgeBodBody.createFixture(shape, 0);
-		
-		shape.set( + halfW,  - halfH , - halfW,  - halfH);
-		mEdgeBodBody.createFixture(shape, 0);
-		shape.dispose();
+		mEdgeBox = new LHEdgeBox(mWorld);
 		
 		mStage = new Stage();
 		mLabel = new Label("", new LabelStyle(new BitmapFont(),
@@ -162,9 +147,7 @@ public class LHMainScreen implements Screen, ContactListener {
 		mLabel.setPosition(mStage.getWidth() - 50, mStage.getHeight()-mLabel.getHeight()-10);
 		mStage.addActor(mLabel);
 		
-		currentGenBlock++;
 		genBlock();
-
 	}
 	
 	private void gameOver(){
@@ -219,7 +202,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		mWorld.destroyBody(mEdgeBodBody);
+		mWorld.destroyBody(mEdgeBox.getBody());
 		mWorld.dispose();
 		mSRender.dispose();
 	}
@@ -234,6 +217,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	public void endContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("endContact happen");
+		LHLogger.logD("vo:"+mMainBall.getBody().getLinearVelocity().len());
 	}
 
 	@Override

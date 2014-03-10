@@ -9,8 +9,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "LuckyHuFirstGame";
 		cfg.useGL20 = false;
-		cfg.width = 960;
-		cfg.height = 640;
+		cfg.width = 320;
+		cfg.height = 480;
 		
 		new LwjglApplication(new LHBallGame(), cfg);
 	}

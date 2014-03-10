@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHRectObject extends LHGameObject{
 

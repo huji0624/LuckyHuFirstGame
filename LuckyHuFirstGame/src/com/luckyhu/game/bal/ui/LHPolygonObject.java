@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHPolygonObject extends LHGameObject {
 
@@ -56,7 +58,10 @@ public class LHPolygonObject extends LHGameObject {
 
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
-		mBody.createFixture(shape, 0);
+		FixtureDef fix = new FixtureDef();
+		fix.shape = shape;
+		fix.friction = 0.0f;
+		mBody.createFixture(fix);
 		shape.dispose();
 	}
 
@@ -64,6 +69,7 @@ public class LHPolygonObject extends LHGameObject {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		mWorld.destroyBody(mBody);
+		LHLogger.logD("Body destroy");
 	}
 
 	@Override

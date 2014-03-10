@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
-public class InputPainter extends InputAdapter {
+public class InputPainter {
 
 	private Vector2 mStartP;
 	private Vector2 mEndP;
@@ -27,20 +27,22 @@ public class InputPainter extends InputAdapter {
 	public MainBall mainBall;
 
 	static private float Box_Height = 10;
+	
+	private boolean touch = false;
 
 	public InputPainter(World world) {
 		this.mWolrd = world;
-
-		Gdx.input.setInputProcessor(this);
 	}
 	
 	public void setOffset(float offset){
 		mOffset = offset;
 	}
 
-	public void render(ShapeRenderer render, float delta, MainBall ball) {
+	public void render(ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
 		if (Gdx.input.justTouched()) {
+			touch = true;
+			
 			mStartP = new Vector2(Gdx.input.getX(), getTouchY());
 			mEndP = new Vector2(mStartP);
 			
@@ -49,7 +51,15 @@ public class InputPainter extends InputAdapter {
 		}
 
 		if (Gdx.input.isTouched()) {
+			touch = true;
 			mEndP = new Vector2(Gdx.input.getX(), getTouchY());
+		}else{
+			if (touch){
+				if(mBody != null)
+					mWolrd.destroyBody(mBody);
+				touchUp();
+				touch = false;
+			}
 		}
 
 		if (mStartP != null) {
@@ -61,12 +71,8 @@ public class InputPainter extends InputAdapter {
 		}
 	}
 
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	public boolean touchUp() {
 		// TODO Auto-generated method stub
-
-		if (mBody != null)
-			mWolrd.destroyBody(mBody);
 		
 		if(mEndP.equals(mStartP)){
 			return false;
@@ -88,6 +94,7 @@ public class InputPainter extends InputAdapter {
 		bd.position.set(center);
 
 		mBody = mWolrd.createBody(bd);
+		LHLogger.logD("Painter Create Body.");
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(mStartP.dst(mEndP)/2, Box_Height / 2,

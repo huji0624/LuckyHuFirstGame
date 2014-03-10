@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class MainBall extends LHGameObject{
 	
@@ -23,7 +24,7 @@ public class MainBall extends LHGameObject{
 	
 	public MainBall(World world){
 		super(world);
-		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 30);
+		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/20 );
 		mDirection = new Vector2(-1, 1);
 		
 		BodyDef bodyDef = new BodyDef();
@@ -40,8 +41,14 @@ public class MainBall extends LHGameObject{
 		
 		shape.dispose();
 		
-//		Vector2 force = new Vector2(0, 50f);
-//		mBody.applyLinearImpulse(force, bodyDef.position,true);
+		Vector2 force = new Vector2(0, 50f);
+		mBody.applyLinearImpulse(force, bodyDef.position,true);
+		
+		LHLogger.logD("bvo:"+mBody.getLinearVelocity().len());
+	}
+	
+	public Body getBody(){
+		return mBody;
 	}
 	
 	public void setDirection(float x,float y){
