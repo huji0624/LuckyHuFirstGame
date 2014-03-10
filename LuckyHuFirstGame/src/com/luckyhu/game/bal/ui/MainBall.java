@@ -41,7 +41,7 @@ public class MainBall extends LHGameObject{
 		
 		shape.dispose();
 		
-		Vector2 force = new Vector2(0, 50f);
+		Vector2 force = new Vector2(15, 50f);
 		mBody.applyLinearImpulse(force, bodyDef.position,true);
 		
 		LHLogger.logD("bvo:"+mBody.getLinearVelocity().len());
@@ -85,6 +85,12 @@ public class MainBall extends LHGameObject{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		mWorld.destroyBody(mBody);
+	}
+
+	@Override
+	public float getTop() {
+		// TODO Auto-generated method stub
+		return circle.y + circle.radius;
 	}
 
 }

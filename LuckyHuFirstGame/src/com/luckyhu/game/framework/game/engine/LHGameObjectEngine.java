@@ -7,9 +7,11 @@ import com.badlogic.gdx.utils.Array;
 public class LHGameObjectEngine {
 	
 	private Array<LHGameObject> mObjects;
+	private LHGameObjectEngineListener mListener;
 	
-	public LHGameObjectEngine(){
+	public LHGameObjectEngine(LHGameObjectEngineListener listener){
 		mObjects = new Array<LHGameObject>();
+		mListener = listener;
 	}
 	
 	public void addObject(LHGameObject object){
@@ -28,7 +30,13 @@ public class LHGameObjectEngine {
 	
 	public void renderObject(ShapeRenderer batch,float delta){
 		for (int i = 0; i < mObjects.size; i++) {
-			mObjects.get(i).render(batch, delta);
+			LHGameObject obj = mObjects.get(i);
+			obj.render(batch, delta);
+			if(mListener.removeObject(obj)){
+				obj.willRemove();
+				mObjects.removeIndex(i);
+				obj.didRemove();
+			}
 		}
 	}
 	

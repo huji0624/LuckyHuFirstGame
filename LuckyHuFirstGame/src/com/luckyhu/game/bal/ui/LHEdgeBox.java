@@ -3,8 +3,8 @@ package com.luckyhu.game.bal.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class LHEdgeBox {
@@ -35,8 +35,8 @@ public class LHEdgeBox {
 		mEdgeBoxBody.createFixture(shape, 0);
 		shape.dispose();
 	}
-	
-	public Body getBody(){
+
+	public Body getBody() {
 		return mEdgeBoxBody;
 	}
 

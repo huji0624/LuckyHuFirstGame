@@ -1,8 +1,9 @@
-package com.luckyhu.game.bal.ui;
+package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -68,6 +69,12 @@ public class LHPolygonObject extends LHGameObject {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void didRemove() {
+		// TODO Auto-generated method stub
+		super.didRemove();
 		mWorld.destroyBody(mBody);
 		LHLogger.logD("Body destroy");
 	}
@@ -78,6 +85,13 @@ public class LHPolygonObject extends LHGameObject {
 		mPolygon.translate(dx, dy);
 		mPolygon.setVertices(mPolygon.getTransformedVertices());
 		mBody.setTransform(mPolygon.getX(), mPolygon.getY(), 0);
+	}
+
+	@Override
+	public float getTop() {
+		// TODO Auto-generated method stub
+		Rectangle rect = mPolygon.getBoundingRectangle();
+		return rect.getY()+rect.getHeight();
 	}
 
 }

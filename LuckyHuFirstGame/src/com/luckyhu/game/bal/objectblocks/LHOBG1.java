@@ -1,7 +1,7 @@
 package com.luckyhu.game.bal.objectblocks;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.bal.ui.LHPolygonObject;
+import com.luckyhu.game.bal.gameobject.LHPolygonObject;
 
 public class LHOBG1 extends LHOBGBase {
 

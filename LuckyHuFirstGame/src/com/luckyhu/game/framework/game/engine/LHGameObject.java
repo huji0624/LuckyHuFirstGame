@@ -16,4 +16,9 @@ public abstract class LHGameObject implements Disposable{
 	public  void render(SpriteBatch batch,float delta){}
 	public  void render(ShapeRenderer render,float delta){}
 	public abstract void moveBy(float dx,float dy);
+	
+	public void willRemove(){};
+	public void didRemove(){};
+	
+	public abstract float getTop();
 }

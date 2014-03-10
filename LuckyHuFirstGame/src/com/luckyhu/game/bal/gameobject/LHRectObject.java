@@ -1,4 +1,4 @@
-package com.luckyhu.game.bal.ui;
+package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
-import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHRectObject extends LHGameObject{
 
@@ -60,6 +59,12 @@ public class LHRectObject extends LHGameObject{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void didRemove() {
+		// TODO Auto-generated method stub
+		super.didRemove();
 		mWorld.destroyBody(mBody);
 	}
 
@@ -69,6 +74,12 @@ public class LHRectObject extends LHGameObject{
 		mRect.x += dx;
 		mRect.y += dy;
 		mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y+dy, 0);
+	}
+
+	@Override
+	public float getTop() {
+		// TODO Auto-generated method stub
+		return (float)(mRect.y+mRect.width*Math.sin(mAngle));
 	}
 
 }

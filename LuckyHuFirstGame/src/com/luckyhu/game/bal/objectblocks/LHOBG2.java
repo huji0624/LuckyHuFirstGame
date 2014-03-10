@@ -2,7 +2,7 @@ package com.luckyhu.game.bal.objectblocks;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.bal.ui.LHRectObject;
+import com.luckyhu.game.bal.gameobject.LHRectObject;
 
 
 public class LHOBG2 extends LHOBGBase {

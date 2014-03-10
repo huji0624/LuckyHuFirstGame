@@ -7,17 +7,11 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -26,8 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -35,10 +29,10 @@ import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
+import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
 import com.luckyhu.game.framework.game.util.LHLogger;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
-public class LHMainScreen implements Screen, ContactListener {
+public class LHMainScreen implements Screen, ContactListener ,LHGameObjectEngineListener {
 
 	private LHGameObjectEngine mObjectEngine;
 	private ShapeRenderer mSRender;
@@ -103,6 +97,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	
 	private void genBlock(){
 		 try {
+			@SuppressWarnings("unchecked")
 			Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class.forName("com.luckyhu.game.bal.objectblocks.LHOBG"+currentGenBlock);
 			LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass.newInstance();
 			Array<LHGameObject> array = gen.generate(mWorld, mStage.getWidth(), mStage.getHeight());
@@ -126,7 +121,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		mObjectEngine = new LHGameObjectEngine();
+		mObjectEngine = new LHGameObjectEngine(this);
 		mSRender = new ShapeRenderer();
 		mCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		mCamera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2,0);
@@ -202,6 +197,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		mMainBall.dispose();
 		mWorld.destroyBody(mEdgeBox.getBody());
 		mWorld.dispose();
 		mSRender.dispose();
@@ -230,6 +226,15 @@ public class LHMainScreen implements Screen, ContactListener {
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("postSolve happen");
+	}
+
+	@Override
+	public boolean removeObject(LHGameObject obj) {
+		// TODO Auto-generated method stub
+		if(mCamera.position.y - obj.getTop() > Gdx.graphics.getHeight()/2){
+			return true;
+		}
+		return false;
 	}
 
 }
