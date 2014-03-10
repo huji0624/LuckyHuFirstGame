@@ -3,6 +3,8 @@ package com.luckyhu.game.bal.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,17 +24,24 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
+import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.util.LHLogger;
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 public class LHMainScreen implements Screen, ContactListener {
 
 	private LHGameObjectEngine mObjectEngine;
 	private ShapeRenderer mSRender;
+	private OrthographicCamera mCamera;
 	private MainBall mMainBall;
 	private InputPainter mPainter;
 
@@ -41,23 +50,68 @@ public class LHMainScreen implements Screen, ContactListener {
 	private Box2DDebugRenderer debugRender;
 	
 	private Stage mStage;
+	
+	private float mOffset;
+	private Label mLabel;
+	private int currentGenBlock=0;
+	private Body mEdgeBodBody;
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		if(mStage!=null){
-			mStage.act(delta);
-			mStage.draw();
-		}else{			
-			mWorld.step(delta, 10, 10);
-		}
+		
+		mSRender.setProjectionMatrix(mCamera.combined);
+		GL10 gl = Gdx.app.getGraphics().getGL10(); 
+        mCamera.update(); 
+        mCamera.apply(gl); 
+        
+        mWorld.step(delta, 10, 10);
 
 		mPainter.render(mSRender, delta, mMainBall);
 
 		mObjectEngine.renderObject(mSRender, delta);
 		mMainBall.render(mSRender, delta);
+		
+		mStage.act(delta);
+		mStage.draw();
+		
+		if(mMainBall.getPositionY()-mOffset>400){
+			mOffset += delta*500;
+			mLabel.setText(""+((int)mOffset));
+			
+			int pg =(int) (mOffset/mStage.getHeight());
+			if(pg>=currentGenBlock){
+				genBlock();
+			}
+			
+			if(mOffset>mCamera.position.y){
+				mCamera.position.y+=100*delta;
+				mEdgeBodBody.setTransform(Gdx.graphics.getWidth()/2, mEdgeBodBody.getPosition().y+100*delta, 0);
+			}
+			
+			mPainter.setOffset(mOffset);
+		}
+		
+		
 
 		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		
+	}
+	
+	private void genBlock(){
+		 try {
+			Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class.forName("com.luckyhu.game.bal.objectblocks.LHOBG"+currentGenBlock);
+			LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass.newInstance();
+			Array<LHGameObject> array = gen.generate(mWorld, mStage.getWidth(), mStage.getHeight());
+			for (LHGameObject lhGameObject : array) {
+				lhGameObject.moveBy(0, currentGenBlock*mStage.getHeight());
+			}
+			mObjectEngine.addObjects(array);
+			currentGenBlock++;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -71,6 +125,8 @@ public class LHMainScreen implements Screen, ContactListener {
 		// TODO Auto-generated method stub
 		mObjectEngine = new LHGameObjectEngine();
 		mSRender = new ShapeRenderer();
+		mCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		mCamera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2,0);
 
 		mWorld = new World(new Vector2(0, 0), true);
 		mWorld.setContactListener(this);
@@ -83,34 +139,38 @@ public class LHMainScreen implements Screen, ContactListener {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.StaticBody;
 		bd.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		Body body = mWorld.createBody(bd);
+		mEdgeBodBody = mWorld.createBody(bd);
 		
 		EdgeShape shape = new EdgeShape();
-		float halfW = 400;
-		float halfH = 300;
+		float halfW = Gdx.graphics.getWidth()/2-5;
+		float halfH = Gdx.graphics.getHeight()/2-25;
 		shape.set( - halfW,  - halfH ,  - halfW,  + halfH);
-		body.createFixture(shape, 0);
+		mEdgeBodBody.createFixture(shape, 0);
 		
-		shape.set( - halfW,  + halfH ,  + halfW,  + halfH);
-		body.createFixture(shape, 0);
+//		shape.set( - halfW,  + halfH ,  + halfW,  + halfH);
+//		body.createFixture(shape, 0);
 
 		shape.set( + halfW,  + halfH ,  + halfW,  - halfH);
-		body.createFixture(shape, 0);
+		mEdgeBodBody.createFixture(shape, 0);
 		
 		shape.set( + halfW,  - halfH , - halfW,  - halfH);
-		body.createFixture(shape, 0);
+		mEdgeBodBody.createFixture(shape, 0);
 		shape.dispose();
 		
-		//Debug
-		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(400, 200, 100, 20), 1.9f));
-		float ves[] = {100,100,110,180,200,200,200,100,150,50};
-		mObjectEngine.addObject(new LHPolygonObject(mWorld, ves));
+		mStage = new Stage();
+		mLabel = new Label("", new LabelStyle(new BitmapFont(),
+				Color.WHITE));
+		mLabel.setPosition(mStage.getWidth() - 50, mStage.getHeight()-mLabel.getHeight()-10);
+		mStage.addActor(mLabel);
+		
+		currentGenBlock++;
+		genBlock();
+
 	}
 	
 	private void gameOver(){
-		mStage = new Stage();
 		Gdx.input.setInputProcessor(mStage);
-		
+			
 		Group uiGroup = new Group();
 		uiGroup.setColor(Color.RED);
 		uiGroup.setBounds(mStage.getWidth()*2, 0, mStage.getWidth(), mStage.getHeight());
@@ -160,6 +220,7 @@ public class LHMainScreen implements Screen, ContactListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		mWorld.destroyBody(mEdgeBodBody);
 		mWorld.dispose();
 		mSRender.dispose();
 	}

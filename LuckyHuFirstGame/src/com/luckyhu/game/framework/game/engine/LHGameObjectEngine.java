@@ -16,6 +16,10 @@ public class LHGameObjectEngine {
 		mObjects.add(object);
 	}
 	
+	public void addObjects(Array<LHGameObject> objects){
+		mObjects.addAll(objects);
+	}
+	
 	public void renderObject(SpriteBatch batch,float delta){
 		for (int i = 0; i < mObjects.size; i++) {
 			mObjects.get(i).render(batch, delta);

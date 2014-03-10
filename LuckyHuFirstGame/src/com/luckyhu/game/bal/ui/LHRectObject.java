@@ -65,7 +65,9 @@ public class LHRectObject extends LHGameObject{
 	@Override
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
-		
+		mRect.x += dx;
+		mRect.y += dy;
+		mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y+dy, 0);
 	}
 
 }

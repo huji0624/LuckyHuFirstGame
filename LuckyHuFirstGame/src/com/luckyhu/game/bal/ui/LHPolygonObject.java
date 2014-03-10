@@ -69,7 +69,9 @@ public class LHPolygonObject extends LHGameObject {
 	@Override
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
-
+		mPolygon.translate(dx, dy);
+		mPolygon.setVertices(mPolygon.getTransformedVertices());
+		mBody.setTransform(mPolygon.getX(), mPolygon.getY(), 0);
 	}
 
 }

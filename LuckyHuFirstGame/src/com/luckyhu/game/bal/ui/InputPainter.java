@@ -17,6 +17,8 @@ public class InputPainter extends InputAdapter {
 	private Vector2 mEndP;
 	private Body mBody;
 	private World mWolrd;
+	
+	private float mOffset;
 
 	static private float Box_Height = 10;
 
@@ -24,6 +26,10 @@ public class InputPainter extends InputAdapter {
 		this.mWolrd = world;
 
 		Gdx.input.setInputProcessor(this);
+	}
+	
+	public void setOffset(float offset){
+		mOffset = offset;
 	}
 
 	public void render(ShapeRenderer render, float delta, MainBall ball) {
@@ -81,7 +87,7 @@ public class InputPainter extends InputAdapter {
 	}
 
 	private float getTouchY() {
-		return Gdx.graphics.getHeight() - Gdx.input.getY();
+		return Gdx.graphics.getHeight() - Gdx.input.getY() + mOffset;
 	}
 
 }

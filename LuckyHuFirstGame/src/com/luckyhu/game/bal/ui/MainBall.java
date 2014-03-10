@@ -49,6 +49,10 @@ public class MainBall extends LHGameObject{
 		mDirection.y = y;
 	}
 	
+	public float getPositionY(){
+		return this.circle.y;
+	}
+	
 	@Override
 	public void render(ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
