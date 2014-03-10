@@ -92,8 +92,6 @@ public class LHMainScreen implements Screen, ContactListener {
 			mPainter.setOffset(mOffset);
 		}
 		
-		
-
 		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 		
 	}
@@ -134,6 +132,7 @@ public class LHMainScreen implements Screen, ContactListener {
 
 		mMainBall = new MainBall(mWorld);
 		mPainter = new InputPainter(mWorld);
+		mPainter.mainBall = mMainBall;
 		
 		//the box
 		BodyDef bd = new BodyDef();

@@ -23,7 +23,7 @@ public class MainBall extends LHGameObject{
 	
 	public MainBall(World world){
 		super(world);
-		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 10);
+		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 30);
 		mDirection = new Vector2(-1, 1);
 		
 		BodyDef bodyDef = new BodyDef();
@@ -40,8 +40,8 @@ public class MainBall extends LHGameObject{
 		
 		shape.dispose();
 		
-		Vector2 force = new Vector2(0, 50f);
-		mBody.applyLinearImpulse(force, bodyDef.position,true);
+//		Vector2 force = new Vector2(0, 50f);
+//		mBody.applyLinearImpulse(force, bodyDef.position,true);
 	}
 	
 	public void setDirection(float x,float y){

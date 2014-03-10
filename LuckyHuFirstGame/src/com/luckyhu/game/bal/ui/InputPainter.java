@@ -4,12 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class InputPainter extends InputAdapter {
 
@@ -19,6 +23,8 @@ public class InputPainter extends InputAdapter {
 	private World mWolrd;
 	
 	private float mOffset;
+	
+	public MainBall mainBall;
 
 	static private float Box_Height = 10;
 
@@ -66,6 +72,12 @@ public class InputPainter extends InputAdapter {
 			return false;
 		}
 		
+		if(checkOverLap()){
+			LHLogger.logD("Painter and MainBall overlaps!");
+			mStartP = null;
+			return false;
+		}
+		
 		Vector2 an = new Vector2(mEndP.x-mStartP.x, mEndP.y-mStartP.y);
 		float anR = an.angle();
 		BodyDef bd = new BodyDef();
@@ -84,6 +96,35 @@ public class InputPainter extends InputAdapter {
 		shape.dispose();
 
 		return true;
+	}
+	
+	private boolean checkOverLap(){
+		
+		Vector2 an = new Vector2(mEndP.x-mStartP.x, mEndP.y-mStartP.y);
+		float anR = an.angle();
+		an.nor().setAngle(anR+90);
+		
+		Vector2 p3 = mEndP.cpy().add(an);
+		
+		anR = an.angle();
+		an.setAngle(anR+90);
+		
+		Vector2 p4 = p3.cpy().add(an);
+		
+		Vector2 point = new Vector2(mainBall.circle.x, mainBall.circle.y);
+		float dis = mainBall.circle.radius;
+		
+		if(Intersector.distanceLinePoint(mStartP, mEndP	, point)<=dis){
+			return true;
+		}else if(Intersector.distanceLinePoint(mEndP, p3	, point)<=dis){
+			return true;
+		}else if(Intersector.distanceLinePoint(p3, p4	, point)<=dis){
+			return true;
+		}else if(Intersector.distanceLinePoint(p4, mStartP	, point)<=dis){
+			return true;
+		}
+		
+		return false;
 	}
 
 	private float getTouchY() {
