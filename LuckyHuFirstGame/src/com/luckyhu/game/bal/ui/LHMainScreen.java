@@ -27,11 +27,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHRectObject;
+import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
+import com.luckyhu.game.framework.game.util.LHActionQueue;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHMainScreen implements Screen, ContactListener,
@@ -55,6 +57,8 @@ public class LHMainScreen implements Screen, ContactListener,
 
 	private LHEdgeBox mEdgeBox;
 
+	private LHActionQueue mQueue = new LHActionQueue();
+
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
@@ -65,6 +69,8 @@ public class LHMainScreen implements Screen, ContactListener,
 		mCamera.apply(gl);
 
 		mWorld.step(delta, 10, 10);
+
+		mQueue.runAll();
 
 		mPainter.render(mSRender, delta);
 
@@ -222,6 +228,28 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void beginContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("beginContact happen");
+		Object ud = contact.getFixtureB().getUserData();
+		if (ud != null && ud instanceof LHWormHoleObject) {
+			LHWormHoleObject wo = (LHWormHoleObject) ud;
+			if (wo.inTranslate == false) {
+				wo.inTranslate = true;
+				final Vector2 po = wo.getOtherFixTurePosition(contact
+						.getFixtureB());
+				if (po == null) {
+					LHLogger.logD("LHWormContact error.");
+				} else {
+					mQueue.enqueue(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							mMainBall.moveTo(po.x, po.y);
+						}
+					});
+
+				}
+			}
+
+		}
 	}
 
 	@Override
@@ -229,6 +257,11 @@ public class LHMainScreen implements Screen, ContactListener,
 		// TODO Auto-generated method stub
 		LHLogger.logD("endContact happen");
 		LHLogger.logD("vo:" + mMainBall.getBody().getLinearVelocity().len());
+		Object ud = contact.getFixtureB().getUserData();
+		if (ud != null && ud instanceof LHWormHoleObject) {
+			LHWormHoleObject wo = (LHWormHoleObject) ud;
+			wo.inTranslate = false;
+		}
 	}
 
 	@Override

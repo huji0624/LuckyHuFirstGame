@@ -42,18 +42,13 @@ public class MainBall extends LHGameObject{
 		
 		shape.dispose();
 		
-		Vector2 force = new Vector2(15, 50f);
+		Vector2 force = new Vector2(0, 50f);
 		mBody.applyLinearImpulse(force, bodyDef.position,true);
 		LHLogger.logD("bvo:"+mBody.getLinearVelocity().len());
 	}
 	
 	public Body getBody(){
 		return mBody;
-	}
-	
-	public void setDirection(float x,float y){
-		mDirection.x = x;
-		mDirection.y = y;
 	}
 	
 	public float getPositionY(){
@@ -79,6 +74,17 @@ public class MainBall extends LHGameObject{
 		// TODO Auto-generated method stub
 		circle.x += dx;
 		circle.y += dy;
+		
+		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
+				+ dy, 0);
+	}
+	
+	@Override
+	public void moveTo(float x, float y) {
+		// TODO Auto-generated method stub
+		circle.x = x;
+		circle.y = y;
+		mBody.setTransform(x,y, 0);
 	}
 
 	@Override

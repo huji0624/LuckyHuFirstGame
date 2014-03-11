@@ -3,6 +3,7 @@ package com.luckyhu.game.framework.game.engine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHGameObjectEngine {
 	
@@ -34,6 +35,7 @@ public class LHGameObjectEngine {
 			obj.render(batch, delta);
 			if(mListener.removeObject(obj)){
 				obj.willRemove();
+				LHLogger.logD("Will Remove "+obj);
 				mObjects.removeIndex(i);
 				obj.didRemove();
 			}
