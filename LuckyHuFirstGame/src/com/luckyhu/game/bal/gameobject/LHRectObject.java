@@ -11,56 +11,64 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 
-public class LHRectObject extends LHGameObject{
+public class LHRectObject extends LHGameObject {
 
 	private Rectangle mRect;
 	private Body mBody;
 	private float mAngle;
-	
-	public LHRectObject(World world,Rectangle rect,float angle) {
-		// TODO Auto-generated constructor stub
+	private float mAngularVelocity = 0.0f;
+
+	public LHRectObject(World world, Rectangle rect, float angle,
+			float angularVelocity) {
 		super(world);
 		mAngle = angle;
+		mAngularVelocity = angularVelocity;
 		mRect = new Rectangle(rect);
-		
+
 		BodyDef bd = new BodyDef();
-		bd.type = BodyType.StaticBody;
-		
-		Vector2 an = new Vector2(1,0);
-		float anR = (float)Math.toDegrees(angle);
-		an.setAngle(anR+90);
-		
+		if(mAngularVelocity==0.0f){
+			bd.type = BodyType.StaticBody;
+		}else{			
+			bd.type = BodyType.KinematicBody;
+		}
+
 		Vector2 center = new Vector2();
 		mRect.getCenter(center);
-		center.add(-mRect.x, -mRect.y);
-		center.setAngle((float)Math.toDegrees(angle));
-		center.add(mRect.x,mRect.y).add(an.nor().scl(mRect.height/2));
 		bd.position.set(center);
+		bd.angularVelocity = mAngularVelocity;
 
 		mBody = mWorld.createBody(bd);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(mRect.width/2, mRect.height / 2,
-				new Vector2(0, 0),angle);
+		shape.setAsBox(mRect.width / 2, mRect.height / 2, new Vector2(0, 0),
+				angle);
 		mBody.createFixture(shape, 0);
 		shape.dispose();
 	}
-	
+
+	public LHRectObject(World world, Rectangle rect, float angle) {
+		// TODO Auto-generated constructor stub
+		this(world, rect, angle, 0.0f);
+	}
+
 	@Override
 	public void render(ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
 		super.render(render, delta);
-		
+
 		render.begin(ShapeType.Filled);
-		render.rect(mRect.x, mRect.y, mRect.width, mRect.height, 0, 0, (float)Math.toDegrees(mAngle));
+		mAngle += mAngularVelocity * delta;
+		render.rect(mRect.x, mRect.y, mRect.width, mRect.height,
+				mRect.width / 2, mRect.height / 2,
+				(float) Math.toDegrees(mAngle));
 		render.end();
 	}
-	
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void didRemove() {
 		// TODO Auto-generated method stub
@@ -73,13 +81,14 @@ public class LHRectObject extends LHGameObject{
 		// TODO Auto-generated method stub
 		mRect.x += dx;
 		mRect.y += dy;
-		mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y+dy, 0);
+		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
+				+ dy, 0);
 	}
 
 	@Override
 	public float getTop() {
 		// TODO Auto-generated method stub
-		return (float)(mRect.y+mRect.width*Math.sin(mAngle));
+		return (float) (mRect.y + mRect.width * Math.sin(mAngle));
 	}
 
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -43,8 +44,10 @@ public class InputPainter {
 			mStartP = new Vector2(Gdx.input.getX(), getTouchY());
 			mEndP = new Vector2(mStartP);
 			
-			if (mBody != null)
+			if (mBody != null){
 				mWolrd.destroyBody(mBody);
+				mBody = null;
+			}
 		}
 
 		if (Gdx.input.isTouched()) {
@@ -52,8 +55,10 @@ public class InputPainter {
 			mEndP = new Vector2(Gdx.input.getX(), getTouchY());
 		}else{
 			if (touch){
-				if(mBody != null)
+				if(mBody != null){
 					mWolrd.destroyBody(mBody);
+					mBody = null;
+				}
 				touchUp();
 				touch = false;
 			}
@@ -96,9 +101,11 @@ public class InputPainter {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(mStartP.dst(mEndP)/2, Box_Height / 2,
 				new Vector2(0, 0),(float)Math.toRadians(anR));
-		mBody.createFixture(shape, 0);
+		FixtureDef fix = new FixtureDef();
+		fix.shape = shape;
+		fix.friction = 0.0f;
+		mBody.createFixture(fix);
 		shape.dispose();
-
 		return true;
 	}
 	

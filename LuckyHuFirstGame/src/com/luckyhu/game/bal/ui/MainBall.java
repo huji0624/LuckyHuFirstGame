@@ -37,13 +37,13 @@ public class MainBall extends LHGameObject{
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
 		fd.restitution =1.0f;
+		fd.friction = 0.0f;
 		mBody.createFixture(fd);
 		
 		shape.dispose();
 		
 		Vector2 force = new Vector2(15, 50f);
 		mBody.applyLinearImpulse(force, bodyDef.position,true);
-		
 		LHLogger.logD("bvo:"+mBody.getLinearVelocity().len());
 	}
 	
