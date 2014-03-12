@@ -3,6 +3,7 @@ package com.luckyhu.game.framework.game.engine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHGameObjectEngine {
@@ -15,11 +16,11 @@ public class LHGameObjectEngine {
 		mListener = listener;
 	}
 	
-	public void addObject(LHGameObject object){
+	public void addObject(LHBallGameObject object){
 		mObjects.add(object);
 	}
 	
-	public void addObjects(Array<LHGameObject> objects){
+	public void addObjects(Array<LHBallGameObject> objects){
 		mObjects.addAll(objects);
 	}
 	

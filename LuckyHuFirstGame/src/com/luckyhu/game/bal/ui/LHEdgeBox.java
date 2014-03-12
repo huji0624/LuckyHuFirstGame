@@ -6,9 +6,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 
-public class LHEdgeBox extends LHGameObject{
+public class LHEdgeBox extends LHBallGameObject{
 
 	private Body mEdgeBoxBody;
 

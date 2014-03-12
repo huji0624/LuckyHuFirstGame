@@ -1,5 +1,6 @@
 package com.luckyhu.game.bal.gameobject;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
@@ -11,10 +12,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
-public class LHPolygonObject extends LHGameObject {
+public class LHPolygonObject extends LHBallGameObject {
 
 	private Polygon mPolygon;
 	private Body mBody;
@@ -32,6 +32,7 @@ public class LHPolygonObject extends LHGameObject {
 		float ves[] = mPolygon.getVertices();
 		
 		mSRender.begin(ShapeType.Filled);
+		mSRender.setColor(mColor);
 		float x1 = ves[0];
 		float y1 = ves[1];
 		for (int i = 2; i < ves.length - 2; i += 2) {
@@ -47,6 +48,7 @@ public class LHPolygonObject extends LHGameObject {
 	public LHPolygonObject(World world, float vertices[]) {
 		this(world);
 		this.tag = -1;
+		mColor = Color.RED;
 		
 		if (vertices.length < 6) {
 			throw new RuntimeException("vertices < 6");

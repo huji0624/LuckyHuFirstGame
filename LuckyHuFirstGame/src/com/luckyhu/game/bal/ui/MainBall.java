@@ -11,9 +11,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 
-public class MainBall extends LHGameObject{
+public class MainBall extends LHBallGameObject{
 	
 	public Circle circle;
 	private Body mBody;
@@ -65,7 +65,7 @@ public class MainBall extends LHGameObject{
 		circle.setPosition(mBody.getPosition());
 		
 		render.begin(ShapeType.Filled);
-		render.setColor(Color.WHITE);
+		render.setColor(mColor);
 		render.circle(circle.x, circle.y, circle.radius);
 		render.end();
 		

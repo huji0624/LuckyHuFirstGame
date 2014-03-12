@@ -1,5 +1,6 @@
 package com.luckyhu.game.bal.gameobject;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
@@ -11,9 +12,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
 
-public class LHWormHoleObject extends LHGameObject{
+public class LHWormHoleObject extends LHBallGameObject{
 
 	private Circle circleA;
 	private Circle circleB;
@@ -30,6 +30,7 @@ public class LHWormHoleObject extends LHGameObject{
 	public LHWormHoleObject(World world,Circle A,Circle B){
 		this(world);
 		this.tag = 1;
+		mColor = Color.GREEN;
 		
 		circleA = A;
 		circleB = B;
@@ -79,7 +80,7 @@ public class LHWormHoleObject extends LHGameObject{
 		super.render(render, delta);
 		
 		render.begin(ShapeType.Filled);
-		
+		render.setColor(mColor);
 		render.circle(circleA.x, circleA.y, circleA.radius);
 		render.circle(circleB.x, circleB.y, circleB.radius);
 		

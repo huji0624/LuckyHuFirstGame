@@ -1,5 +1,6 @@
 package com.luckyhu.game.bal.gameobject;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -7,12 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
 
-public class LHRectObject extends LHGameObject {
+public class LHRectObject extends LHBallGameObject {
 
 	private Rectangle mRect;
 	private Body mBody;
@@ -23,6 +22,7 @@ public class LHRectObject extends LHGameObject {
 			float angularVelocity) {
 		super(world);
 		this.tag = -1;
+		mColor = Color.RED;
 		
 		mAngle = angle;
 		mAngularVelocity = angularVelocity;
@@ -61,6 +61,7 @@ public class LHRectObject extends LHGameObject {
 		super.render(render, delta);
 
 		render.begin(ShapeType.Filled);
+		render.setColor(mColor);
 		mAngle += mAngularVelocity * delta;
 		render.rect(mRect.x, mRect.y, mRect.width, mRect.height,
 				mRect.width / 2, mRect.height / 2,

@@ -3,20 +3,20 @@ package com.luckyhu.game.bal.objectblocks;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.luckyhu.game.framework.game.engine.LHGameObject;
+import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public abstract class LHOBGBase implements LHObjectBlockGenerator{
 
-	protected Array<LHGameObject> mArray;
+	protected Array<LHBallGameObject> mArray;
 	private float width;
 	private float height;
 	
 	@Override
-	public Array<LHGameObject> generate(World world, float width, float height) {
+	public Array<LHBallGameObject> generate(World world, float width, float height) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("genBlock "+this);
-		mArray = new Array<LHGameObject>();
+		mArray = new Array<LHBallGameObject>();
 		this.width = width;
 		this.height = height;
 		gen(world);

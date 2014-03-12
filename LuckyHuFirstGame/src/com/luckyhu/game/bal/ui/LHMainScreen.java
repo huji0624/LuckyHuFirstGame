@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -28,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.luckyhu.game.bal.gameobject.LHRectObject;
+import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
@@ -81,7 +80,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 
 			moveViewPort(delta);
 
-			debugRender.render(mWorld, mSRender.getProjectionMatrix());
+//			debugRender.render(mWorld, mSRender.getProjectionMatrix());
 			
 			if(maxDis<mMainBall.getTop()){
 				maxDis =(int) mMainBall.getTop();
@@ -117,9 +116,9 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 								+ blockNumber);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
-				Array<LHGameObject> array = gen.generate(mWorld,
+				Array<LHBallGameObject> array = gen.generate(mWorld,
 						mStage.getWidth(), mStage.getHeight());
-				for (LHGameObject lhGameObject : array) {
+				for (LHBallGameObject lhGameObject : array) {
 					lhGameObject.moveBy(0, mBlockTop);
 				}
 				mObjectEngine.addObjects(array);
@@ -269,8 +268,8 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	
 	private void checkBody(Object ud,Contact contact){
 		if (ud != null) {
-			if (ud instanceof LHGameObject) {
-				LHGameObject go = (LHGameObject) ud;
+			if (ud instanceof LHBallGameObject) {
+				LHBallGameObject go = (LHBallGameObject) ud;
 				if (go.tag < 0) {
 					gameOver();
 				}
