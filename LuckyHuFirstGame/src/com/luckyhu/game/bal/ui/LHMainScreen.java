@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -37,7 +38,7 @@ import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
 import com.luckyhu.game.framework.game.util.LHActionQueue;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
-public class LHMainScreen implements Screen, ContactListener,
+public class LHMainScreen extends InputAdapter implements Screen, ContactListener,
 		LHGameObjectEngineListener {
 
 	private LHGameObjectEngine mObjectEngine;
@@ -166,10 +167,31 @@ public class LHMainScreen implements Screen, ContactListener,
 		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();
 
-		// Debug
-		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(50, 50,
-				30, 5), 1.9f, 3.6f));
-
+		Gdx.input.setInputProcessor(this);
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		Array<LHGameObject> objs = mObjectEngine.getObjects();
+		for (LHGameObject lhGameObject : objs) {
+			if(lhGameObject instanceof LHWormHoleObject){
+				LHWormHoleObject wo = (LHWormHoleObject)lhGameObject;
+				final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
+				if(po!=null){
+					mQueue.enqueue(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							mMainBall.moveTo(po.x, po.y);
+						}
+					});
+					return true;
+				}
+			}
+		}
+		
+		return super.touchUp(screenX, screenY, pointer, button);
 	}
 
 	private void gameOver() {
@@ -229,8 +251,10 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void dispose() {
 		// TODO Auto-generated method stub
 		mMainBall.dispose();
+		mMainBall=null;
 		mWorld.destroyBody(mEdgeBox.getBody());
 		mWorld.dispose();
+		mWorld=null;
 		mSRender.dispose();
 	}
 
@@ -245,28 +269,7 @@ public class LHMainScreen implements Screen, ContactListener,
 	
 	private void checkBody(Object ud,Contact contact){
 		if (ud != null) {
-
-			if (ud instanceof LHWormHoleObject) {
-				LHWormHoleObject wo = (LHWormHoleObject) ud;
-				if (wo.inTranslate == false) {
-					wo.inTranslate = true;
-					final Vector2 po = wo.getOtherFixTurePosition(contact
-							.getFixtureB());
-					if (po == null) {
-						LHLogger.logD("LHWormContact error.");
-					} else {
-						mQueue.enqueue(new Runnable() {
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								mMainBall.moveTo(po.x, po.y);
-							}
-						});
-
-					}
-				}
-
-			} else if (ud instanceof LHGameObject) {
+			if (ud instanceof LHGameObject) {
 				LHGameObject go = (LHGameObject) ud;
 				if (go.tag < 0) {
 					gameOver();
@@ -279,14 +282,6 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void endContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("endContact happen");
-		Object ud = contact.getFixtureB().getBody().getUserData();
-		if (ud == null) {
-			ud = contact.getFixtureA().getBody().getUserData();
-		}
-		if (ud != null && ud instanceof LHWormHoleObject) {
-			LHWormHoleObject wo = (LHWormHoleObject) ud;
-			wo.inTranslate = false;
-		}
 	}
 
 	@Override
@@ -304,7 +299,7 @@ public class LHMainScreen implements Screen, ContactListener,
 	@Override
 	public boolean removeObject(LHGameObject obj) {
 		// TODO Auto-generated method stub
-		if (mCamera.position.y - obj.getTop() > Gdx.graphics.getHeight() / 2) {
+		if (mCamera.position.y - obj.getTop() > Gdx.graphics.getHeight()) {
 			return true;
 		}
 		return false;

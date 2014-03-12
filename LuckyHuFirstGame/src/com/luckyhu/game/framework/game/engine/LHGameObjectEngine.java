@@ -29,6 +29,10 @@ public class LHGameObjectEngine {
 		}
 	}
 	
+	public Array<LHGameObject> getObjects(){
+		return mObjects;
+	}
+	
 	public void renderObject(ShapeRenderer batch,float delta){
 		for (int i = 0; i < mObjects.size; i++) {
 			LHGameObject obj = mObjects.get(i);

@@ -92,7 +92,7 @@ public class LHRectObject extends LHGameObject {
 	@Override
 	public float getTop() {
 		// TODO Auto-generated method stub
-		return (float) (mRect.y + mRect.width * Math.sin(mAngle));
+		return (float) (mRect.y + mRect.width);
 	}
 
 }

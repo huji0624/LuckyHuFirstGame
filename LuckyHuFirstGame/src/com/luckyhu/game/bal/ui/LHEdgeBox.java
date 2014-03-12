@@ -24,8 +24,8 @@ public class LHEdgeBox extends LHGameObject{
 		mEdgeBoxBody.setUserData(this);
 
 		EdgeShape shape = new EdgeShape();
-		float halfW = Gdx.graphics.getWidth() / 2 - 5;
-		float halfH = Gdx.graphics.getHeight() / 2 - 25;
+		float halfW = Gdx.graphics.getWidth() / 2;
+		float halfH = Gdx.graphics.getHeight() / 2;
 		shape.set(-halfW, -halfH, -halfW, +halfH);
 		mEdgeBoxBody.createFixture(shape, 0);
 

@@ -22,8 +22,6 @@ public class LHWormHoleObject extends LHGameObject{
 	private Fixture mFixtureA;
 	private Fixture mFixtureB;
 	
-	public boolean inTranslate = false;
-	
 	public LHWormHoleObject(World world) {
 		super(world);
 		// TODO Auto-generated constructor stub
@@ -66,10 +64,10 @@ public class LHWormHoleObject extends LHGameObject{
 		shape.dispose();
 	}
 	
-	public Vector2 getOtherFixTurePosition(Fixture currentFixture){
-		if (currentFixture==mFixtureA) {
+	public Vector2 getOtherFixTurePosition(Circle circle){
+		if (circleA.contains(circle)) {
 			return new Vector2(circleB.x, circleB.y);
-		}else if(currentFixture==mFixtureB){
+		}else if(circleB.contains(circle)){
 			return new Vector2(circleA.x, circleA.y);
 		}
 		return null;
