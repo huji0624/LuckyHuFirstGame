@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -45,7 +46,8 @@ public class LHPolygonObject extends LHGameObject {
 
 	public LHPolygonObject(World world, float vertices[]) {
 		this(world);
-
+		this.tag = -1;
+		
 		if (vertices.length < 6) {
 			throw new RuntimeException("vertices < 6");
 		}
@@ -56,6 +58,7 @@ public class LHPolygonObject extends LHGameObject {
 		bd.type = BodyType.StaticBody;
 		bd.position.set(0, 0);
 		mBody = mWorld.createBody(bd);
+		mBody.setUserData(this);
 
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);

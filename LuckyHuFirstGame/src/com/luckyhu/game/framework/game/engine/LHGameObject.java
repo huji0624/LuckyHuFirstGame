@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 public abstract class LHGameObject implements Disposable{
 	
+	public int tag = 0;
 	protected World mWorld;
 	
 	public LHGameObject(World world){

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -13,19 +12,19 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
-import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class MainBall extends LHGameObject{
 	
 	public Circle circle;
-	private Vector2 mDirection;
 	private Body mBody;
 //	private float mSpeed = 400;
+	private float mOffset;
 	
 	public MainBall(World world){
 		super(world);
+		this.tag = 624;
+		
 		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/20 );
-		mDirection = new Vector2(-1, 1);
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -41,18 +40,18 @@ public class MainBall extends LHGameObject{
 		mBody.createFixture(fd);
 		
 		shape.dispose();
-		
-		Vector2 force = new Vector2(0, 50f);
-		mBody.applyLinearImpulse(force, bodyDef.position,true);
-		LHLogger.logD("bvo:"+mBody.getLinearVelocity().len());
 	}
 	
 	public Body getBody(){
 		return mBody;
 	}
 	
-	public float getPositionY(){
-		return this.circle.y;
+	public void setOffset(float offset){
+		mOffset = offset;
+	}
+	
+	private float getTouchY() {
+		return Gdx.graphics.getHeight() - Gdx.input.getY() + mOffset;
 	}
 	
 	@Override
@@ -60,12 +59,35 @@ public class MainBall extends LHGameObject{
 		// TODO Auto-generated method stub
 		super.render(render, delta);
 		
+		handleTouch(delta);
+		
 		circle.setPosition(mBody.getPosition());
 		
 		render.begin(ShapeType.Filled);
 		render.setColor(Color.WHITE);
 		render.circle(circle.x, circle.y, circle.radius);
 		render.end();
+		
+	}
+	
+	private float lastX = 0;
+	private float lastY = 0;
+	
+	private void handleTouch(float delta){
+		if (Gdx.input.justTouched()) {
+			lastX = Gdx.input.getX();
+			lastY = getTouchY();
+		}else if(Gdx.input.isTouched()){
+			float x = Gdx.input.getX();
+			float y = getTouchY();
+			float dx = x - lastX;
+			float dy = y - lastY;
+			
+			mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y + dy, 0);
+			
+			lastX = x;
+			lastY = y;
+		}
 		
 	}
 

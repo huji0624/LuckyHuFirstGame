@@ -18,6 +18,7 @@ public class LHEdgeBox {
 		bd.position.set(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2);
 		mEdgeBoxBody = world.createBody(bd);
+		mEdgeBoxBody.setUserData(this);
 
 		EdgeShape shape = new EdgeShape();
 		float halfW = Gdx.graphics.getWidth() / 2 - 5;

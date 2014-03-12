@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
@@ -21,6 +22,8 @@ public class LHRectObject extends LHGameObject {
 	public LHRectObject(World world, Rectangle rect, float angle,
 			float angularVelocity) {
 		super(world);
+		this.tag = -1;
+		
 		mAngle = angle;
 		mAngularVelocity = angularVelocity;
 		mRect = new Rectangle(rect);
@@ -38,6 +41,7 @@ public class LHRectObject extends LHGameObject {
 		bd.angularVelocity = mAngularVelocity;
 
 		mBody = mWorld.createBody(bd);
+		mBody.setUserData(this);
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(mRect.width / 2, mRect.height / 2, new Vector2(0, 0),

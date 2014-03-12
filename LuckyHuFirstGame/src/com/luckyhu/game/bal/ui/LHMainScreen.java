@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -43,7 +44,6 @@ public class LHMainScreen implements Screen, ContactListener,
 	private ShapeRenderer mSRender;
 	private OrthographicCamera mCamera;
 	private MainBall mMainBall;
-	private InputPainter mPainter;
 
 	private World mWorld;
 
@@ -53,76 +53,78 @@ public class LHMainScreen implements Screen, ContactListener,
 
 	private float mOffset;
 	private Label mLabel;
-	private int currentGenBlock = 1;
+	private float mBlockTop = 0;
 
 	private LHEdgeBox mEdgeBox;
 
 	private LHActionQueue mQueue = new LHActionQueue();
 
+	private boolean gameOver = false;
+
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		if (!gameOver) {
+			mSRender.setProjectionMatrix(mCamera.combined);
+			GL10 gl = Gdx.app.getGraphics().getGL10();
+			mCamera.update();
+			mCamera.apply(gl);
 
-		mSRender.setProjectionMatrix(mCamera.combined);
-		GL10 gl = Gdx.app.getGraphics().getGL10();
-		mCamera.update();
-		mCamera.apply(gl);
+			mWorld.step(delta, 10, 10);
 
-		mWorld.step(delta, 10, 10);
+			mQueue.runAll();
 
-		mQueue.runAll();
+			mObjectEngine.renderObject(mSRender, delta);
+			mMainBall.render(mSRender, delta);
 
-		mPainter.render(mSRender, delta);
+			moveViewPort(delta);
 
-		mObjectEngine.renderObject(mSRender, delta);
-		mMainBall.render(mSRender, delta);
-
+			debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		}
 		mStage.act(delta);
 		mStage.draw();
+	}
 
-		float dd = 100;
+	private void moveViewPort(float delta) {
 
-		if (mOffset + mStage.getHeight() - mMainBall.getPositionY() < dd) {
-			mOffset += dd;
-			mLabel.setText("" + ((int) mOffset));
+		float dis = 20 * delta;
+		mOffset += dis;
+		mCamera.position.y += dis;
+		mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth() / 2,
+				mEdgeBox.getBody().getPosition().y + dis, 0);
 
-			int pg = (int) (mOffset / mStage.getHeight());
-			if (pg >= currentGenBlock - 2) {
-				genBlock();
-			}
+		genBlock();
 
-			mPainter.setOffset(mOffset);
-		}
-
-		if (mOffset > mCamera.position.y - Gdx.graphics.getHeight() / 2) {
-			float ms = 1000;
-			mCamera.position.y += ms * delta;
-			mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth() / 2,
-					mEdgeBox.getBody().getPosition().y + ms * delta, 0);
-		}
-
-		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		mMainBall.setOffset(mOffset);
 	}
 
 	private void genBlock() {
-		try {
-			@SuppressWarnings("unchecked")
-			Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
-					.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-							+ currentGenBlock);
-			LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
-					.newInstance();
-			Array<LHGameObject> array = gen.generate(mWorld, mStage.getWidth(),
-					mStage.getHeight());
-			for (LHGameObject lhGameObject : array) {
-				lhGameObject.moveBy(0, currentGenBlock * mStage.getHeight());
+
+		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
+			try {
+				int MaxBlock = 5;
+				int blockNumber = MathUtils.random(1, MaxBlock);
+				@SuppressWarnings("unchecked")
+				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
+						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
+								+ blockNumber);
+				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
+						.newInstance();
+				Array<LHGameObject> array = gen.generate(mWorld,
+						mStage.getWidth(), mStage.getHeight());
+				for (LHGameObject lhGameObject : array) {
+					lhGameObject.moveBy(0, mBlockTop);
+				}
+				mObjectEngine.addObjects(array);
+
+				mBlockTop += gen.blockSize().y;
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			mObjectEngine.addObjects(array);
-			currentGenBlock++;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
 	}
 
 	@Override
@@ -146,8 +148,6 @@ public class LHMainScreen implements Screen, ContactListener,
 		debugRender = new Box2DDebugRenderer();
 
 		mMainBall = new MainBall(mWorld);
-		mPainter = new InputPainter(mWorld);
-		mPainter.mainBall = mMainBall;
 
 		mEdgeBox = new LHEdgeBox(mWorld);
 
@@ -157,14 +157,18 @@ public class LHMainScreen implements Screen, ContactListener,
 				mStage.getHeight() - mLabel.getHeight() - 10);
 		mStage.addActor(mLabel);
 
+		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();
 
 		// Debug
 		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(50, 50,
 				30, 5), 1.9f, 3.6f));
+
 	}
 
 	private void gameOver() {
+		
+		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);
 
 		Group uiGroup = new Group();
@@ -228,27 +232,40 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void beginContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("beginContact happen");
-		Object ud = contact.getFixtureB().getUserData();
-		if (ud != null && ud instanceof LHWormHoleObject) {
-			LHWormHoleObject wo = (LHWormHoleObject) ud;
-			if (wo.inTranslate == false) {
-				wo.inTranslate = true;
-				final Vector2 po = wo.getOtherFixTurePosition(contact
-						.getFixtureB());
-				if (po == null) {
-					LHLogger.logD("LHWormContact error.");
-				} else {
-					mQueue.enqueue(new Runnable() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							mMainBall.moveTo(po.x, po.y);
-						}
-					});
+		Object ud = contact.getFixtureB().getBody().getUserData();
 
+		if (ud == null) {
+			ud = contact.getFixtureA().getBody().getUserData();
+		}
+
+		if (ud != null) {
+
+			if (ud instanceof LHWormHoleObject) {
+				LHWormHoleObject wo = (LHWormHoleObject) ud;
+				if (wo.inTranslate == false) {
+					wo.inTranslate = true;
+					final Vector2 po = wo.getOtherFixTurePosition(contact
+							.getFixtureB());
+					if (po == null) {
+						LHLogger.logD("LHWormContact error.");
+					} else {
+						mQueue.enqueue(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								mMainBall.moveTo(po.x, po.y);
+							}
+						});
+
+					}
+				}
+
+			} else if (ud instanceof LHGameObject) {
+				LHGameObject go = (LHGameObject) ud;
+				if (go.tag < 0) {
+					gameOver();
 				}
 			}
-
 		}
 	}
 
@@ -257,7 +274,7 @@ public class LHMainScreen implements Screen, ContactListener,
 		// TODO Auto-generated method stub
 		LHLogger.logD("endContact happen");
 		LHLogger.logD("vo:" + mMainBall.getBody().getLinearVelocity().len());
-		Object ud = contact.getFixtureB().getUserData();
+		Object ud = contact.getFixtureB().getBody().getUserData();
 		if (ud != null && ud instanceof LHWormHoleObject) {
 			LHWormHoleObject wo = (LHWormHoleObject) ud;
 			wo.inTranslate = false;
