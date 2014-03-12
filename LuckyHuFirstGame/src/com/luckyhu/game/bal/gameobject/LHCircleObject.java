@@ -1,60 +1,42 @@
-package com.luckyhu.game.bal.ui;
+package com.luckyhu.game.bal.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 
-public class MainBall extends LHBallGameObject{
-	
+public class LHCircleObject extends LHBallGameObject {
+
 	public Circle circle;
-	private Body mBody;
-	private float mOffset;
-	
-	public static MainBall mainBall = null;
-	
-	public MainBall(World world){
+
+	public LHCircleObject(World world) {
 		super(world);
-		this.tag = 624;
-		
-		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/25 );
-		
+		// TODO Auto-generated constructor stub
+	}
+
+	public LHCircleObject(World world, Circle circle) {
+		this(world);
+		this.circle = new Circle(circle);
+
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.type = BodyType.StaticBody;
 		bodyDef.position.set(circle.x, circle.y);
 		mBody = world.createBody(bodyDef);
 		mBody.setUserData(this);
-		
+
 		CircleShape shape = new CircleShape();
 		shape.setRadius(circle.radius);
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
-		fd.restitution =1.0f;
+		fd.restitution = 1.0f;
 		fd.friction = 0.0f;
 		mBody.createFixture(fd);
-		
+
 		shape.dispose();
-		
-		mainBall = this;
-	}
-	
-	public Body getBody(){
-		return mBody;
-	}
-	
-	public void setOffset(float offset){
-		mOffset = offset;
-	}
-	
-	private float getTouchY() {
-		return Gdx.graphics.getHeight() - Gdx.input.getY() + mOffset;
 	}
 	
 	@Override
@@ -62,35 +44,10 @@ public class MainBall extends LHBallGameObject{
 		// TODO Auto-generated method stub
 		super.render(render, delta);
 		
-		handleTouch(delta);
-		
-		circle.setPosition(mBody.getPosition());
-		
 		render.begin(ShapeType.Filled);
 		render.setColor(mColor);
 		render.circle(circle.x, circle.y, circle.radius);
 		render.end();
-		
-	}
-	
-	private float lastX = 0;
-	private float lastY = 0;
-	
-	private void handleTouch(float delta){
-		if (Gdx.input.justTouched()) {
-			lastX = Gdx.input.getX();
-			lastY = getTouchY();
-		}else if(Gdx.input.isTouched()){
-			float x = Gdx.input.getX();
-			float y = getTouchY();
-			float dx = x - lastX;
-			float dy = y - lastY;
-			
-			mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y + dy, 0);
-			
-			lastX = x;
-			lastY = y;
-		}
 		
 	}
 

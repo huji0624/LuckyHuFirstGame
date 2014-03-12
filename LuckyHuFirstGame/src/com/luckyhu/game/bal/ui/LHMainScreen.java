@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -28,6 +29,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
+import com.luckyhu.game.bal.gameobject.LHBlackHoleObject;
+import com.luckyhu.game.bal.gameobject.LHDragObject;
+import com.luckyhu.game.bal.gameobject.LHWhiteHoleObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
@@ -80,7 +84,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 
 			moveViewPort(delta);
 
-//			debugRender.render(mWorld, mSRender.getProjectionMatrix());
+			debugRender.render(mWorld, mSRender.getProjectionMatrix());
 			
 			if(maxDis<mMainBall.getTop()){
 				maxDis =(int) mMainBall.getTop();
@@ -113,7 +117,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ blockNumber);
+								+ 6);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,
@@ -167,6 +171,10 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		genBlock();
 
 		Gdx.input.setInputProcessor(this);
+		
+		//DEBUG
+		float ves[] = { 10, 10,10,20, 20, 20, 20,10};
+		mObjectEngine.addObject(new LHDragObject(mWorld, ves, mMainBall));
 	}
 	
 	@Override
@@ -249,6 +257,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		MainBall.mainBall =null;
 		mMainBall.dispose();
 		mMainBall=null;
 		mWorld.destroyBody(mEdgeBox.getBody());

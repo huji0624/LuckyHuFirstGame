@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,19 +15,22 @@ import com.luckyhu.game.framework.game.util.LHLogger;
 public class LHPolygonObject extends LHBallGameObject {
 
 	private Polygon mPolygon;
-	private Body mBody;
 
 	public LHPolygonObject(World world) {
 		super(world);
 		// TODO Auto-generated constructor stub
 	}
 
+	public Polygon getPolygon(){
+		return mPolygon;
+	}
+	
 	@Override
 	public void render(ShapeRenderer mSRender, float delta) {
 		// TODO Auto-generated method stub
 		super.render(mSRender, delta);
 
-		float ves[] = mPolygon.getVertices();
+		float ves[] = mPolygon.getTransformedVertices();
 		
 		mSRender.begin(ShapeType.Filled);
 		mSRender.setColor(mColor);
@@ -88,7 +89,6 @@ public class LHPolygonObject extends LHBallGameObject {
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
 		mPolygon.translate(dx, dy);
-		mPolygon.setVertices(mPolygon.getTransformedVertices());
 		mBody.setTransform(mPolygon.getX(), mPolygon.getY(), 0);
 	}
 

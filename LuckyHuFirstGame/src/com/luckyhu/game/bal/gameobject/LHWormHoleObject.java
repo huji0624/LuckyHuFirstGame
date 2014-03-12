@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -18,7 +17,6 @@ public class LHWormHoleObject extends LHBallGameObject{
 	private Circle circleA;
 	private Circle circleB;
 	
-	private Body mBody;
 	private Fixture mFixtureA;
 	private Fixture mFixtureB;
 	
