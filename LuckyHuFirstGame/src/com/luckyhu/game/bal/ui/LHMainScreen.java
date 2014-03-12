@@ -238,12 +238,12 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void beginContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("beginContact happen");
-		Object ud = contact.getFixtureB().getBody().getUserData();
 
-		if (ud == null) {
-			ud = contact.getFixtureA().getBody().getUserData();
-		}
-
+		checkBody(contact.getFixtureA().getBody().getUserData(), contact);
+		checkBody(contact.getFixtureB().getBody().getUserData(), contact);
+	}
+	
+	private void checkBody(Object ud,Contact contact){
 		if (ud != null) {
 
 			if (ud instanceof LHWormHoleObject) {
