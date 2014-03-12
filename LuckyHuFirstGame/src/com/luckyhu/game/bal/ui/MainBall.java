@@ -30,6 +30,7 @@ public class MainBall extends LHGameObject{
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(circle.x, circle.y);
 		mBody = world.createBody(bodyDef);
+		mBody.setUserData(this);
 		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(circle.radius);

@@ -60,6 +60,7 @@ public class LHMainScreen implements Screen, ContactListener,
 	private LHActionQueue mQueue = new LHActionQueue();
 
 	private boolean gameOver = false;
+	private int maxDis = 0;
 
 	@Override
 	public void render(float delta) {
@@ -80,6 +81,11 @@ public class LHMainScreen implements Screen, ContactListener,
 			moveViewPort(delta);
 
 			debugRender.render(mWorld, mSRender.getProjectionMatrix());
+			
+			if(maxDis<mMainBall.getTop()){
+				maxDis =(int) mMainBall.getTop();
+				mLabel.setText(""+maxDis);
+			}
 		}
 		mStage.act(delta);
 		mStage.draw();
@@ -273,8 +279,10 @@ public class LHMainScreen implements Screen, ContactListener,
 	public void endContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("endContact happen");
-		LHLogger.logD("vo:" + mMainBall.getBody().getLinearVelocity().len());
 		Object ud = contact.getFixtureB().getBody().getUserData();
+		if (ud == null) {
+			ud = contact.getFixtureA().getBody().getUserData();
+		}
 		if (ud != null && ud instanceof LHWormHoleObject) {
 			LHWormHoleObject wo = (LHWormHoleObject) ud;
 			wo.inTranslate = false;

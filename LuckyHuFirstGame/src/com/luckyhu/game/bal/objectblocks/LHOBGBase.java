@@ -30,6 +30,14 @@ public abstract class LHOBGBase implements LHObjectBlockGenerator{
 	public float getHeight() {
 		return height;
 	}
+	
+	public float lenReToWidth(float rellen){
+		return getWidth()*rellen;
+	}
+	
+	public float lenReToHeight(float rellen){
+		return getHeight()*rellen;
+	}
 
 	
 	@Override

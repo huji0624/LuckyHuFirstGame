@@ -6,12 +6,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.luckyhu.game.framework.game.engine.LHGameObject;
 
-public class LHEdgeBox {
+public class LHEdgeBox extends LHGameObject{
 
 	private Body mEdgeBoxBody;
 
 	public LHEdgeBox(World world) {
+		super(world);
+		this.tag = -1;
 		// the box
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.StaticBody;
@@ -39,6 +42,24 @@ public class LHEdgeBox {
 
 	public Body getBody() {
 		return mEdgeBoxBody;
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		mWorld.destroyBody(mEdgeBoxBody);
+	}
+
+	@Override
+	public void moveBy(float dx, float dy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public float getTop() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

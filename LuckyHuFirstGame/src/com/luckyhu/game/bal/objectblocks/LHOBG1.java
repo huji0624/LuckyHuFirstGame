@@ -10,8 +10,8 @@ public class LHOBG1 extends LHOBGBase {
 	@Override
 	public void gen(World world) {
 		// TODO Auto-generated method stub
-		Circle A = new Circle(40, 40, 20);
-		Circle B = new Circle(155,40,40);
+		Circle A = new Circle(40, 40, lenReToWidth(0.08f));
+		Circle B = new Circle(230,40,lenReToWidth(0.08f));
 		mArray.add(new LHWormHoleObject(world, A, B));
 	}
 
