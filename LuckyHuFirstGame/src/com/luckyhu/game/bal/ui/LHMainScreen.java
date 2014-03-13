@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
@@ -38,12 +39,16 @@ import com.luckyhu.game.framework.game.LHGame;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
+import com.luckyhu.game.framework.game.engine.LHMapEngine;
 import com.luckyhu.game.framework.game.util.LHActionQueue;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHMainScreen extends InputAdapter implements Screen, ContactListener,
 		LHGameObjectEngineListener {
 
+	private LHMapEngine mMapEngine;
+	private SpriteBatch mBatch;
+	
 	private LHGameObjectEngine mObjectEngine;
 	private ShapeRenderer mSRender;
 	private OrthographicCamera mCamera;
@@ -71,6 +76,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		// TODO Auto-generated method stub
 		if (!gameOver) {
 			mSRender.setProjectionMatrix(mCamera.combined);
+			mBatch.setProjectionMatrix(mCamera.combined);
 			GL10 gl = Gdx.app.getGraphics().getGL10();
 			mCamera.update();
 			mCamera.apply(gl);
@@ -79,6 +85,10 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 
 			mQueue.runAll();
 
+			mBatch.begin();
+			mMapEngine.render(mBatch, delta,mOffset);
+			mBatch.end();
+			
 			mObjectEngine.renderObject(mSRender, delta);
 			mMainBall.render(mSRender, delta);
 
@@ -147,6 +157,9 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	public void show() {
 		// TODO Auto-generated method stub
 		mObjectEngine = new LHGameObjectEngine(this);
+		mMapEngine = new LHMapEngine();
+		mBatch = new SpriteBatch();
+		
 		mSRender = new ShapeRenderer();
 		mCamera = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
@@ -264,6 +277,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		mWorld.dispose();
 		mWorld=null;
 		mSRender.dispose();
+		mBatch.dispose();
 	}
 
 	@Override
