@@ -30,8 +30,6 @@ public class LHDragObject extends LHPolygonObject{
 	@Override
 	public void render(ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(render, delta);
-		
 		Rectangle rect = getPolygon().getBoundingRectangle();
 		Vector2 center = new Vector2();
 		center = rect.getCenter(center);
@@ -40,5 +38,7 @@ public class LHDragObject extends LHPolygonObject{
 		float a = 1/len/len;
 		Vector2 nor = ve.nor();
 		moveBy( nor.x * delta * a * mess, nor.y * delta * a *mess);
+		
+		super.render(render, delta);
 	}
 }

@@ -21,14 +21,9 @@ public class LHMapEngine {
 		mBlockCache = new Array<LHMapBlock>();
 		Texture.setEnforcePotImages(false);
 		
-		for (int i = 0; i < 2; i++) {			
-			mBlockCache.add(new LHMapBlock("data/grass.png",  14, 14, 14, 14));
+		for (int i = 0; i < 6; i++) {			
+			mBlockCache.add(new LHMapBlock("data/space.png",  14, 14, 14, 14));
 		}
-		
-		mBlockCache.add(new LHMapBlock("data/space.png",  14, 14, 14, 14));
-		mBlockCache.add(new LHMapBlock("data/space.png",  14, 14, 14, 14));
-		mBlockCache.add(new LHMapBlock("data/water.png",  14, 14, 14, 14));
-		mBlockCache.add(new LHMapBlock("data/water.png",  14, 14, 14, 14));
 	}
 	
 	public void render(SpriteBatch batch,float delta,float offset){

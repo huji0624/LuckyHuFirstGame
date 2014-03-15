@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +33,8 @@ import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
 import com.luckyhu.game.bal.gameobject.LHBlackHoleObject;
 import com.luckyhu.game.bal.gameobject.LHDragObject;
+import com.luckyhu.game.bal.gameobject.LHBezierMoveObject;
+import com.luckyhu.game.bal.gameobject.LHPolygonMovingObject;
 import com.luckyhu.game.bal.gameobject.LHWhiteHoleObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
@@ -118,16 +121,19 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		mMainBall.setOffset(mOffset);
 	}
 
+	private int blockNumber = 8;
+	
 	private void genBlock() {
 
 		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
 			try {
-				int MaxBlock = 5;
-				int blockNumber = MathUtils.random(1, MaxBlock);
+				int MaxBlock = 8;
+//				blockNumber = MathUtils.random(1, MaxBlock);
+				
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ 6);
+								+ blockNumber);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,
@@ -138,7 +144,8 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 				mObjectEngine.addObjects(array);
 
 				mBlockTop += gen.blockSize().y;
-
+				blockNumber --;
+				if(blockNumber<=0) blockNumber=MaxBlock;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -186,8 +193,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		Gdx.input.setInputProcessor(this);
 		
 		//DEBUG
-		float ves[] = { 10, 10,10,20, 20, 20, 20,10};
-		mObjectEngine.addObject(new LHDragObject(mWorld, ves, mMainBall));
+		
 	}
 	
 	@Override

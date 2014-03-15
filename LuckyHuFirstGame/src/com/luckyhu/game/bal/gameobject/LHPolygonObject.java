@@ -3,8 +3,10 @@ package com.luckyhu.game.bal.gameobject;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.GeometryUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -90,6 +92,13 @@ public class LHPolygonObject extends LHBallGameObject {
 		// TODO Auto-generated method stub
 		mPolygon.translate(dx, dy);
 		mBody.setTransform(mPolygon.getX(), mPolygon.getY(), 0);
+	}
+	
+	@Override
+	public void moveTo(float x, float y) {
+		// TODO Auto-generated method stub
+		mPolygon.setPosition(x, y);
+		mBody.setTransform(x, y, 0);
 	}
 
 	@Override
