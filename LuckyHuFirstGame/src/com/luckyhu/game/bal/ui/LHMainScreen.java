@@ -90,14 +90,14 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 
 			mBatch.begin();
 			mMapEngine.render(mBatch, delta,mOffset);
+			mObjectEngine.renderObject(mBatch,mSRender, delta);
 			mBatch.end();
 			
-			mObjectEngine.renderObject(mSRender, delta);
-			mMainBall.render(mSRender, delta);
+			mMainBall.render(null, mSRender, delta);
 
 			moveViewPort(delta);
 
-			debugRender.render(mWorld, mSRender.getProjectionMatrix());
+//			debugRender.render(mWorld, mSRender.getProjectionMatrix());
 			
 			if(maxDis<mMainBall.getTop()){
 				maxDis =(int) mMainBall.getTop();
@@ -133,7 +133,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ blockNumber);
+								+ 1);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,
@@ -194,6 +194,13 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		
 		//DEBUG
 		
+	}
+	
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		
+		return super.touchDragged(screenX, screenY, pointer);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -54,9 +55,9 @@ public class LHRectObject extends LHBallGameObject {
 	}
 
 	@Override
-	public void render(ShapeRenderer render, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(render, delta);
+		super.render(batch, render, delta);
 
 		render.begin(ShapeType.Filled);
 		render.setColor(mColor);

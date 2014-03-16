@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -26,9 +27,9 @@ public class LHWhiteHoleObject extends LHCircleObject{
 	}
 
 	@Override
-	public void render(ShapeRenderer render, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(render, delta);
+		super.render(batch, render, delta);
 		
 		Vector2 ve = new Vector2(mainBall.circle.x - circle.x, mainBall.circle.y - circle.y);
 		float len = ve.len();

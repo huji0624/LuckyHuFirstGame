@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -37,7 +38,7 @@ public class LHPolygonMovingObject extends LHPolygonObject{
 	}
 
 	@Override
-	public void render(ShapeRenderer mSRender, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer mSRender, float delta) {
 		// TODO Auto-generated method stub
 		if(mPath!=null){			
 			Vector2 po = new Vector2();
@@ -54,16 +55,16 @@ public class LHPolygonMovingObject extends LHPolygonObject{
 			}
 		}
 		
-		mSRender.begin(ShapeType.Line);
-		mSRender.setColor(Color.GREEN);
-		for (int i = 0; i < mPath.points.length-1; i++) {
-			Vector2 s = mPath.points[i];
-			Vector2 e = mPath.points[i+1];
-			mSRender.line(s, e);
-		}
-		mSRender.end();
+//		mSRender.begin(ShapeType.Line);
+//		mSRender.setColor(Color.GREEN);
+//		for (int i = 0; i < mPath.points.length-1; i++) {
+//			Vector2 s = mPath.points[i];
+//			Vector2 e = mPath.points[i+1];
+//			mSRender.line(s, e);
+//		}
+//		mSRender.end();
 		
-		super.render(mSRender, delta);
+		super.render(batch, mSRender, delta);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.GeometryUtils;
@@ -28,9 +29,9 @@ public class LHPolygonObject extends LHBallGameObject {
 	}
 	
 	@Override
-	public void render(ShapeRenderer mSRender, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer mSRender, float delta) {
 		// TODO Auto-generated method stub
-		super.render(mSRender, delta);
+		super.render(batch, mSRender, delta);
 
 		float ves[] = mPolygon.getTransformedVertices();
 		

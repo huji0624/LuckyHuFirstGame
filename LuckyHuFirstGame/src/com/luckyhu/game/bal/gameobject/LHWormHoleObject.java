@@ -1,6 +1,9 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
@@ -19,6 +22,11 @@ public class LHWormHoleObject extends LHBallGameObject{
 	
 	private Fixture mFixtureA;
 	private Fixture mFixtureB;
+	
+	private Sprite mSpriteA;
+	private Sprite mSpriteB;
+	
+	private Texture mTexture;
 	
 	public LHWormHoleObject(World world) {
 		super(world);
@@ -61,6 +69,14 @@ public class LHWormHoleObject extends LHBallGameObject{
 		mFixtureB=mBody.createFixture(fd);
 		mFixtureB.setUserData(this);
 		shape.dispose();
+		
+		mTexture = new Texture("data/wormhole.png");
+		mSpriteA = new Sprite(mTexture);
+		mSpriteB = new Sprite(mTexture);
+		mSpriteA.setPosition(circleA.x-circleA.radius, circleA.y-circleA.radius);
+		mSpriteA.setSize(circleA.radius*2, circleA.radius*2);
+		mSpriteB.setPosition(circleB.x-circleB.radius, circleB.y-circleB.radius);
+		mSpriteB.setSize(circleA.radius*2, circleA.radius*2);
 	}
 	
 	public Vector2 getOtherFixTurePosition(Circle circle){
@@ -73,22 +89,23 @@ public class LHWormHoleObject extends LHBallGameObject{
 	}
 	
 	@Override
-	public void render(ShapeRenderer render, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(render, delta);
+		super.render(batch, render, delta);
 		
 		render.begin(ShapeType.Filled);
 		render.setColor(mColor);
 		render.circle(circleA.x, circleA.y, circleA.radius);
 		render.circle(circleB.x, circleB.y, circleB.radius);
-		
 		render.end();
+		mSpriteA.draw(batch);
+		mSpriteB.draw(batch);
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		mTexture.dispose();
 	}
 	
 	@Override
@@ -109,6 +126,9 @@ public class LHWormHoleObject extends LHBallGameObject{
 		
 		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
 				+ dy, 0);
+		
+		mSpriteA.translate(dx, dy);
+		mSpriteB.translate(dx, dy);
 	}
 
 	@Override

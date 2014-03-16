@@ -24,20 +24,14 @@ public class LHGameObjectEngine {
 		mObjects.addAll(objects);
 	}
 	
-	public void renderObject(SpriteBatch batch,float delta){
-		for (int i = 0; i < mObjects.size; i++) {
-			mObjects.get(i).render(batch, delta);
-		}
-	}
-	
 	public Array<LHGameObject> getObjects(){
 		return mObjects;
 	}
 	
-	public void renderObject(ShapeRenderer batch,float delta){
+	public void renderObject(SpriteBatch batch,ShapeRenderer render,float delta){
 		for (int i = 0; i < mObjects.size; i++) {
 			LHGameObject obj = mObjects.get(i);
-			obj.render(batch, delta);
+			obj.render(batch, render, delta);
 			if(mListener.removeObject(obj)){
 				obj.willRemove();
 				LHLogger.logD("Will Remove "+obj);

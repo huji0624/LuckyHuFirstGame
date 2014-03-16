@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -28,7 +29,7 @@ public class LHDragObject extends LHPolygonObject{
 	}
 
 	@Override
-	public void render(ShapeRenderer render, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
 		Rectangle rect = getPolygon().getBoundingRectangle();
 		Vector2 center = new Vector2();
@@ -39,6 +40,6 @@ public class LHDragObject extends LHPolygonObject{
 		Vector2 nor = ve.nor();
 		moveBy( nor.x * delta * a * mess, nor.y * delta * a *mess);
 		
-		super.render(render, delta);
+		super.render(batch, render, delta);
 	}
 }

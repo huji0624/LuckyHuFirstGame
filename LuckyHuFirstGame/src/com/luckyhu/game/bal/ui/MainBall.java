@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
@@ -58,9 +59,9 @@ public class MainBall extends LHBallGameObject{
 	}
 	
 	@Override
-	public void render(ShapeRenderer render, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(render, delta);
+		super.render(batch, render, delta);
 		
 		handleTouch(delta);
 		

@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
@@ -30,7 +31,7 @@ public class LHBezierMoveObject extends LHPolygonObject{
 	}
 	
 	@Override
-	public void render(ShapeRenderer mSRender, float delta) {
+	public void render(SpriteBatch batch, ShapeRenderer mSRender, float delta) {
 		// TODO Auto-generated method stub
 		if(mPath!=null){			
 			Vector2 po = new Vector2();
@@ -47,7 +48,7 @@ public class LHBezierMoveObject extends LHPolygonObject{
 			}
 		}
 		
-		super.render(mSRender, delta);
+		super.render(batch, mSRender, delta);
 	}
 	
 	@Override

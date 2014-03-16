@@ -18,7 +18,7 @@ public class LHMapBlock implements Disposable{
 	}
 	
 	public void render(SpriteBatch batch,float delta){
-		batch.draw(mTexture, x, y);
+		batch.draw(mTexture, x, y,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 	}
 	
 	public void moveBy(float dx,float dy){
