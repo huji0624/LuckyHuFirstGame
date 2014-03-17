@@ -1,9 +1,10 @@
 package com.luckyhu.game.bal.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,6 +17,9 @@ public class LHRectObject extends LHBallGameObject {
 	private Rectangle mRect;
 	private float mAngle;
 	private float mAngularVelocity = 0.0f;
+	
+	private Sprite mSprite;
+	private Texture mTexture;
 
 	public LHRectObject(World world, Rectangle rect, float angle,
 			float angularVelocity) {
@@ -47,6 +51,10 @@ public class LHRectObject extends LHBallGameObject {
 				angle);
 		mBody.createFixture(shape, 0);
 		shape.dispose();
+		
+		mTexture = new Texture("data/rect.png");
+		mSprite = new Sprite(mTexture);
+		mSprite.setBounds(rect.x, rect.y, rect.width, rect.height);
 	}
 
 	public LHRectObject(World world, Rectangle rect, float angle) {
@@ -57,20 +65,16 @@ public class LHRectObject extends LHBallGameObject {
 	@Override
 	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		super.render(batch, render, delta);
-
-		render.begin(ShapeType.Filled);
-		render.setColor(mColor);
+		
 		mAngle += mAngularVelocity * delta;
-		render.rect(mRect.x, mRect.y, mRect.width, mRect.height,
-				mRect.width / 2, mRect.height / 2,
-				(float) Math.toDegrees(mAngle));
-		render.end();
+		mSprite.setRotation((float) Math.toDegrees(mAngle));
+		mSprite.draw(batch);
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		mTexture.dispose();
 	}
 
 	@Override
@@ -85,6 +89,7 @@ public class LHRectObject extends LHBallGameObject {
 		// TODO Auto-generated method stub
 		mRect.x += dx;
 		mRect.y += dy;
+		mSprite.translate(dx, dy);
 		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
 				+ dy, 0);
 	}

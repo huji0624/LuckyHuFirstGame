@@ -46,12 +46,12 @@ import com.luckyhu.game.framework.game.engine.LHMapEngine;
 import com.luckyhu.game.framework.game.util.LHActionQueue;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
-public class LHMainScreen extends InputAdapter implements Screen, ContactListener,
-		LHGameObjectEngineListener {
+public class LHMainScreen extends InputAdapter implements Screen,
+		ContactListener, LHGameObjectEngineListener {
 
 	private LHMapEngine mMapEngine;
 	private SpriteBatch mBatch;
-	
+
 	private LHGameObjectEngine mObjectEngine;
 	private ShapeRenderer mSRender;
 	private OrthographicCamera mCamera;
@@ -77,32 +77,31 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		mSRender.setProjectionMatrix(mCamera.combined);
+		mBatch.setProjectionMatrix(mCamera.combined);
+		GL10 gl = Gdx.app.getGraphics().getGL10();
+		mCamera.update();
+		mCamera.apply(gl);
+
 		if (!gameOver) {
-			mSRender.setProjectionMatrix(mCamera.combined);
-			mBatch.setProjectionMatrix(mCamera.combined);
-			GL10 gl = Gdx.app.getGraphics().getGL10();
-			mCamera.update();
-			mCamera.apply(gl);
-
 			mWorld.step(delta, 10, 10);
+		}
 
-			mQueue.runAll();
+		mQueue.runAll();
 
-			mBatch.begin();
-			mMapEngine.render(mBatch, delta,mOffset);
-			mObjectEngine.renderObject(mBatch,mSRender, delta);
-			mBatch.end();
-			
-			mMainBall.render(null, mSRender, delta);
+		mBatch.begin();
+		mMapEngine.render(mBatch, delta, mOffset);
+		mObjectEngine.renderObject(mBatch, mSRender, delta);
+		mMainBall.render(mBatch, mSRender, delta);
+		mBatch.end();
 
-			moveViewPort(delta);
+		moveViewPort(delta);
 
-//			debugRender.render(mWorld, mSRender.getProjectionMatrix());
-			
-			if(maxDis<mMainBall.getTop()){
-				maxDis =(int) mMainBall.getTop();
-				mLabel.setText(""+maxDis);
-			}
+//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+
+		if (maxDis < mMainBall.getTop()) {
+			maxDis = (int) mMainBall.getTop();
+			mLabel.setText("" + maxDis);
 		}
 		mStage.act(delta);
 		mStage.draw();
@@ -110,30 +109,28 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 
 	private void moveViewPort(float delta) {
 
-		float dis = 20 * delta;
+		float dis = 80 * delta;
 		mOffset += dis;
 		mCamera.position.y += dis;
 		mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth() / 2,
 				mEdgeBox.getBody().getPosition().y + dis, 0);
 
 		genBlock();
-
-		mMainBall.setOffset(mOffset);
 	}
 
 	private int blockNumber = 8;
-	
+
 	private void genBlock() {
 
 		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
 			try {
 				int MaxBlock = 8;
-//				blockNumber = MathUtils.random(1, MaxBlock);
-				
+				// blockNumber = MathUtils.random(1, MaxBlock);
+
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ 1);
+								+ blockNumber);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,
@@ -144,8 +141,9 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 				mObjectEngine.addObjects(array);
 
 				mBlockTop += gen.blockSize().y;
-				blockNumber --;
-				if(blockNumber<=0) blockNumber=MaxBlock;
+				blockNumber--;
+				if (blockNumber <= 0)
+					blockNumber = MaxBlock;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -166,7 +164,7 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		mObjectEngine = new LHGameObjectEngine(this);
 		mMapEngine = new LHMapEngine();
 		mBatch = new SpriteBatch();
-		
+
 		mSRender = new ShapeRenderer();
 		mCamera = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
@@ -191,27 +189,29 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 		genBlock();
 
 		Gdx.input.setInputProcessor(this);
-		
-		//DEBUG
-		
+
+		// DEBUG
+
 	}
-	
+
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
-		
+
+		mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
+
 		return super.touchDragged(screenX, screenY, pointer);
 	}
-	
+
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
 		Array<LHGameObject> objs = mObjectEngine.getObjects();
 		for (LHGameObject lhGameObject : objs) {
-			if(lhGameObject instanceof LHWormHoleObject){
-				LHWormHoleObject wo = (LHWormHoleObject)lhGameObject;
+			if (lhGameObject instanceof LHWormHoleObject) {
+				LHWormHoleObject wo = (LHWormHoleObject) lhGameObject;
 				final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
-				if(po!=null){
+				if (po != null) {
 					mQueue.enqueue(new Runnable() {
 						@Override
 						public void run() {
@@ -223,12 +223,12 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 				}
 			}
 		}
-		
+
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
 
 	private void gameOver() {
-		
+
 		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);
 
@@ -283,12 +283,12 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		MainBall.mainBall =null;
+		MainBall.mainBall = null;
 		mMainBall.dispose();
-		mMainBall=null;
+		mMainBall = null;
 		mWorld.destroyBody(mEdgeBox.getBody());
 		mWorld.dispose();
-		mWorld=null;
+		mWorld = null;
 		mSRender.dispose();
 		mBatch.dispose();
 	}
@@ -297,12 +297,13 @@ public class LHMainScreen extends InputAdapter implements Screen, ContactListene
 	public void beginContact(Contact contact) {
 		// TODO Auto-generated method stub
 		LHLogger.logD("beginContact happen");
-
+		if (gameOver)
+			return;
 		checkBody(contact.getFixtureA().getBody().getUserData(), contact);
 		checkBody(contact.getFixtureB().getBody().getUserData(), contact);
 	}
-	
-	private void checkBody(Object ud,Contact contact){
+
+	private void checkBody(Object ud, Contact contact) {
 		if (ud != null) {
 			if (ud instanceof LHBallGameObject) {
 				LHBallGameObject go = (LHBallGameObject) ud;

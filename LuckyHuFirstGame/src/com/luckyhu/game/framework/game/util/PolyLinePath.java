@@ -34,6 +34,16 @@ public class PolyLinePath implements Path<Vector2> {
 	@Override
 	public Vector2 valueAt(Vector2 out, float t) {
 		// TODO Auto-generated method stub
+		if(t>getLength()){
+			out.x = points[points.length-1].x;
+			out.y = points[points.length-1].y;
+			return out;
+		}else if(t<0){
+			out.x = points[0].x;
+			out.y = points[0].y;
+			return out;
+		}
+		
 		int index = 0;
 		
 		float segLen = 0;

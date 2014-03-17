@@ -19,10 +19,10 @@ public class LHMapEngine {
 	public LHMapEngine(){
 		mMapBlock = new Array<LHMapBlock>();
 		mBlockCache = new Array<LHMapBlock>();
-//		Texture.setEnforcePotImages(false);
+		Texture.setEnforcePotImages(false);
 		
 		for (int i = 0; i < 6; i++) {			
-			mBlockCache.add(new LHMapBlock("data/rect.png",  14, 14, 14, 14));
+			mBlockCache.add(new LHMapBlock("data/background.png",  14, 14, 14, 14));
 		}
 	}
 	

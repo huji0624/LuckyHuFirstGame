@@ -1,9 +1,10 @@
 package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,7 +18,9 @@ public class MainBall extends LHBallGameObject{
 	
 	public Circle circle;
 	private Body mBody;
-	private float mOffset;
+	
+	private Sprite mSprite;
+	private Texture mTexture;
 	
 	public static MainBall mainBall = null;
 	
@@ -25,7 +28,11 @@ public class MainBall extends LHBallGameObject{
 		super(world);
 		this.tag = 624;
 		
-		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/25 );
+		circle = new Circle(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/15 );
+		mTexture = new Texture("data/main.png");
+		mSprite = new Sprite(mTexture);
+		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
+		mSprite.setSize(circle.radius*2, circle.radius*2);
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -50,48 +57,12 @@ public class MainBall extends LHBallGameObject{
 		return mBody;
 	}
 	
-	public void setOffset(float offset){
-		mOffset = offset;
-	}
-	
-	private float getTouchY() {
-		return Gdx.graphics.getHeight() - Gdx.input.getY() + mOffset;
-	}
-	
 	@Override
 	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
 		super.render(batch, render, delta);
 		
-		handleTouch(delta);
-		
-		circle.setPosition(mBody.getPosition());
-		
-		render.begin(ShapeType.Filled);
-		render.setColor(mColor);
-		render.circle(circle.x, circle.y, circle.radius);
-		render.end();
-		
-	}
-	
-	private float lastX = 0;
-	private float lastY = 0;
-	
-	private void handleTouch(float delta){
-		if (Gdx.input.justTouched()) {
-			lastX = Gdx.input.getX();
-			lastY = getTouchY();
-		}else if(Gdx.input.isTouched()){
-			float x = Gdx.input.getX();
-			float y = getTouchY();
-			float dx = x - lastX;
-			float dy = y - lastY;
-			
-			mBody.setTransform(mBody.getPosition().x+dx, mBody.getPosition().y + dy, 0);
-			
-			lastX = x;
-			lastY = y;
-		}
+		mSprite.draw(batch);
 		
 	}
 
@@ -100,7 +71,7 @@ public class MainBall extends LHBallGameObject{
 		// TODO Auto-generated method stub
 		circle.x += dx;
 		circle.y += dy;
-		
+		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
 				+ dy, 0);
 	}
@@ -110,12 +81,14 @@ public class MainBall extends LHBallGameObject{
 		// TODO Auto-generated method stub
 		circle.x = x;
 		circle.y = y;
+		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		mBody.setTransform(x,y, 0);
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		mTexture.dispose();
 		mWorld.destroyBody(mBody);
 	}
 

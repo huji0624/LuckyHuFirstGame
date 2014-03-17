@@ -2,23 +2,24 @@ package com.luckyhu.game.framework.game.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
 public class LHMapBlock implements Disposable{
 	
+	private Sprite mSprite;
 	private Texture mTexture;
-	
-	private float x;
-	private float y;
 	
 	public LHMapBlock(String path,int left,int right,int top,int bottom){
 		mTexture = new Texture(path);
+		mSprite = new Sprite(mTexture);
 	}
 	
 	public void render(SpriteBatch batch,float delta){
-		batch.draw(mTexture, x, y,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+//		batch.draw(mTexture, x, y,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		mSprite.draw(batch);
 	}
 	
 	public void moveBy(float dx,float dy){
@@ -26,12 +27,11 @@ public class LHMapBlock implements Disposable{
 	}
 	
 	public void moveTo(float x,float y){
-		this.x = x;
-		this.y = y;
+		mSprite.setPosition(x, y);
 	}
 	
 	public float getTop(){
-		return this.y+Gdx.graphics.getHeight();
+		return this.mSprite.getY()+mSprite.getHeight();
 	}
 	
 	public Vector2 blockSize(){
