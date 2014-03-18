@@ -29,6 +29,7 @@ public class LHCircleMoveObject extends LHCircleObject{
 		mSprite = new Sprite(mTexture);
 		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		mSprite.setSize(circle.radius*2, circle.radius*2);
+		mSprite.setOrigin(circle.radius, circle.radius);
 		
 		mPath = new PolyLinePath(path);
 		mReverse = reverse;
@@ -41,6 +42,10 @@ public class LHCircleMoveObject extends LHCircleObject{
 		if(mPath!=null){			
 			Vector2 po = new Vector2();
 			mPath.valueAt(po, mLoc);
+			
+			Vector2 dire = new Vector2(po.x-circle.x, po.y-circle.y);
+			mSprite.setRotation(dire.angle()-90);
+			
 			moveTo(po.x, po.y);
 			mLoc += mSpeed * delta;
 			

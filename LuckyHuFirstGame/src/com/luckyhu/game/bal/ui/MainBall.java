@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class MainBall extends LHBallGameObject{
 	
@@ -33,6 +35,7 @@ public class MainBall extends LHBallGameObject{
 		mSprite = new Sprite(mTexture);
 		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		mSprite.setSize(circle.radius*2, circle.radius*2);
+		mSprite.setOrigin(circle.radius, circle.radius);
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -72,6 +75,13 @@ public class MainBall extends LHBallGameObject{
 		circle.x += dx;
 		circle.y += dy;
 		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
+		
+//		Vector2 dire = new Vector2(dx, dy);
+//		if (dire.len()>5) {
+////			LHLogger.logD("de:"+dire.x+" "+dire.y);
+//			mSprite.setRotation(dire.angle()-90);	
+//		}
+		
 		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
 				+ dy, 0);
 	}

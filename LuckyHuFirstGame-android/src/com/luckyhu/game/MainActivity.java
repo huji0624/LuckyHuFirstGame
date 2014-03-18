@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.luckyhu.game.bal.LHBallGame;
 
 public class MainActivity extends AndroidApplication {
     @Override
@@ -13,6 +14,6 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
         
-        initialize(new LuckyHuGame(), cfg);
+        initialize(new LHBallGame(), cfg);
     }
 }
