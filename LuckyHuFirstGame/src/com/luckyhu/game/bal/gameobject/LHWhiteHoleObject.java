@@ -14,7 +14,7 @@ public class LHWhiteHoleObject extends LHCircleObject{
 	private float mess;
 
 	public LHWhiteHoleObject(World world, Circle circle) {
-		super(world, circle);
+		super(world, circle,"data/wh.png");
 		// TODO Auto-generated constructor stub
 		mColor = Color.ORANGE;
 	}

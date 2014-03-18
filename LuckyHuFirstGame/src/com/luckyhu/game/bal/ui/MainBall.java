@@ -54,6 +54,7 @@ public class MainBall extends LHBallGameObject{
 		shape.dispose();
 		
 		mainBall = this;
+		
 	}
 	
 	public Body getBody(){
@@ -76,11 +77,7 @@ public class MainBall extends LHBallGameObject{
 		circle.y += dy;
 		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		
-//		Vector2 dire = new Vector2(dx, dy);
-//		if (dire.len()>5) {
-////			LHLogger.logD("de:"+dire.x+" "+dire.y);
-//			mSprite.setRotation(dire.angle()-90);	
-//		}
+//		mSprite.setRotation(mDirection.angle()-90);	
 		
 		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
 				+ dy, 0);

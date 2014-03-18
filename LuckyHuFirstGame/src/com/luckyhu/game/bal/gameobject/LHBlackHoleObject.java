@@ -1,6 +1,5 @@
 package com.luckyhu.game.bal.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,7 +14,7 @@ public class LHBlackHoleObject extends LHCircleObject{
 	private float mess;
 	
 	public LHBlackHoleObject(World world, Circle circle) {
-		super(world, circle);
+		super(world, circle,"data/bh.png");
 		// TODO Auto-generated constructor stub
 		mColor = Color.BLUE;
 	}

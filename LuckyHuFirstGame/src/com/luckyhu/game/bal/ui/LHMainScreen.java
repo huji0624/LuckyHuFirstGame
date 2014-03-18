@@ -109,7 +109,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 	private void moveViewPort(float delta) {
 
-		float dis = 80 * delta;
+		float dis = 30 * delta;
 		mOffset += dis;
 		mCamera.position.y += dis;
 		mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth() / 2,
@@ -130,7 +130,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ blockNumber);
+								+ 3);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,

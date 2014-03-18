@@ -4,16 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.GeometryUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHPolygonObject extends LHBallGameObject {
 
@@ -85,7 +82,6 @@ public class LHPolygonObject extends LHBallGameObject {
 		// TODO Auto-generated method stub
 		super.didRemove();
 		mWorld.destroyBody(mBody);
-		LHLogger.logD("Body destroy");
 	}
 
 	@Override

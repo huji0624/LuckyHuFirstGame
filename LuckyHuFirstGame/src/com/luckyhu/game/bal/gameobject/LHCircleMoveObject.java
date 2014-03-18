@@ -1,7 +1,5 @@
 package com.luckyhu.game.bal.gameobject;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -10,9 +8,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.framework.game.util.PolyLinePath;
 
 public class LHCircleMoveObject extends LHCircleObject{
-
-	private Sprite mSprite;
-	private Texture mTexture;
 	
 	private PolyLinePath mPath;
 	private float mSpeed;
@@ -21,15 +16,9 @@ public class LHCircleMoveObject extends LHCircleObject{
 	private float mLoc = 0;
 	
 	public LHCircleMoveObject(World world, Circle circle,float speed,Vector2[] path,boolean reverse) {
-		super(world, circle);
+		super(world, circle,"data/badguy.png");
 		// TODO Auto-generated constructor stub
 		this.tag = -1;
-		
-		mTexture = new Texture("data/badguy.png");
-		mSprite = new Sprite(mTexture);
-		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
-		mSprite.setSize(circle.radius*2, circle.radius*2);
-		mSprite.setOrigin(circle.radius, circle.radius);
 		
 		mPath = new PolyLinePath(path);
 		mReverse = reverse;
@@ -65,25 +54,16 @@ public class LHCircleMoveObject extends LHCircleObject{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		super.dispose();
-		mTexture.dispose();
 	}
 	
 	@Override
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
 		super.moveBy(dx, dy);
-		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 		for (int i = 0; i < mPath.points.length; i++) {
 			Vector2 ve = mPath.points[i];
 			ve.add(dx, dy);
 		}
-	}
-	
-	@Override
-	public void moveTo(float x, float y) {
-		// TODO Auto-generated method stub
-		super.moveTo(x, y);
-		mSprite.setPosition(circle.x-circle.radius, circle.y-circle.radius);
 	}
 
 }
