@@ -23,13 +23,13 @@ public class LHCircleObject extends LHBallGameObject {
 		super(world);
 		// TODO Auto-generated constructor stub
 	}
-
-	public LHCircleObject(World world, Circle circle, String path) {
+	
+	public LHCircleObject(World world, Circle circle, String path,BodyType type){
 		this(world);
 		this.circle = new Circle(circle);
 
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.StaticBody;
+		bodyDef.type = type;
 		bodyDef.position.set(circle.x, circle.y);
 		mBody = world.createBody(bodyDef);
 		mBody.setUserData(this);
@@ -49,6 +49,10 @@ public class LHCircleObject extends LHBallGameObject {
 		mSprite.setPosition(circle.x - circle.radius, circle.y - circle.radius);
 		mSprite.setSize(circle.radius * 2, circle.radius * 2);
 		mSprite.setOrigin(circle.radius, circle.radius);
+	}
+
+	public LHCircleObject(World world, Circle circle, String path) {
+		this(world, circle, path, BodyType.StaticBody);
 	}
 
 	@Override

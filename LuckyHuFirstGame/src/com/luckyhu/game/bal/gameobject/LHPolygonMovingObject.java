@@ -68,8 +68,8 @@ public class LHPolygonMovingObject extends LHPolygonObject{
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
 		super.moveBy(dx, dy);
-		for (int i = 0; i < mPath.points.length; i++) {
-			Vector2 ve = mPath.points[i];
+		for (int i = 0; i < mPath.points.size; i++) {
+			Vector2 ve = mPath.points.get(i);
 			ve.add(dx, dy);
 		}
 	}

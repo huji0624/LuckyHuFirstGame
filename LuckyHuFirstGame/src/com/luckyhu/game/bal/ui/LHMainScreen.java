@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Bezier;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -31,11 +28,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
-import com.luckyhu.game.bal.gameobject.LHBlackHoleObject;
-import com.luckyhu.game.bal.gameobject.LHDragObject;
-import com.luckyhu.game.bal.gameobject.LHBezierMoveObject;
-import com.luckyhu.game.bal.gameobject.LHPolygonMovingObject;
-import com.luckyhu.game.bal.gameobject.LHWhiteHoleObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
@@ -47,7 +39,7 @@ import com.luckyhu.game.framework.game.util.LHActionQueue;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHMainScreen extends InputAdapter implements Screen,
-		ContactListener, LHGameObjectEngineListener {
+		ContactListener, LHGameObjectEngineListener,MainBallDelegate {
 
 	private LHMapEngine mMapEngine;
 	private SpriteBatch mBatch;
@@ -92,8 +84,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mBatch.begin();
 		mMapEngine.render(mBatch, delta, mOffset);
 		mObjectEngine.renderObject(mBatch, mSRender, delta);
-		mMainBall.render(mBatch, mSRender, delta);
 		mBatch.end();
+		mMainBall.render(mBatch, mSRender, delta);
+		
 
 		moveViewPort(delta);
 
@@ -130,7 +123,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 				@SuppressWarnings("unchecked")
 				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
 						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ 3);
+								+ blockNumber);
 				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
 						.newInstance();
 				Array<LHBallGameObject> array = gen.generate(mWorld,
@@ -176,6 +169,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		debugRender = new Box2DDebugRenderer();
 
 		mMainBall = new MainBall(mWorld);
+		mMainBall.setMainBallDelegate(this);
 
 		mEdgeBox = new LHEdgeBox(mWorld);
 
@@ -197,14 +191,20 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
-
-		mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
-
+//		mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
+		mMainBall.addPathPoint(new Vector2(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY()));
 		return super.touchDragged(screenX, screenY, pointer);
 	}
-
+	
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		mMainBall.initPath();
+		return super.touchDown(screenX, screenY, pointer, button);
+	}
+	
+	@Override
+	public void mainBallStopMoving() {
 		// TODO Auto-generated method stub
 		Array<LHGameObject> objs = mObjectEngine.getObjects();
 		for (LHGameObject lhGameObject : objs) {
@@ -219,13 +219,34 @@ public class LHMainScreen extends InputAdapter implements Screen,
 							mMainBall.moveTo(po.x, po.y);
 						}
 					});
-					return true;
 				}
 			}
 		}
-
-		return super.touchUp(screenX, screenY, pointer, button);
 	}
+
+//	@Override
+//	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+//		// TODO Auto-generated method stub
+//		Array<LHGameObject> objs = mObjectEngine.getObjects();
+//		for (LHGameObject lhGameObject : objs) {
+//			if (lhGameObject instanceof LHWormHoleObject) {
+//				LHWormHoleObject wo = (LHWormHoleObject) lhGameObject;
+//				final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
+//				if (po != null) {
+//					mQueue.enqueue(new Runnable() {
+//						@Override
+//						public void run() {
+//							// TODO Auto-generated method stub
+//							mMainBall.moveTo(po.x, po.y);
+//						}
+//					});
+//					return true;
+//				}
+//			}
+//		}
+//
+//		return super.touchUp(screenX, screenY, pointer, button);
+//	}
 
 	private void gameOver() {
 
