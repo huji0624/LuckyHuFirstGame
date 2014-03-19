@@ -1,5 +1,7 @@
 package com.luckyhu.game.bal.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
@@ -36,10 +38,12 @@ import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
 import com.luckyhu.game.framework.game.engine.LHMapEngine;
 import com.luckyhu.game.framework.game.util.LHActionQueue;
+import com.luckyhu.game.framework.game.util.LHLevel;
+import com.luckyhu.game.framework.game.util.LHLevelLoader;
 import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHMainScreen extends InputAdapter implements Screen,
-		ContactListener, LHGameObjectEngineListener,MainBallDelegate {
+		ContactListener, LHGameObjectEngineListener, MainBallDelegate {
 
 	private LHMapEngine mMapEngine;
 	private SpriteBatch mBatch;
@@ -86,11 +90,10 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mObjectEngine.renderObject(mBatch, mSRender, delta);
 		mBatch.end();
 		mMainBall.render(mBatch, mSRender, delta);
-		
 
 		moveViewPort(delta);
 
-//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		// debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -116,31 +119,45 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	private void genBlock() {
 
 		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
-			try {
-				int MaxBlock = 8;
-				// blockNumber = MathUtils.random(1, MaxBlock);
+			int MaxBlock = 8;
 
-				@SuppressWarnings("unchecked")
-				Class<LHObjectBlockGenerator> onwClass = (Class<LHObjectBlockGenerator>) Class
-						.forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-								+ blockNumber);
-				LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
-						.newInstance();
-				Array<LHBallGameObject> array = gen.generate(mWorld,
-						mStage.getWidth(), mStage.getHeight());
-				for (LHBallGameObject lhGameObject : array) {
-					lhGameObject.moveBy(0, mBlockTop);
-				}
-				mObjectEngine.addObjects(array);
+			// old level
+			// try {
+			// // blockNumber = MathUtils.random(1, MaxBlock);
+			// @SuppressWarnings("unchecked")
+			// Class<LHObjectBlockGenerator> onwClass =
+			// (Class<LHObjectBlockGenerator>) Class
+			// .forName("com.luckyhu.game.bal.objectblocks.LHOBG"
+			// + blockNumber);
+			// LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
+			// .newInstance();
+			// Array<LHBallGameObject> array = gen.generate(mWorld,
+			// mStage.getWidth(), mStage.getHeight());
+			// for (LHBallGameObject lhGameObject : array) {
+			// lhGameObject.moveBy(0, mBlockTop);
+			// }
+			// mObjectEngine.addObjects(array);
+			//
+			// mBlockTop += gen.blockSize().y;
+			// blockNumber--;
+			// if (blockNumber <= 0)
+			// blockNumber = MaxBlock;
+			// } catch (Exception e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 
-				mBlockTop += gen.blockSize().y;
-				blockNumber--;
-				if (blockNumber <= 0)
-					blockNumber = MaxBlock;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			// new level
+			LHLevel level = LHLevelLoader.instance().loadLevel("level/level"+1+".svg");
+			ArrayList<LHGameObject> array = level.objects;
+			for (LHGameObject lhGameObject : array) {
+				lhGameObject.moveBy(0, mBlockTop);
 			}
+			mObjectEngine.addObjects(array);
+			mBlockTop += level.size.y;
+			blockNumber--;
+			if (blockNumber <= 0)
+				blockNumber = MaxBlock;
 		}
 
 	}
@@ -179,11 +196,13 @@ public class LHMainScreen extends InputAdapter implements Screen,
 				mStage.getHeight() - mLabel.getHeight() - 10);
 		mStage.addActor(mLabel);
 
-		mBlockTop = Gdx.graphics.getHeight();
-		genBlock();
-
 		Gdx.input.setInputProcessor(this);
 
+		LHLevelLoader.world = mWorld;
+		LHLevelLoader.instance().initLevel("level/level1.svg");
+		
+		mBlockTop = Gdx.graphics.getHeight();
+		genBlock();
 		// DEBUG
 
 	}
@@ -191,18 +210,19 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
-//		mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
-		mMainBall.addPathPoint(new Vector2(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY()));
+		// mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
+		mMainBall.addPathPoint(new Vector2(Gdx.input.getDeltaX(), -Gdx.input
+				.getDeltaY()));
 		return super.touchDragged(screenX, screenY, pointer);
 	}
-	
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
 		mMainBall.initPath();
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
-	
+
 	@Override
 	public void mainBallStopMoving() {
 		// TODO Auto-generated method stub
@@ -224,29 +244,30 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		}
 	}
 
-//	@Override
-//	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-//		// TODO Auto-generated method stub
-//		Array<LHGameObject> objs = mObjectEngine.getObjects();
-//		for (LHGameObject lhGameObject : objs) {
-//			if (lhGameObject instanceof LHWormHoleObject) {
-//				LHWormHoleObject wo = (LHWormHoleObject) lhGameObject;
-//				final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
-//				if (po != null) {
-//					mQueue.enqueue(new Runnable() {
-//						@Override
-//						public void run() {
-//							// TODO Auto-generated method stub
-//							mMainBall.moveTo(po.x, po.y);
-//						}
-//					});
-//					return true;
-//				}
-//			}
-//		}
-//
-//		return super.touchUp(screenX, screenY, pointer, button);
-//	}
+	// @Override
+	// public boolean touchUp(int screenX, int screenY, int pointer, int button)
+	// {
+	// // TODO Auto-generated method stub
+	// Array<LHGameObject> objs = mObjectEngine.getObjects();
+	// for (LHGameObject lhGameObject : objs) {
+	// if (lhGameObject instanceof LHWormHoleObject) {
+	// LHWormHoleObject wo = (LHWormHoleObject) lhGameObject;
+	// final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
+	// if (po != null) {
+	// mQueue.enqueue(new Runnable() {
+	// @Override
+	// public void run() {
+	// // TODO Auto-generated method stub
+	// mMainBall.moveTo(po.x, po.y);
+	// }
+	// });
+	// return true;
+	// }
+	// }
+	// }
+	//
+	// return super.touchUp(screenX, screenY, pointer, button);
+	// }
 
 	private void gameOver() {
 

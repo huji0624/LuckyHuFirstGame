@@ -1,5 +1,7 @@
 package com.luckyhu.game.framework.game.engine;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -20,8 +22,14 @@ public class LHGameObjectEngine {
 		mObjects.add(object);
 	}
 	
-	public void addObjects(Array<LHBallGameObject> objects){
+	public void addObjects(Array<LHGameObject> objects){
 		mObjects.addAll(objects);
+	}
+	
+	public void addObjects(ArrayList<LHGameObject> objects){
+		for (LHGameObject lhGameObject : objects) {
+			mObjects.add(lhGameObject);	
+		}
 	}
 	
 	public Array<LHGameObject> getObjects(){

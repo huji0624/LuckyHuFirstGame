@@ -18,22 +18,25 @@ import com.svg.level.reader.entity.SvgRect;
 public class SvgLevelReader<T> {
 	
 	private SvgLevelReaderHandler<T> mHandler;
+	private HashMap<String, SvgLevel<SvgEntity>> cache = new HashMap<String, SvgLevel<SvgEntity>>();
 	
 	public SvgLevelReader(SvgLevelReaderHandler<T> handler){
 		mHandler = handler;
 	}
-
-	public SvgLevel<T> loadLevel(String path){
+	
+	public void initLevel(String path){
+		SvgLevel<SvgEntity> level = new SvgLevel<SvgEntity>();
 		
-		SvgLevel<T> level = new SvgLevel<T>();
-		
-		ArrayList<T> objects = new ArrayList<T>();
-		
+		ArrayList<SvgEntity> objects = new ArrayList<SvgEntity>();
 		try {
 			DocumentBuilderFactory fa = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = fa.newDocumentBuilder();
 			Document doc = builder.parse(path);
 			Element root = doc.getDocumentElement();
+			
+			//parse block width and height
+			parseRoot(root, level);
+			
 			NodeList list = root.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
 				Node node = list.item(i);
@@ -48,8 +51,7 @@ public class SvgLevelReader<T> {
 							//desc
 							parseDesc(rect, gnode);
 							
-							T o = this.mHandler.handleRect(rect);
-							objects.add(o);
+							objects.add(rect);
 						}
 					}
 				}
@@ -57,6 +59,50 @@ public class SvgLevelReader<T> {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		level.objects = objects;
+		
+		cache.put(path, level);
+	}
+	
+	private void parseRoot(Element root,SvgLevel<SvgEntity> level){
+		NamedNodeMap map = root.getAttributes();
+		for (int i = 0; i < map.getLength(); i++) {
+			Node node = map.item(i);
+			if(node.getNodeName().equals("height")){
+				String value = node.getNodeValue();
+				level.height = Float.valueOf(value);
+			}else if(node.getNodeName().equals("width")){
+				String value = node.getNodeValue();
+				level.width = Float.valueOf(value);
+			}
+		}
+	}
+
+	public SvgLevel<T> loadLevel(String path){
+		
+		if(!cache.containsKey(path)){
+			initLevel(path);
+		}
+		
+		SvgLevel<SvgEntity> oneCache = cache.get(path);
+		
+		SvgLevel<T> level = new SvgLevel<T>();
+		level.width = oneCache.width;
+		level.height = oneCache.height;
+		
+		ArrayList<T> objects = new ArrayList<T>();
+		for (int i = 0; i < oneCache.objects.size(); i++) {
+			T o = null;
+			
+			SvgEntity entity = oneCache.objects.get(i);
+			if(entity instanceof SvgRect){
+				o = mHandler.handleRect(level,(SvgRect)entity);
+			}
+			
+			if(o!=null)
+				objects.add(o);
 		}
 		
 		level.objects = objects;
@@ -84,9 +130,14 @@ public class SvgLevelReader<T> {
 					String nbs[] = numberstr.split(",");
 					float fls[] = new float[nbs.length];
 					for (int j = 0; j < fls.length; j++) {
-						fls[j] = Float.valueOf(nbs[i]);
+						fls[j] = Float.valueOf(nbs[j]);
 					}
 					rect.matrix = fls;
+				}else if(value.startsWith("translate")){
+					String numberstr = value.substring("translate(".length(), value.length()-1);
+					String nbs[] = numberstr.split(",");
+					rect.translateX = Float.valueOf(nbs[0]);
+					rect.translateY = Float.valueOf(nbs[1]);
 				}
 			}
 		}

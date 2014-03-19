@@ -19,6 +19,7 @@ public abstract class LHOBGBase implements LHObjectBlockGenerator{
 		mArray = new Array<LHBallGameObject>();
 		this.width = width;
 		this.height = height;
+		
 		gen(world);
 		return mArray;
 	}
