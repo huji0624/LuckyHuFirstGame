@@ -1,0 +1,8 @@
+LuckyHuFirstGame/bin
+LuckyHuFirstGame-robovm/bin
+LuckyHuFirstGame-android/bin
+LuckyHuFirstGame-desktop/bin
+LuckyHuFirstGame-android/.settings/org.eclipse.jdt.core.prefs
+LuckyHuFirstGame-desktop/.settings/org.eclipse.jdt.core.prefs
+LuckyHuFirstGame/.settings/org.eclipse.jdt.core.prefs
+*.swp
