@@ -43,23 +43,25 @@ public class MainBall extends LHCircleObject {
 		// TODO Auto-generated method stub
 		
 		if (mPath != null) {
-			render.begin(ShapeType.Line);
-			render.setColor(Color.BLACK);
-			for (int i = 0; i < mPath.points.size - 1; i++) {
-				render.line(mPath.points.get(i), mPath.points.get(i + 1));
-			}
-			render.end();
 
-			if (mPath.points.size > 1 ) {
+			if (mPath.size() > 1 ) {
 				Vector2 to = new Vector2();
 				mPath.valueAt(to, mLoc);
 				mDire = new Vector2(to.x-circle.x, to.y-circle.y);
 				moveTo(to.x, to.y);
 				mLoc += delta*70;
+				
 				if(mLoc>=mPath.getLength()){
 					mPath.clear();
 					mDelegate.mainBallStopMoving();
 				}
+				
+				render.begin(ShapeType.Line);
+				render.setColor(Color.BLACK);
+				for (int i = mPath.index(); i < mPath.size() - 1; i++) {
+					render.line(mPath.get(i), mPath.get(i + 1));
+				}
+				render.end();
 			}
 		}
 		
@@ -83,8 +85,8 @@ public class MainBall extends LHCircleObject {
 	public void moveBy(float dx, float dy) {
 		// TODO Auto-generated method stub
 		super.moveBy(dx, dy);
-		for (int i = 0; i < mPath.points.size; i++) {
-			Vector2 ve = mPath.points.get(i);
+		for (int i = 0; i < mPath.size(); i++) {
+			Vector2 ve = mPath.get(i);
 			ve.add(dx, dy);
 		}
 	}
@@ -94,8 +96,8 @@ public class MainBall extends LHCircleObject {
 			return;
 		}
 		
-		if(mPath.points.size!=0){
-			Vector2 last = mPath.points.peek().cpy();
+		if(mPath.size()!=0){
+			Vector2 last = mPath.peek().cpy();
 			mPath.add(last.add(p));
 		}else{
 			mPath.add(new Vector2(circle.x, circle.y));

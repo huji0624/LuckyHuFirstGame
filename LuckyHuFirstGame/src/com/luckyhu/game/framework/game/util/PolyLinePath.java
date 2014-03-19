@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class PolyLinePath implements Path<Vector2> {
 
-	public Array<Vector2> points;
+	private Array<Vector2> points;
 	private Array<Float> mLenghes;
 
 	private float length;
@@ -23,6 +23,29 @@ public class PolyLinePath implements Path<Vector2> {
 	public PolyLinePath(){
 		Array<Vector2> pa = new Array<Vector2>();
 		init(pa);
+	}
+	
+	public int size(){
+		return points.size;
+	}
+	
+	public Vector2 get(int index){
+		return points.get(index);
+	}
+	
+	/**
+	 * 
+	 * @return the first point.
+	 */
+	public Vector2 dequeue(){
+		Vector2 first = this.points.removeIndex(0);
+		float len = this.mLenghes.removeIndex(0);
+		length -= len;
+		return first;
+	}
+	
+	public Vector2 peek(){
+		return this.points.peek();
 	}
 
 	private void init(Array<Vector2> points) {
@@ -62,6 +85,7 @@ public class PolyLinePath implements Path<Vector2> {
 		points.clear();
 		mLenghes.clear();
 		length=0;
+		mIndex=0;
 	}
 
 	@Override
@@ -93,6 +117,7 @@ public class PolyLinePath implements Path<Vector2> {
 			}
 		}
 
+		mIndex = index;
 		Vector2 s = points.get(index).cpy();
 		Vector2 e = points.get(index + 1).cpy();
 
@@ -104,6 +129,16 @@ public class PolyLinePath implements Path<Vector2> {
 		out.y = s.y;
 
 		return out;
+	}
+	
+	private int mIndex;
+	
+	/**
+	 * 
+	 * @return the index after call valueat.
+	 */
+	public int index(){
+		return mIndex;
 	}
 
 	@Override
