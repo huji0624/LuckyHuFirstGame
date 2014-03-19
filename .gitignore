@@ -6,3 +6,6 @@ LuckyHuFirstGame-android/.settings/org.eclipse.jdt.core.prefs
 LuckyHuFirstGame-desktop/.settings/org.eclipse.jdt.core.prefs
 LuckyHuFirstGame/.settings/org.eclipse.jdt.core.prefs
 *.swp
+
+svglevelreader/bin
+svglevelreader/.settings
