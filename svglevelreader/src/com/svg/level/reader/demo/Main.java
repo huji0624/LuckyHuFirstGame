@@ -19,7 +19,12 @@ public class Main implements SvgLevelReaderHandler<String>{
 	@Override
 	public String handleRect(SvgRect rect) {
 		// TODO Auto-generated method stub
+		
 		return "aa";
+	}
+	
+	public static <T> void printf(T t){
+		System.out.print(t+"\n");
 	}
 
 }
