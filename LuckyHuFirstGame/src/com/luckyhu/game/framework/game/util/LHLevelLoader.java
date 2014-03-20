@@ -32,7 +32,7 @@ public class LHLevelLoader implements SvgLevelReaderHandler<LHGameObject>{
 	
 	public void initLevel(String path){
 		FileHandle fh = Gdx.files.internal(path);
-		svgLoader.initLevel(fh.path());
+		svgLoader.initLevel(fh.read(),path);
 	}
 	
 	public LHLevel loadLevel(String path){

@@ -1,5 +1,6 @@
 package com.svg.level.reader;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,14 +25,14 @@ public class SvgLevelReader<T> {
 		mHandler = handler;
 	}
 	
-	public void initLevel(String path){
+	public void initLevel(InputStream input,String path){
 		SvgLevel<SvgEntity> level = new SvgLevel<SvgEntity>();
 		
 		ArrayList<SvgEntity> objects = new ArrayList<SvgEntity>();
 		try {
 			DocumentBuilderFactory fa = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = fa.newDocumentBuilder();
-			Document doc = builder.parse(path);
+			Document doc = builder.parse(input);
 			Element root = doc.getDocumentElement();
 			
 			//parse block width and height
@@ -83,7 +84,7 @@ public class SvgLevelReader<T> {
 	public SvgLevel<T> loadLevel(String path){
 		
 		if(!cache.containsKey(path)){
-			initLevel(path);
+			return null;
 		}
 		
 		SvgLevel<SvgEntity> oneCache = cache.get(path);
