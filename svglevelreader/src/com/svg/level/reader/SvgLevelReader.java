@@ -13,20 +13,26 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.svg.level.reader.entity.Svg;
+import com.svg.level.reader.entity.SvgCircle;
 import com.svg.level.reader.entity.SvgEntity;
+import com.svg.level.reader.entity.SvgG;
 import com.svg.level.reader.entity.SvgRect;
+import com.svg.level.reader.entity.SvgSizeEntity;
 
-public class SvgLevelReader<T> {
+public class SvgLevelReader {
 	
-	private SvgLevelReaderHandler<T> mHandler;
-	private HashMap<String, SvgLevel<SvgEntity>> cache = new HashMap<String, SvgLevel<SvgEntity>>();
+	private HashMap<String, ArrayList<SvgEntity>> cache = new HashMap<String, ArrayList<SvgEntity>>();
 	
-	public SvgLevelReader(SvgLevelReaderHandler<T> handler){
-		mHandler = handler;
+	public SvgLevelReader(){
 	}
 	
+	/**
+	 * parse xml to svgentity.
+	 * @param input
+	 * @param path
+	 */
 	public void initLevel(InputStream input,String path){
-		SvgLevel<SvgEntity> level = new SvgLevel<SvgEntity>();
 		
 		ArrayList<SvgEntity> objects = new ArrayList<SvgEntity>();
 		try {
@@ -35,24 +41,25 @@ public class SvgLevelReader<T> {
 			Document doc = builder.parse(input);
 			Element root = doc.getDocumentElement();
 			
+			Svg svg = new Svg();
 			//parse block width and height
-			parseRoot(root, level);
+			parseRoot(root, svg);
+			objects.add(svg);
 			
 			NodeList list = root.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
 				Node node = list.item(i);
-				if(node.getNodeName().equals("g")){
+				if(node.getNodeName().equals(Const.TAG_G)){
+					
+					objects.add(parseG(node));
+					
 					NodeList glist = node.getChildNodes();
 					for (int j = 0; j < glist.getLength(); j++) {
 						Node gnode = glist.item(j);
-						if(gnode.getNodeName().equals("rect")){
-							SvgRect rect = new SvgRect();
-							parseRectAttri(rect,gnode);
-							
-							//desc
-							parseDesc(rect, gnode);
-							
-							objects.add(rect);
+						if(gnode.getNodeName().equals(Const.TAG_RECT)){
+							objects.add(parseRect(gnode));
+						}else if(gnode.getNodeName().equals(Const.TAG_CIRCLE)){
+							objects.add(parseCircle(gnode));
 						}
 					}
 				}
@@ -62,53 +69,72 @@ public class SvgLevelReader<T> {
 			e.printStackTrace();
 		}
 		
-		level.objects = objects;
-		
-		cache.put(path, level);
+		cache.put(path, objects);
 	}
 	
-	private void parseRoot(Element root,SvgLevel<SvgEntity> level){
+	/**
+	 * call level handler's hanle method to generate game objects.
+	 * @param path
+	 * @return
+	 */
+	public void loadLevel(SvgLevelReaderHandler handler,String path){
+		
+		if(!cache.containsKey(path)){
+			return;
+		}
+		
+		ArrayList<SvgEntity> cacehSvgObjs = cache.get(path);
+		for (int i = 0; i < cacehSvgObjs.size(); i++) {
+			SvgEntity entity = cacehSvgObjs.get(i);
+			if(entity instanceof SvgRect){
+				handler.handleRect((SvgRect)entity);
+			}else if(entity instanceof Svg){
+				handler.handleSvg((Svg)entity);
+			}else if(entity instanceof SvgCircle){
+				handler.handleCircle((SvgCircle)entity);
+			}
+		}
+		
+	}
+	
+	private SvgG parseG(Node node){
+		SvgG g = new SvgG();
+		
+		return g;
+	}
+	
+	private SvgRect parseRect(Node node){
+		SvgRect rect = new SvgRect();
+		parseRectAttri(rect,node);
+		//desc
+		parseDesc(rect, node);
+		return rect;
+	}
+	
+	private SvgCircle parseCircle(Node node){
+		SvgCircle circle = new SvgCircle();
+		NamedNodeMap attrs = node.getAttributes();
+		for (int i = 0; i < attrs.getLength(); i++) {
+			Node it = attrs.item(i);
+			if(it.getNodeName().equals(Const.ATTR_CX)){
+				circle.x = Float.valueOf(it.getNodeValue());
+			}else if(it.getNodeName().equals(Const.ATTR_CY)){
+				circle.y = Float.valueOf(it.getNodeValue());
+			}
+		}
+		return circle;
+	}
+	
+	private void parseRoot(Element root,Svg svg){
 		NamedNodeMap map = root.getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node node = map.item(i);
-			if(node.getNodeName().equals("height")){
-				String value = node.getNodeValue();
-				level.height = Float.valueOf(value);
-			}else if(node.getNodeName().equals("width")){
-				String value = node.getNodeValue();
-				level.width = Float.valueOf(value);
+			if(parseAttrHeight(svg, node)){
+				continue;
+			}else if(parseAttrWidth(svg, node)){
+				continue;
 			}
 		}
-	}
-
-	public SvgLevel<T> loadLevel(String path){
-		
-		if(!cache.containsKey(path)){
-			return null;
-		}
-		
-		SvgLevel<SvgEntity> oneCache = cache.get(path);
-		
-		SvgLevel<T> level = new SvgLevel<T>();
-		level.width = oneCache.width;
-		level.height = oneCache.height;
-		
-		ArrayList<T> objects = new ArrayList<T>();
-		for (int i = 0; i < oneCache.objects.size(); i++) {
-			T o = null;
-			
-			SvgEntity entity = oneCache.objects.get(i);
-			if(entity instanceof SvgRect){
-				o = mHandler.handleRect(level,(SvgRect)entity);
-			}
-			
-			if(o!=null)
-				objects.add(o);
-		}
-		
-		level.objects = objects;
-		
-		return level;
 	}
 	
 	private void parseRectAttri(SvgRect rect,Node node){
@@ -117,15 +143,15 @@ public class SvgLevelReader<T> {
 			Node it = map.item(i);
 			String name = it.getNodeName();
 			String value = it.getNodeValue();
-			if(name.equals("height")){
+			if(name.equals(Const.ATTR_HEIGHT)){
 				rect.height = Float.valueOf(value);
-			}else if(name.equals("width")){
+			}else if(name.equals(Const.ATTR_WIDTH)){
 				rect.width = Float.valueOf(value);
-			}else if(name.equals("x")){
+			}else if(name.equals(Const.ATTR_X)){
 				rect.x = Float.valueOf(value);
-			}else if(name.equals("y")){
+			}else if(name.equals(Const.ATTR_Y)){
 				rect.y = Float.valueOf(value);
-			}else if(name.equals("transform")){
+			}else if(name.equals(Const.ATTR_TRANSFORM)){
 				if(value.startsWith("matrix")){					
 					String numberstr = value.substring("matrix(".length(), value.length()-1);
 					String nbs[] = numberstr.split(",");
@@ -144,12 +170,30 @@ public class SvgLevelReader<T> {
 		}
 	}
 	
+	private boolean parseAttrWidth(SvgSizeEntity entity,Node node){
+		if(node.getNodeName().equals(Const.ATTR_WIDTH)){
+			String value = node.getNodeValue();
+			entity.width = Float.valueOf(value);
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean parseAttrHeight(SvgSizeEntity entity,Node node){
+		if(node.getNodeName().equals(Const.ATTR_HEIGHT)){
+			String value = node.getNodeValue();
+			entity.height = Float.valueOf(value);
+			return true;
+		}
+		return false;
+	}
+	
 	private void parseDesc(SvgEntity entity,Node node){
 		if(node.hasChildNodes()){
 			NodeList list = node.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
 				Node item = list.item(i);
-				if(item.getNodeName().equals("desc")){
+				if(item.getNodeName().equals(Const.TAG_DESC)){
 					HashMap<String, String> map = new HashMap<String, String>(); 
 					String desc = item.getTextContent();
 					String lines[] = desc.split("\n");
