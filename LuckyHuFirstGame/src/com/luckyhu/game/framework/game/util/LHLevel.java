@@ -7,12 +7,14 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.luckyhu.game.bal.gameobject.LHPolygonObject;
 import com.luckyhu.game.bal.gameobject.LHRectObject;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.svg.level.reader.SvgLevelReaderHandler;
 import com.svg.level.reader.entity.Svg;
 import com.svg.level.reader.entity.SvgCircle;
 import com.svg.level.reader.entity.SvgPath;
+import com.svg.level.reader.entity.SvgPolygon;
 import com.svg.level.reader.entity.SvgRect;
 
 public class LHLevel implements SvgLevelReaderHandler{
@@ -87,5 +89,13 @@ public class LHLevel implements SvgLevelReaderHandler{
 	public void handlePath(SvgPath path) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void handlePolygon(SvgPolygon polygon) {
+		// TODO Auto-generated method stub
+		LHPolygonObject po = new LHPolygonObject(mWorld, polygon.points);
+		
+		objects.add(po);
 	}
 }

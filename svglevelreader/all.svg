@@ -26,15 +26,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
      inkscape:cx="92.157287"
-     inkscape:cy="459.39085"
+     inkscape:cy="378.57865"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="773"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -71,9 +71,14 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        transform="translate(9.5964492,7.0710678)" />
+    <polygon
+       points="300,210 170,250 220,100"
+       style="fill:#cccccc;stroke:#000000;stroke-width:1"
+       id="polygon10"
+       transform="matrix(0.68086502,0,0,0.4708782,13.124882,-15.995084)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 131.42857,100.36218 162.85714,68.57143 142.85715,10 180,91.42857"
+       d="m 26.877782,135.71752 162.857138,68.57143 142.85715,10 180,91.42857"
        id="path2991"
        inkscape:connector-curvature="0" />
     <rect
@@ -84,5 +89,6 @@
        x="10"
        y="200"
        transform="matrix(0.8954062,-0.4452502,0.4452502,0.8954062,0,0)" />
+	<polygon points="220,100 300,210 170,250" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
   </g>
 </svg>

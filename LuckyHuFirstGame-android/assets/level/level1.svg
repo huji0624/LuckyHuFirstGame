@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="480"
+   height="960"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.2 r9819"
@@ -77,7 +77,16 @@
        y="370.90353"
        transform="translate(0,572.36218)">
       <desc
-         id="desc2993">speed=30</desc>
+         id="desc2993">speed=3</desc>
     </rect>
+	<polygon points="100,400 300,410 170,550 100,580"
+	style="fill:#cccccc;
+	stroke:#000000;stroke-width:1"
+    transform="translate(0,572.36218)"/>
+	<circle cx="50" cy="650" r="20" stroke="black" stroke-width="2" fill="white" transform="translate(0,572.36218)"></circle>
+	<circle cx="200" cy="650" r="20" stroke="black" stroke-width="2" fill="black" transform="translate(0,572.36218)"/>
+	<circle cx="50" cy="750" r="20" stroke="black" stroke-width="2" fill="orange" transform="translate(0,572.36218)"/>
+	<circle cx="50" cy="850" r="20" stroke="black" stroke-width="2" fill="red" transform="translate(0,572.36218)"/>
+	<circle cx="250" cy="850" r="20" stroke="black" stroke-width="2" fill="red" transform="translate(0,572.36218)"/>
   </g>
 </svg>

@@ -5,6 +5,7 @@ import com.svg.level.reader.SvgLevelReaderHandler;
 import com.svg.level.reader.entity.Svg;
 import com.svg.level.reader.entity.SvgCircle;
 import com.svg.level.reader.entity.SvgPath;
+import com.svg.level.reader.entity.SvgPolygon;
 import com.svg.level.reader.entity.SvgRect;
 
 public class SvgMain implements SvgLevelReaderHandler{
@@ -16,6 +17,7 @@ public class SvgMain implements SvgLevelReaderHandler{
 		// TODO Auto-generated method stub
 		SvgMain main = new SvgMain();
 		SvgLevelReader reader = new SvgLevelReader();
+		reader.initLevel("all.svg");
 		reader.loadLevel(main,"all.svg");
 	}
 	
@@ -43,7 +45,17 @@ public class SvgMain implements SvgLevelReaderHandler{
 	@Override
 	public void handlePath(SvgPath path) {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < path.d.length; i++) {
+			printf("Path:"+path.d[i]);
+		}
+	}
+
+	@Override
+	public void handlePolygon(SvgPolygon polygon) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < polygon.points.length; i++) {
+			printf("Polygon:"+polygon.points[i]);
+		}
 	}
 
 }
