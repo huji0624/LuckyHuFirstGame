@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -58,6 +59,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	private Box2DDebugRenderer debugRender;
 
 	private Stage mStage;
+	private GamePlayPanel mPanel;
 
 	private float mOffset;
 	private Label mLabel;
@@ -91,7 +93,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mBatch.end();
 		mMainBall.render(mBatch, mSRender, delta);
 
-		moveViewPort(delta);
+		if(!gameOver)
+			moveViewPort(delta);
 
 		// debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
@@ -274,40 +277,46 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);
 
-		Group uiGroup = new Group();
-		uiGroup.setColor(Color.RED);
-		uiGroup.setBounds(mStage.getWidth() * 2, 0, mStage.getWidth(),
-				mStage.getHeight());
+		Preferences pre = Gdx.app.getPreferences("record");
+		int best = pre.getInteger("best");
+		boolean shownew = mOffset>best?true:false;
+		if(shownew){
+			pre.putInteger("best", (int)mOffset);
+			pre.flush();
+		}
+		
+		mPanel = new GamePlayPanel(mStage.getWidth()/2,-mStage.getHeight()/2,shownew);
+		mStage.addActor(mPanel);
 
-		mStage.addActor(uiGroup);
+		mStage.addActor(mPanel);
 		MoveToAction action = new MoveToAction();
 		action.setDuration(1);
-		action.setPosition(0, 0);
-		uiGroup.addAction(action);
+		action.setPosition(mPanel.getX(), mStage.getHeight()/2-mPanel.getHeight()/2);
+		mPanel.addAction(action);
 
-		TextButtonStyle style = new TextButton.TextButtonStyle();
-		style.font = new BitmapFont();
-		style.fontColor = Color.GREEN;
-		TextButton playButton = new TextButton("Click To Play", style);
-		playButton.setTouchable(Touchable.enabled);
-		playButton.setPosition(uiGroup.getWidth() / 2 - playButton.getWidth()
-				/ 2, uiGroup.getHeight() / 2 - playButton.getHeight() / 2);
-		playButton.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				// TODO Auto-generated method stub
-				super.clicked(event, x, y);
-				LHGame.setCurrentSceen(new LHMainScreen());
-			}
-		});
-		uiGroup.addActor(playButton);
+//		TextButtonStyle style = new TextButton.TextButtonStyle();
+//		style.font = new BitmapFont();
+//		style.fontColor = Color.GREEN;
+//		TextButton playButton = new TextButton("Click To Play", style);
+//		playButton.setTouchable(Touchable.enabled);
+//		playButton.setPosition(uiGroup.getWidth() / 2 - playButton.getWidth()
+//				/ 2, uiGroup.getHeight() / 2 - playButton.getHeight() / 2);
+//		playButton.addListener(new ClickListener() {
+//
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				// TODO Auto-generated method stub
+//				super.clicked(event, x, y);
+//				LHGame.setCurrentSceen(new LHMainScreen());
+//			}
+//		});
+//		uiGroup.addActor(playButton);
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -333,6 +342,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mWorld = null;
 		mSRender.dispose();
 		mBatch.dispose();
+		mStage.dispose();
+		if(mPanel!=null)
+			mPanel.dispose();
 	}
 
 	@Override
