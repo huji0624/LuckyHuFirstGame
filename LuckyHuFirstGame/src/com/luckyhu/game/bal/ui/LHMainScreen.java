@@ -9,8 +9,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -19,11 +21,16 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.DelegateAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -77,9 +84,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		// TODO Auto-generated method stub
 		mSRender.setProjectionMatrix(mCamera.combined);
 		mBatch.setProjectionMatrix(mCamera.combined);
-		GL10 gl = Gdx.app.getGraphics().getGL10();
+		// GL10 gl = Gdx.app.getGraphics().getGL10();
 		mCamera.update();
-		mCamera.apply(gl);
+		// mCamera.apply(gl);
 
 		if (!gameOver) {
 			mWorld.step(delta, 10, 10);
@@ -93,7 +100,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mBatch.end();
 		mMainBall.render(mBatch, mSRender, delta);
 
-		if(!gameOver)
+		if (!gameOver)
 			moveViewPort(delta);
 
 		// debugRender.render(mWorld, mSRender.getProjectionMatrix());
@@ -151,7 +158,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 			// }
 
 			// new level
-			LHLevel level = LHLevelLoader.instance().loadLevel("level/level"+1+".svg");
+			LHLevel level = LHLevelLoader.instance().loadLevel(
+					"level/level" + 1 + ".svg");
 			ArrayList<LHGameObject> array = level.objects;
 			for (LHGameObject lhGameObject : array) {
 				lhGameObject.moveBy(0, mBlockTop);
@@ -203,7 +211,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 		LHLevelLoader.world = mWorld;
 		LHLevelLoader.instance().initLevel("level/level1.svg");
-		
+
 		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();
 		// DEBUG
@@ -277,46 +285,46 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);
 
+		Texture t = new Texture("data/libgdx.png");
+		TextureRegion tr = new TextureRegion(t, 10, 10, 5, 5);
+		final Image white = new Image(tr);
+		white.setBounds(0, 0, mStage.getWidth(), mStage.getHeight());
+		mStage.addActor(white);
+		white.getColor().a=0.0f;
+		float duration = 0.2f;
+		AlphaAction up = new AlphaAction();
+		up.setAlpha(1.0f);
+		up.setDuration(duration);
+		AlphaAction down = new AlphaAction();
+		down.setAlpha(0.0f);
+		down.setDuration(duration);
+		SequenceAction whiteaction = new SequenceAction(up,down);
+		white.addAction(whiteaction);
+
 		Preferences pre = Gdx.app.getPreferences("record");
 		int best = pre.getInteger("best");
-		boolean shownew = mOffset>best?true:false;
-		if(shownew){
-			pre.putInteger("best", (int)mOffset);
+		boolean shownew = mOffset > best ? true : false;
+		if (shownew) {
+			pre.putInteger("best", (int) mOffset);
 			pre.flush();
 		}
-		
-		mPanel = new GamePlayPanel(mStage.getWidth()/2,-mStage.getHeight()/2,shownew);
+
+		mPanel = new GamePlayPanel(mStage.getWidth() / 2,
+				-mStage.getHeight() / 2, shownew);
 		mStage.addActor(mPanel);
 
 		mStage.addActor(mPanel);
 		MoveToAction action = new MoveToAction();
 		action.setDuration(1);
-		action.setPosition(mPanel.getX(), mStage.getHeight()/2-mPanel.getHeight()/2);
+		action.setPosition(mPanel.getX(),
+				mStage.getHeight() / 2 - mPanel.getHeight() / 2);
 		mPanel.addAction(action);
-
-//		TextButtonStyle style = new TextButton.TextButtonStyle();
-//		style.font = new BitmapFont();
-//		style.fontColor = Color.GREEN;
-//		TextButton playButton = new TextButton("Click To Play", style);
-//		playButton.setTouchable(Touchable.enabled);
-//		playButton.setPosition(uiGroup.getWidth() / 2 - playButton.getWidth()
-//				/ 2, uiGroup.getHeight() / 2 - playButton.getHeight() / 2);
-//		playButton.addListener(new ClickListener() {
-//
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				// TODO Auto-generated method stub
-//				super.clicked(event, x, y);
-//				LHGame.setCurrentSceen(new LHMainScreen());
-//			}
-//		});
-//		uiGroup.addActor(playButton);
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -343,7 +351,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mSRender.dispose();
 		mBatch.dispose();
 		mStage.dispose();
-		if(mPanel!=null)
+		if (mPanel != null)
 			mPanel.dispose();
 	}
 

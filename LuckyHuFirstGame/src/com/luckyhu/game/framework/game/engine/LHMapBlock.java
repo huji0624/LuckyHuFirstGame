@@ -15,6 +15,7 @@ public class LHMapBlock implements Disposable{
 	public LHMapBlock(String path,int left,int right,int top,int bottom){
 		mTexture = new Texture(path);
 		mSprite = new Sprite(mTexture);
+		mSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	public void render(SpriteBatch batch,float delta){
