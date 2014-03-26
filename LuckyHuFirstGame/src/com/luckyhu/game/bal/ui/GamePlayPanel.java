@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,12 +32,15 @@ public class GamePlayPanel extends Group implements Disposable {
 	 */
 	public GamePlayPanel(float x,float y,boolean shownew) {
 		super();
-		mPanel = new Texture("data/panel.png");
+		float width = Gdx.graphics.getWidth()-40;
+		float height = Gdx.graphics.getHeight()/3;
+		mPanel = new Texture("data/ori_back.png");
+		NinePatch nine = new NinePatch(mPanel,4,4,2,2);
+		setBounds(x-width/2, y-height/2, width, height);
 		
-		setBounds(x-mPanel.getWidth()/2, y-mPanel.getHeight()/2, mPanel.getWidth(), mPanel.getHeight());
-		
-		Image background = new Image(mPanel);
+		Image background = new Image(nine);
 		background.setPosition(0, 0);
+		background.setSize(width, height);
 		addActor(background);
 		
 		Preferences pre = Gdx.app.getPreferences("record");
