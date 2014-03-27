@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.luckyhu.game.framework.game.LHGame;
+import com.luckyhu.game.framework.game.util.LHGameCache;
 
 public class GamePlayPanel extends Group implements Disposable {
 
@@ -34,7 +35,7 @@ public class GamePlayPanel extends Group implements Disposable {
 		super();
 		float width = Gdx.graphics.getWidth()-40;
 		float height = Gdx.graphics.getHeight()/3;
-		mPanel = new Texture("data/ori_back.png");
+		mPanel = new Texture("data/panel.png");
 		NinePatch nine = new NinePatch(mPanel,4,4,2,2);
 		setBounds(x-width/2, y-height/2, width, height);
 		
@@ -55,6 +56,7 @@ public class GamePlayPanel extends Group implements Disposable {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
+				LHGameCache.loadSound("data/click.wav").play();
 				LHGame.setCurrentSceen(new LHMainScreen());
 			}
 		}, 50);

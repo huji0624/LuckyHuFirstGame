@@ -46,6 +46,7 @@ import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
 import com.luckyhu.game.framework.game.engine.LHMapEngine;
 import com.luckyhu.game.framework.game.util.LHActionQueue;
+import com.luckyhu.game.framework.game.util.LHGameCache;
 import com.luckyhu.game.framework.game.util.LHLevel;
 import com.luckyhu.game.framework.game.util.LHLevelLoader;
 import com.luckyhu.game.framework.game.util.LHLogger;
@@ -282,6 +283,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 	private void gameOver() {
 
+		LHGameCache.loadSound("data/hit.ogg").play();
+		
 		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);
 

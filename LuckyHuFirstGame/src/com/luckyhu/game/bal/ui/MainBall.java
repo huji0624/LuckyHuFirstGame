@@ -1,6 +1,7 @@
 package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.bal.gameobject.LHCircleObject;
+import com.luckyhu.game.framework.game.util.LHGameCache;
 import com.luckyhu.game.framework.game.util.PolyLinePath;
 
 public class MainBall extends LHCircleObject {
@@ -50,6 +52,9 @@ public class MainBall extends LHCircleObject {
 				mDire = new Vector2(to.x-circle.x, to.y-circle.y);
 				moveTo(to.x, to.y);
 				mLoc += delta*70;
+				
+				Sound sound = LHGameCache.loadSound("data/walk1.wav");
+				sound.play();
 				
 				if(mLoc>=mPath.getLength()){
 					mPath.clear();
