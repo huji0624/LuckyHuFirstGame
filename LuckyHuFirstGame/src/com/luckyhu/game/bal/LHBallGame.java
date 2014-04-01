@@ -10,9 +10,7 @@ public class LHBallGame extends LHGame{
 		// TODO Auto-generated method stub
 		LHGameCache.initSound("data/hit.ogg");
 		LHGameCache.initSound("data/click.wav");
-		LHGameCache.initSound("data/walk1.wav");
-		LHGameCache.initSound("data/walk2.wav");
-		LHGameCache.initSound("data/walk3.wav");
+		LHGameCache.initMusic("data/walk3.wav");
 		setCurrentSceen(new LHStartScreen());
 	}
 }

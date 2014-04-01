@@ -4,10 +4,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.luckyhu.game.framework.game.util.LHADable;
 
 public class LHGame implements ApplicationListener{
 
 	private Screen mCurrentScreen;
+	
+	public LHADable adImp;
 	
 	public static void setCurrentSceen(Screen screen){
 		LHGame game =(LHGame) Gdx.app.getApplicationListener();

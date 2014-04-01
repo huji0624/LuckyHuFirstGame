@@ -1,7 +1,7 @@
 package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -53,12 +53,14 @@ public class MainBall extends LHCircleObject {
 				moveTo(to.x, to.y);
 				mLoc += delta*70;
 				
-				Sound sound = LHGameCache.loadSound("data/walk1.wav");
-				sound.play();
+				Music music = LHGameCache.loadMusic("data/walk3.wav");
+				if(music.isPlaying()==false){
+					music.setLooping(true);
+					music.play();
+				}
 				
 				if(mLoc>=mPath.getLength()){
-					mPath.clear();
-					mDelegate.mainBallStopMoving();
+					stopMoving();
 				}
 				
 				render.begin(ShapeType.Line);
@@ -77,12 +79,21 @@ public class MainBall extends LHCircleObject {
 		batch.end();
 	}
 	
+	private void stopMoving(){
+		Music music = LHGameCache.loadMusic("data/walk3.wav");
+		mLoc = 0;
+		mPath.clear();
+		mDelegate.mainBallStopMoving();
+		if(music.isPlaying()){
+			music.pause();
+		}
+	}
+	
 	private float mLoc = 0;
 	private Vector2 mDire = new Vector2(0, 1);
 
 	public void initPath() {
-		mLoc = 0;
-		mPath.clear();
+		stopMoving();
 		mPath.add(new Vector2(circle.x, circle.y));
 	}
 	

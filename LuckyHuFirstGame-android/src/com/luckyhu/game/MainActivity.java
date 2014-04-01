@@ -5,8 +5,10 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.luckyhu.game.bal.LHBallGame;
+import com.luckyhu.game.framework.game.LHGame;
+import com.luckyhu.game.framework.game.util.LHADable;
 
-public class MainActivity extends AndroidApplication {
+public class MainActivity extends AndroidApplication implements LHADable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,6 +16,8 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
         
-        initialize(new LHBallGame(), cfg);
+        LHGame game = new LHBallGame();
+        game.adImp =this;
+        initialize(game, cfg);
     }
 }
