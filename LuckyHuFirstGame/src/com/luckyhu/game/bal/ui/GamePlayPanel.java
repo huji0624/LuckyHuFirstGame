@@ -66,6 +66,7 @@ public class GamePlayPanel extends Group implements Disposable {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
+				LHGame.adImp.hideAd();
 			}
 		}, 200);
 	}

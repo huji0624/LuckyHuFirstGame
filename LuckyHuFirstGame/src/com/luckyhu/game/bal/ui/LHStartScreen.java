@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.luckyhu.game.framework.game.LHGame;
 
 public class LHStartScreen implements Screen{
 
@@ -40,12 +41,14 @@ public class LHStartScreen implements Screen{
 		
 		mPanel = new GamePlayPanel(mStage.getWidth()/2,mStage.getHeight()/2,false);
 		mStage.addActor(mPanel);
+		
+		LHGame.adImp.showAd();
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+		LHGame.adImp.hideAd();
 	}
 
 	@Override

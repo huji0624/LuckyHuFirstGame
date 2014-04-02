@@ -10,7 +10,7 @@ public class LHGame implements ApplicationListener{
 
 	private Screen mCurrentScreen;
 	
-	public LHADable adImp;
+	public static LHADable adImp;
 	
 	public static void setCurrentSceen(Screen screen){
 		LHGame game =(LHGame) Gdx.app.getApplicationListener();

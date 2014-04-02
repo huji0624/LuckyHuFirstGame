@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="/LuckyHuFirstGame/libs/gdx.jar" sourcepath="/LuckyHuFirstGame/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="/Users/huji/Documents/git/LuckyHuFirstGame/LuckyHuFirstGame-android/libs/GoogleAdMobAdsSdk-6.4.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
