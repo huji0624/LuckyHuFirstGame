@@ -19,6 +19,9 @@ public class LHGame implements ApplicationListener{
 	}
 	
 	private void setScreen(Screen screen){
+		if(mCurrentScreen!=null){
+			mCurrentScreen.dispose();
+		}
 		mCurrentScreen = screen;
 		mCurrentScreen.show();
 	}

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -23,26 +22,28 @@ public class LHCircleObject extends LHBallGameObject {
 		super(world);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public LHCircleObject(World world, Circle circle, String path,BodyType type){
+
+	public LHCircleObject(World world, Circle circle, String path, BodyType type) {
 		this(world);
 		this.circle = new Circle(circle);
 
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = type;
-		bodyDef.position.set(circle.x, circle.y);
-		mBody = world.createBody(bodyDef);
-		mBody.setUserData(this);
+		if (world != null) {
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = type;
+			bodyDef.position.set(circle.x, circle.y);
+			mBody = world.createBody(bodyDef);
+			mBody.setUserData(this);
 
-		CircleShape shape = new CircleShape();
-		shape.setRadius(circle.radius);
-		FixtureDef fd = new FixtureDef();
-		fd.shape = shape;
-		fd.restitution = 1.0f;
-		fd.friction = 0.0f;
-		mBody.createFixture(fd);
+			CircleShape shape = new CircleShape();
+			shape.setRadius(circle.radius);
+			FixtureDef fd = new FixtureDef();
+			fd.shape = shape;
+			fd.restitution = 1.0f;
+			fd.friction = 0.0f;
+			mBody.createFixture(fd);
 
-		shape.dispose();
+			shape.dispose();
+		}
 
 		mTexture = new Texture(path);
 		mSprite = new Sprite(mTexture);
@@ -69,8 +70,10 @@ public class LHCircleObject extends LHBallGameObject {
 		circle.x += dx;
 		circle.y += dy;
 		mSprite.translate(dx, dy);
-		mBody.setTransform(mBody.getPosition().x + dx, mBody.getPosition().y
-				+ dy, 0);
+		if (mBody != null) {
+			mBody.setTransform(mBody.getPosition().x + dx,
+					mBody.getPosition().y + dy, 0);
+		}
 	}
 
 	@Override
@@ -78,14 +81,17 @@ public class LHCircleObject extends LHBallGameObject {
 		// TODO Auto-generated method stub
 		circle.x = x;
 		circle.y = y;
-		mBody.setTransform(x, y, 0);
+		if (mBody != null) {
+			mBody.setTransform(x, y, 0);
+		}
 		mSprite.setPosition(circle.x - circle.radius, circle.y - circle.radius);
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		mWorld.destroyBody(mBody);
+		if(mWorld!=null)
+			mWorld.destroyBody(mBody);
 		mTexture.dispose();
 	}
 

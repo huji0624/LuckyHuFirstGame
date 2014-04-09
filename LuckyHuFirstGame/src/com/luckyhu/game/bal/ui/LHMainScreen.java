@@ -227,7 +227,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
 		// mMainBall.moveBy(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
-		mMainBall.addPathPoint(new Vector2(Gdx.input.getDeltaX(), -Gdx.input
+		mMainBall.addPathDelta(new Vector2(Gdx.input.getDeltaX(), -Gdx.input
 				.getDeltaY()));
 		return super.touchDragged(screenX, screenY, pointer);
 	}
