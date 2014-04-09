@@ -49,7 +49,7 @@ public class LHPolygonObject extends LHBallGameObject {
 	public LHPolygonObject(World world, float vertices[]) {
 		this(world);
 		this.tag = -1;
-		mColor = Color.RED;
+		mColor = Color.ORANGE;
 		
 		if (vertices.length < 6) {
 			throw new RuntimeException("vertices < 6");

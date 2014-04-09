@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.luckyhu.game.framework.game.util.LHADable;
+import com.luckyhu.game.framework.game.util.LHLogger;
 
 public class LHGame implements ApplicationListener{
 
@@ -25,7 +26,7 @@ public class LHGame implements ApplicationListener{
 	@Override
 	public void create() {
 		// TODO Auto-generated method stub
-		
+		LHLogger.logD("Screen W:"+Gdx.graphics.getWidth()+" H:"+Gdx.graphics.getHeight());
 	}
 
 	@Override

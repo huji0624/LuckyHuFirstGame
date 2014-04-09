@@ -55,6 +55,7 @@ public class LHRectObject extends LHBallGameObject {
 		mTexture = new Texture("data/rect.png");
 		mSprite = new Sprite(mTexture);
 		mSprite.setBounds(rect.x, rect.y, rect.width, rect.height);
+		mSprite.setOrigin(rect.width/2, rect.height/2);
 	}
 
 	public LHRectObject(World world, Rectangle rect, float angle) {

@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -38,6 +39,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
+import com.luckyhu.game.bal.gameobject.LHRectObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
 import com.luckyhu.game.framework.game.LHGame;
@@ -104,7 +106,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (!gameOver)
 			moveViewPort(delta);
 
-		// debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -217,6 +219,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 		// DEBUG
 
+		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(30, 100, 200, 10),
+				1.9f));
 	}
 
 	@Override
