@@ -23,8 +23,6 @@ import com.luckyhu.game.framework.game.util.LHGameCache;
 public class GamePlayPanel extends Group implements Disposable {
 
 	private Texture mPanel;
-	private Texture mPlay;
-	private Texture mRank;
 
 	/**
 	 * center.
@@ -36,12 +34,12 @@ public class GamePlayPanel extends Group implements Disposable {
 		float width = Gdx.graphics.getWidth()-40;
 		float height = Gdx.graphics.getHeight()/3;
 		mPanel = new Texture("data/panel.png");
-		NinePatch nine = new NinePatch(mPanel,4,4,2,2);
+		NinePatch nine = new NinePatch(mPanel,10,10,10,10);
 		setBounds(x-width/2, y-height/2, width, height);
 		
 		Image background = new Image(nine);
-		background.setPosition(0, 0);
-		background.setSize(width, height);
+		background.setPosition(0, height/2);
+		background.setSize(width, height/2);
 		addActor(background);
 		
 		Preferences pre = Gdx.app.getPreferences("record");
@@ -51,7 +49,7 @@ public class GamePlayPanel extends Group implements Disposable {
 		label.setPosition(getWidth()/2-label.getWidth()/2, getHeight()-50);
 		addActor(label);
 		
-		mPlay = addButton("data/play.png", new ClickListener(){
+		addButton("data/play", new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
@@ -59,39 +57,34 @@ public class GamePlayPanel extends Group implements Disposable {
 				LHGameCache.loadSound("data/click.wav").play();
 				LHGame.setCurrentSceen(new LHMainScreen());
 			}
-		}, 50);
+		}, getWidth()/4);
 		
-		mRank = addButton("data/rank.png", new ClickListener(){
+		addButton("data/rank", new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
 				LHGame.adImp.hideAd();
 			}
-		}, 200);
+		}, getWidth()/4*3);
 	}
 	
-	private Texture addButton(String path,ClickListener listener,float x){
-		Texture t = new Texture(path);
-		TextureRegion trup = new TextureRegion(t, 0, 0, 132, 128);
-		TextureRegion trdown = new TextureRegion(t, 132, 0, 128, 128);
-		TextureRegionDrawable trdup = new TextureRegionDrawable(trup);
-		TextureRegionDrawable trddown = new TextureRegionDrawable(trdown);
-		Button button = new Button(new ButtonStyle(trdup, trddown, null));
+	private void addButton(String path,ClickListener listener,float x){
+		TextureRegionDrawable trdup = new TextureRegionDrawable(new TextureRegion(LHGameCache.loadTexture(path+".png")));
+		ButtonStyle style = new ButtonStyle(trdup, null, null);
+		style.pressedOffsetY = 5;
+		Button button = new Button(style);
 		button.addListener(listener);
-		float bw = 66;
+		float bw = 64;
 		float bh = 64;
-		button.setBounds(x, getHeight()/2 - bh/2,bw, bh);
+		button.setBounds(x-bw/2, 0,bw, bh);
 		addActor(button);
-		return t;
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		mPanel.dispose();
-		mPlay.dispose();
-		mRank.dispose();
 	}
 
 }

@@ -2,13 +2,18 @@ package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.luckyhu.game.framework.game.LHGame;
 
 public class LHStartScreen implements Screen,MainBallDelegate{
@@ -53,20 +58,22 @@ public class LHStartScreen implements Screen,MainBallDelegate{
 		mPanel = new GamePlayPanel(mStage.getWidth()/2,mStage.getHeight()/2,false);
 		mStage.addActor(mPanel);
 		
+		BitmapFont font = new BitmapFont();
+		font.setScale(3);
+		Label name = new Label("Move On", new LabelStyle(font, Color.WHITE));
+		name.setPosition(mStage.getWidth()/2-name.getWidth()/2, mStage.getHeight()+name.getHeight());
+		mStage.addActor(name);
+		MoveToAction action = new MoveToAction();
+		action.setDuration(1);
+		action.setPosition(name.getX(),mPanel.getY()+mPanel.getHeight()+5);
+		name.addAction(action);
+		
 		mBatch = new SpriteBatch();
 		mSRender = new ShapeRenderer();
 		mMainBall = new MainBall(null);
 		mMainBall.setMainBallDelegate(this);
 		mMainBall.drawPath = false;
 		mainBallStopMoving();
-//		for (int i = 0; i < 5; i++) {
-//			float x = MathUtils.random(Gdx.graphics.getWidth());
-//			float y = MathUtils.random(Gdx.graphics.getHeight());
-//			Vector2 p = new Vector2(x, y);
-//			mMainBall.addPathPoint(p);
-//			
-//			lastPoint = p;
-//		}
 		
 		LHGame.adImp.showAd();
 	}

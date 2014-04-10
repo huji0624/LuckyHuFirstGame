@@ -81,6 +81,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 	private boolean gameOver = false;
 	private int maxDis = 0;
+	
+	private Image mGuideImage;
 
 	@Override
 	public void render(float delta) {
@@ -103,10 +105,10 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mBatch.end();
 		mMainBall.render(mBatch, mSRender, delta);
 
-		if (!gameOver)
+		if (!gameOver&&mGuideImage==null)
 			moveViewPort(delta);
 
-		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -209,6 +211,11 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mLabel.setPosition(mStage.getWidth() - 50,
 				mStage.getHeight() - mLabel.getHeight() - 10);
 		mStage.addActor(mLabel);
+		
+		Image image = new Image(LHGameCache.loadTexture("data/guide.png"));
+		image.setPosition(mStage.getWidth()/2-image.getWidth()/2, mStage.getHeight()/2-image.getHeight()/2);
+		mStage.addActor(image);
+		mGuideImage = image;
 
 		Gdx.input.setInputProcessor(this);
 
@@ -219,8 +226,6 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 		// DEBUG
 
-		mObjectEngine.addObject(new LHRectObject(mWorld, new Rectangle(30, 100, 200, 10),
-				1.9f));
 	}
 
 	@Override
@@ -235,6 +240,11 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
+		if(mGuideImage!=null){
+			mGuideImage.remove();
+			mGuideImage = null;
+		}
+		
 		mMainBall.initPath();
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
