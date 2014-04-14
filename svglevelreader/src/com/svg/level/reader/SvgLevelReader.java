@@ -203,7 +203,7 @@ public class SvgLevelReader {
 
 	private SvgPath parsePath(Node node) {
 		SvgPath path = new SvgPath();
-
+		
 		NamedNodeMap map = node.getAttributes();
 		for (int i = 0; i < map.getLength(); i++) {
 			Node attr = map.item(i);
@@ -220,6 +220,8 @@ public class SvgLevelReader {
 					d[j*2+1] = Float.valueOf(tmp[1]);
 				}
 				path.d = d;
+			}else if (parseAttrId(path, attr)) {
+				continue;
 			}
 			
 		}
@@ -322,11 +324,11 @@ public class SvgLevelReader {
 				if (item.getNodeName().equals(Const.TAG_DESC)) {
 					HashMap<String, String> map = new HashMap<String, String>();
 					String desc = item.getTextContent();
-					String lines[] = desc.split("\n");
+					String lines[] = desc.split(";");
 					for (int j = 0; j < lines.length; j++) {
 						String line = lines[j];
 						String pairs[] = line.split("=");
-						map.put(pairs[0], pairs[1]);
+						map.put(pairs[0].trim(), pairs[1].trim());
 					}
 					entity.desc = map;
 				}

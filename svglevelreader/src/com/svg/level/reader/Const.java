@@ -7,6 +7,7 @@ public class Const {
 	public final static String TAG_RECT = "rect";
 	public final static String TAG_CIRCLE = "circle";
 	public final static String TAG_POLYGON = "polygon";
+	public final static String TAG_POLYLINE = "polyline";
 	public final static String TAG_DESC = "desc";
 	
 	//common.

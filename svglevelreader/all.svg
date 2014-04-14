@@ -71,24 +71,14 @@
        sodipodi:rx="5"
        sodipodi:ry="5"
        transform="translate(9.5964492,7.0710678)" />
-    <polygon
-       points="300,210 170,250 220,100"
-       style="fill:#cccccc;stroke:#000000;stroke-width:1"
-       id="polygon10"
-       transform="matrix(0.68086502,0,0,0.4708782,13.124882,-15.995084)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 26.877782,135.71752 162.857138,68.57143 142.85715,10 180,91.42857"
        id="path2991"
        inkscape:connector-curvature="0" />
-    <rect
-       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect2986"
-       width="100"
-       height="20"
-       x="10"
-       y="200"
-       transform="matrix(0.8954062,-0.4452502,0.4452502,0.8954062,0,0)" />
-	<polygon points="220,100 300,210 170,250" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+	  <polygon points="220,100 300,210 170,250" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+    <polyline
+       points="0,0 320,0 320,480 0,480 0,0"
+       style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>

@@ -2,13 +2,19 @@ package com.luckyhu.game.framework.game.util;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.luckyhu.game.bal.gameobject.LHBlackHoleObject;
+import com.luckyhu.game.bal.gameobject.LHCircleMoveObject;
 import com.luckyhu.game.bal.gameobject.LHPolygonObject;
 import com.luckyhu.game.bal.gameobject.LHRectObject;
+import com.luckyhu.game.bal.gameobject.LHWhiteHoleObject;
+import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
+import com.luckyhu.game.bal.ui.MainBall;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.svg.level.reader.SvgLevelReaderHandler;
 import com.svg.level.reader.entity.Svg;
@@ -32,12 +38,13 @@ public class LHLevel implements SvgLevelReaderHandler{
 	public void handleSvg(Svg svg) {
 		// TODO Auto-generated method stub
 		size = new Vector2(svg.width, svg.height);
+		LHLogger.logD("Sw "+size.toString());
 	}
 	
 	@Override
 	public void handleRect(SvgRect rect) {
 		// TODO Auto-generated method stub
-		Rectangle rt = new Rectangle(rect.x, rect.y, rect.width, rect.height);
+		Rectangle rt = new Rectangle(rect.x, size.y-rect.y, rect.width, rect.height);
 		
 		Matrix3 matrix = new Matrix3();
 		if(rect.matrix!=null){			
@@ -82,7 +89,44 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handleCircle(SvgCircle circle) {
 		// TODO Auto-generated method stub
+		if(circle.desc==null){
+			return;
+		}
+		String type = circle.desc.get("type");
+		if (type==null) {
+			return;
+		}
 		
+		float cx = circle.x;
+		float cy = size.y - circle.y;
+		float r = circle.r;
+		if (type.equals("w")) {
+			LHWhiteHoleObject wh = new LHWhiteHoleObject(mWorld, new Circle(cx, cy, r),MainBall.mainBall);
+			objects.add(wh);
+		}else if(type.equals("b")){
+			LHBlackHoleObject bh = new LHBlackHoleObject(mWorld, new Circle(cx, cy, r),MainBall.mainBall);
+			objects.add(bh);
+		}else if (type.equals("m")) {
+			float speed = 10;
+			String sp = circle.desc.get("speed");
+			if(sp!=null){
+				speed = Float.valueOf(sp);
+			}
+			boolean reverse = true;
+			SvgPath spath = circle.map.getPath(circle.desc.get("path"));
+			Vector2 path[] = new Vector2[spath.d.length/2];
+			for (int i = 0; i < path.length; i++) {
+				path[i] = new Vector2(spath.d[i*2], size.y - spath.d[i*2+1]);
+			}
+			LHCircleMoveObject mv = new LHCircleMoveObject(mWorld, new Circle(cx, cy, r), speed, path, reverse);
+			objects.add(mv);
+		}else if (type.equals("t")) {
+			Circle A = new Circle(cx, cy, r);
+			SvgCircle b = circle.map.getCircle(circle.desc.get("t"));
+			Circle B = new Circle(b.x, size.y - b.y, b.r);
+			LHWormHoleObject rh = new LHWormHoleObject(mWorld, A, B);
+			objects.add(rh);
+		}
 	}
 
 	@Override
@@ -94,6 +138,11 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handlePolygon(SvgPolygon polygon) {
 		// TODO Auto-generated method stub
+		for (int i = 0; i < polygon.points.length; i++) {
+			if (i%2==1) {
+				polygon.points[i]=size.y - polygon.points[i];
+			}
+		}
 		LHPolygonObject po = new LHPolygonObject(mWorld, polygon.points);
 		
 		objects.add(po);
