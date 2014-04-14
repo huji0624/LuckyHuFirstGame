@@ -209,13 +209,11 @@ public class SvgLevelReader {
 			Node attr = map.item(i);
 			if (attr.getNodeName().equals(Const.ATTR_D)) {
 				String value = attr.getNodeValue();
-				String numberstr = value.substring("m ".length(),
-						value.length());
-				String nbpairs[] = numberstr.split(" ");
+				String nbpairs[] = value.split(" ");
 				float d[] = new float[nbpairs.length * 2];
 				for (int j = 0; j < nbpairs.length; j++) {
 					String pair = nbpairs[j];
-					String tmp[] = pair.split(",");
+					String tmp[] = pair.substring(1).split(",");
 					d[j*2] = Float.valueOf(tmp[0]);
 					d[j*2+1] = Float.valueOf(tmp[1]);
 				}

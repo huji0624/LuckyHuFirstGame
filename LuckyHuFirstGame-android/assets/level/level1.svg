@@ -80,10 +80,10 @@
 	<circle cx="200" cy="650" r="20" stroke="black" stroke-width="2" fill="black" ><desc>type=b</desc></circle>
 
 	<circle cx="50" cy="750" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;path=path1</desc></circle>
-  <path id="path1" d="m 50,750 100,760 300,750" style="fill:none;stroke:red;stroke-width:2"/>
+  <path id="path1" d="M50,750 L300,750" style="fill:none;stroke:red;stroke-width:2"/>
 
-	<circle cx="50" cy="850" r="50" stroke="black" stroke-width="2" fill="red" ><desc>type=t;t=circle1</desc></circle>
-	<circle id="circle1" cx="250" cy="850" r="50" stroke="black" stroke-width="2" fill="red" />
+	<circle cx="50" cy="850" r="40" stroke="black" stroke-width="2" fill="red" ><desc>type=t;t=circle1</desc></circle>
+	<circle id="circle1" cx="250" cy="850" r="40" stroke="black" stroke-width="2" fill="red" />
   <polyline
        points="0,0 320,0 320,960 0,960 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
