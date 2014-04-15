@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -108,7 +109,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (!gameOver&&mGuideImage==null)
 			moveViewPort(delta);
 
-//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -263,37 +264,13 @@ public class LHMainScreen extends InputAdapter implements Screen,
 						public void run() {
 							// TODO Auto-generated method stub
 							mMainBall.moveTo(po.x, po.y);
+							LHGameCache.loadSound("data/transport.ogg").play();
 						}
 					});
 				}
 			}
 		}
 	}
-
-	// @Override
-	// public boolean touchUp(int screenX, int screenY, int pointer, int button)
-	// {
-	// // TODO Auto-generated method stub
-	// Array<LHGameObject> objs = mObjectEngine.getObjects();
-	// for (LHGameObject lhGameObject : objs) {
-	// if (lhGameObject instanceof LHWormHoleObject) {
-	// LHWormHoleObject wo = (LHWormHoleObject) lhGameObject;
-	// final Vector2 po = wo.getOtherFixTurePosition(mMainBall.circle);
-	// if (po != null) {
-	// mQueue.enqueue(new Runnable() {
-	// @Override
-	// public void run() {
-	// // TODO Auto-generated method stub
-	// mMainBall.moveTo(po.x, po.y);
-	// }
-	// });
-	// return true;
-	// }
-	// }
-	// }
-	//
-	// return super.touchUp(screenX, screenY, pointer, button);
-	// }
 
 	private void gameOver() {
 

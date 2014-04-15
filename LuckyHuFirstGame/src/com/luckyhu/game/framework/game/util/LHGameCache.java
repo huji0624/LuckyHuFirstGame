@@ -1,6 +1,7 @@
 package com.luckyhu.game.framework.game.util;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -48,5 +49,29 @@ public class LHGameCache {
 	public static Music loadMusic(String path){
 		initMusic(path);
 		return musicCache.get(path);
+	}
+	
+	public static void unLoadAll(){
+		Set<String> st = musicCache.keySet();
+		for (String string : st) {
+			Music music = musicCache.get(string);
+			music.stop();
+			music.dispose();
+		}
+		musicCache.clear();
+		
+		st = textureCache.keySet();
+		for (String string : st) {
+			Texture t = textureCache.get(string);
+			t.dispose();
+		}
+		textureCache.clear();
+		
+		st = soundCache.keySet();
+		for (String string : st) {
+			Sound s = soundCache.get(string);
+			s.dispose();
+		}
+		soundCache.clear();
 	}
 }

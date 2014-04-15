@@ -35,6 +35,7 @@ public class LHGame implements ApplicationListener{
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
+		LHLogger.logD("resize W:"+width+" H:"+Gdx.graphics.getHeight());
 		mCurrentScreen.resize(width, height);
 	}
 
@@ -51,18 +52,21 @@ public class LHGame implements ApplicationListener{
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
+		LHLogger.logD("LHGame pause");
 		mCurrentScreen.pause();
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
+		LHLogger.logD("LHGame resume");
 		mCurrentScreen.resume();
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		LHLogger.logD("LHGame dispose");
 		mCurrentScreen.dispose();
 	}
 

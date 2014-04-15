@@ -33,8 +33,10 @@ public class LHBlackHoleObject extends LHCircleObject{
 		
 		Vector2 ve = new Vector2(circle.x -mainBall.circle.x, circle.y - mainBall.circle.y);
 		float len = ve.len();
-		float a = 1/len/len;
-		Vector2 nor = ve.nor();
-		mainBall.moveBy( nor.x * delta * a * mess, nor.y * delta * a *mess);
+		if(len>circle.radius){
+			float a = 1/len/len;
+			Vector2 nor = ve.nor();
+			mainBall.moveBy( nor.x * delta * a * mess, nor.y * delta * a *mess);
+		}
 	}
 }

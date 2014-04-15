@@ -69,7 +69,7 @@ public class MainActivity extends AndroidApplication implements LHADable {
 		
 		adView = new AdView(this, AdSize.BANNER, "test");
 		AdRequest request = new AdRequest();
-		request.addTestDevice("TEST_DEVICE_ID");
+		request.addTestDevice(AdRequest.TEST_EMULATOR);
 		adView.loadAd(request);
 		adView.setVisibility(View.GONE);
 		RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(

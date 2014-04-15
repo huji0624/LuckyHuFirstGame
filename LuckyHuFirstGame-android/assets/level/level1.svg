@@ -53,25 +53,18 @@
      id="layer1">
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2987"
-       width="177.78685"
-       height="22.223356"
-       x="130.97104"
-       y="100.48004"/>
-    <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2989"
        width="184.85791"
        height="18.182745"
        x="2.0203052"
-       y="229.48216"/>
+       y="29.48216"/>
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2991"
        width="121.21831"
        height="15.152288"
        x="165.66502"
-       y="370.90353">
+       y="170.90353">
       <desc
          id="desc2993">speed=3</desc>
     </rect>

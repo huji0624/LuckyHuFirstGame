@@ -54,6 +54,9 @@ public class LHWormHoleObject extends LHBallGameObject{
 		
 		FixtureDef fd = new FixtureDef();
 		fd.isSensor=true;
+		fd.density=0.0f;
+		fd.friction=0.0f;
+		fd.restitution=0.0f;
 		fd.shape=shape;
 		mFixtureA=mBody.createFixture(fd);
 		mFixtureA.setUserData(this);
@@ -65,6 +68,9 @@ public class LHWormHoleObject extends LHBallGameObject{
 		
 		fd = new FixtureDef();
 		fd.isSensor=true;
+		fd.density=0.0f;
+		fd.friction=0.0f;
+		fd.restitution=0.0f;
 		fd.shape=shape;
 		mFixtureB=mBody.createFixture(fd);
 		mFixtureB.setUserData(this);

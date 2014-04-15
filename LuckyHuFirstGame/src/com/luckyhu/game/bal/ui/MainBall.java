@@ -25,7 +25,7 @@ public class MainBall extends LHCircleObject {
 
 	public MainBall(World world) {
 		super(world, new Circle(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 15),
+				Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 18),
 				"data/main.png", BodyType.DynamicBody);
 		this.tag = 624;
 
@@ -56,7 +56,7 @@ public class MainBall extends LHCircleObject {
 				mLoc += delta * 70;
 
 				Music music = LHGameCache.loadMusic("data/walk3.wav");
-				if (music.isPlaying() == false) {
+				if (music!=null&&music.isPlaying() == false) {
 					music.setLooping(true);
 					music.play();
 				}
@@ -84,6 +84,13 @@ public class MainBall extends LHCircleObject {
 	}
 
 	private void stopMoving() {
+		if(mPath.size()==0)
+			return;
+		else if (mPath.size()==1) {
+			mPath.clear();
+			return;
+		}
+		
 		Music music = LHGameCache.loadMusic("data/walk3.wav");
 		mLoc = 0;
 		mPath.clear();

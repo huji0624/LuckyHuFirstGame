@@ -4,10 +4,11 @@ LuckyHuFirstGame
 LuckyHu's first game.Experiment work.
 
 TODO:
+添加到后台控制
 
 添加ios广告栏
 
-适配屏幕大小
+适配屏幕大小(Done)
 
 旋转的矩形（Done）
 
