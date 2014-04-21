@@ -109,7 +109,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (!gameOver&&mGuideImage==null)
 			moveViewPort(delta);
 
-		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -165,7 +165,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 			// new level
 			LHLevel level = LHLevelLoader.instance().loadLevel(
-					"level/level" + 1 + ".svg");
+					"level/leveld.svg");
 			ArrayList<LHGameObject> array = level.objects;
 			for (LHGameObject lhGameObject : array) {
 				lhGameObject.moveBy(0, mBlockTop);
@@ -221,7 +221,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		Gdx.input.setInputProcessor(this);
 
 		LHLevelLoader.world = mWorld;
-		LHLevelLoader.instance().initLevel("level/level1.svg");
+		LHLevelLoader.instance().initLevel("level/leveld.svg");
 
 		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();

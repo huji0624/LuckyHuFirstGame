@@ -125,6 +125,9 @@ public class LHLevel implements SvgLevelReaderHandler{
 			for (int i = 0; i < path.length; i++) {
 				path[i] = new Vector2(rv(spath.d[i*2]), size.y - spath.d[i*2+1]);
 			}
+			if (circle.desc.get("reverse").equals("false")) {
+				reverse = false;
+			}
 			LHCircleMoveObject mv = new LHCircleMoveObject(mWorld, new Circle(cx, cy, r), speed, path, reverse);
 			objects.add(mv);
 		}else if (type.equals("t")) {
@@ -145,14 +148,16 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handlePolygon(SvgPolygon polygon) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < polygon.points.length; i++) {
+		float points[] = polygon.points.clone();
+		
+		for (int i = 0; i < points.length; i++) {
 			if (i%2==1) {
-				polygon.points[i]=size.y - polygon.points[i];
+				points[i]=size.y - points[i];
 			}else{
-				polygon.points[i]=rv(polygon.points[i]);
+				points[i]=rv(points[i]);
 			}
 		}
-		LHPolygonObject po = new LHPolygonObject(mWorld, polygon.points);
+		LHPolygonObject po = new LHPolygonObject(mWorld, points);
 		
 		objects.add(po);
 	}
