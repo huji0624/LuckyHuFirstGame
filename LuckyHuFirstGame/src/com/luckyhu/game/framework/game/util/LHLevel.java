@@ -148,16 +148,18 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handlePolygon(SvgPolygon polygon) {
 		// TODO Auto-generated method stub
-		float points[] = polygon.points.clone();
+//		float points[] = polygon.points.clone();
+//		for (int i = 0; i < points.length; i++) {
+//			if (i%2==1) {
+//				points[i]=size.y - points[i];
+//			}else{
+//				points[i]=rv(points[i]);
+//			}
+//		}
 		
-		for (int i = 0; i < points.length; i++) {
-			if (i%2==1) {
-				points[i]=size.y - points[i];
-			}else{
-				points[i]=rv(points[i]);
-			}
-		}
-		LHPolygonObject po = new LHPolygonObject(mWorld, points);
+		float ves[] = { 110, 380, 200, 300, 200, 200, 110, 250 };
+		
+		LHPolygonObject po = new LHPolygonObject(mWorld, ves);
 		
 		objects.add(po);
 	}

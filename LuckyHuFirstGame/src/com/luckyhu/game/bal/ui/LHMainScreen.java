@@ -40,6 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
+import com.luckyhu.game.bal.gameobject.LHPolygonObject;
 import com.luckyhu.game.bal.gameobject.LHRectObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
 import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
@@ -107,9 +108,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mMainBall.render(mBatch, mSRender, delta);
 
 		if (!gameOver&&mGuideImage==null)
-			moveViewPort(delta);
+//			moveViewPort(delta);
 
-//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -130,12 +131,14 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 	}
 
-	private int blockNumber = 8;
+	private int blockNumber = 0;
 
 	private void genBlock() {
-
-		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
-			int MaxBlock = 8;
+		if (blockNumber<0) {
+			return;
+		}
+//		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
+//			int MaxBlock = 8;
 
 			// old level
 			// try {
@@ -173,9 +176,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 			mObjectEngine.addObjects(array);
 			mBlockTop += level.size.y;
 			blockNumber--;
-			if (blockNumber <= 0)
-				blockNumber = MaxBlock;
-		}
+//			if (blockNumber <= 0)
+//				blockNumber = MaxBlock;
+//		}
 
 	}
 
@@ -227,6 +230,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 		// DEBUG
 
+		float ves[] = { 150,370,150,260,280,180,280,360 };
+		mObjectEngine.addObject(new LHPolygonObject(mWorld, ves));
 	}
 
 	@Override

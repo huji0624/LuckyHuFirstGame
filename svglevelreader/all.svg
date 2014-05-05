@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="92.157287"
-     inkscape:cy="378.57865"
+     inkscape:zoom="1.1037344"
+     inkscape:cx="256.04603"
+     inkscape:cy="240"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,8 +56,9 @@
        id="rect2985"
        width="300"
        height="74.285713"
-       x="10"
-       y="232.36218">
+       x="103.14362"
+       y="147.65778"
+       transform="matrix(0.91932152,0.39350722,-0.39350722,0.91932152,0,0)">
       <desc
          id="desc2986">speed=10</desc>
     </rect>
@@ -76,9 +77,13 @@
        d="m 26.877782,135.71752 162.857138,68.57143 142.85715,10 180,91.42857"
        id="path2991"
        inkscape:connector-curvature="0" />
-	  <polygon points="220,100 300,210 170,250" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+    <polygon
+       points="220,100 300,210 170,250"
+       style="fill:#cccccc;stroke:#000000;stroke-width:1"
+       id="polygon11" />
     <polyline
        points="0,0 320,0 320,480 0,480 0,0"
-       style="fill:none;stroke:red;stroke-width:2"/>
+       style="fill:none;stroke:red;stroke-width:2"
+       id="polyline13" />
   </g>
 </svg>
