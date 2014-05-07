@@ -85,6 +85,19 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	private int maxDis = 0;
 	
 	private Image mGuideImage;
+	
+	static final float BOX_STEP=1/120f;
+	static final int  BOX_VELOCITY_ITERATIONS=8;
+	static final int BOX_POSITION_ITERATIONS=10;
+	float accumulator;
+
+	public void updateWorld(float dt){
+	   accumulator+=dt;
+	    while(accumulator>BOX_STEP){
+	      mWorld.step(BOX_STEP,BOX_VELOCITY_ITERATIONS,BOX_POSITION_ITERATIONS);
+	      accumulator-=BOX_STEP;
+	   }
+	}
 
 	@Override
 	public void render(float delta) {
@@ -96,7 +109,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		// mCamera.apply(gl);
 
 		if (!gameOver) {
-			mWorld.step(delta, 10, 10);
+			updateWorld(delta);
 		}
 
 		mQueue.runAll();
@@ -230,7 +243,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 		// DEBUG
 
-		float ves[] = { 150,370,150,260,280,180,280,360 };
+		float ves[] = { 150,370,280,360,280,180,150,260 };
 		mObjectEngine.addObject(new LHPolygonObject(mWorld, ves));
 	}
 
