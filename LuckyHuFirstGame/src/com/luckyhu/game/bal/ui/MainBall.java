@@ -28,7 +28,9 @@ public class MainBall extends LHCircleObject {
 				Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 18),
 				"data/main.png", BodyType.DynamicBody);
 		this.tag = 624;
-
+		if (world!=null) {
+			mBody.setSleepingAllowed(false);
+		}
 		mainBall = this;
 
 		mPath = new PolyLinePath();

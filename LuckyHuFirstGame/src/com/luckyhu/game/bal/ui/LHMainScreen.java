@@ -121,7 +121,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mMainBall.render(mBatch, mSRender, delta);
 
 		if (!gameOver&&mGuideImage==null)
-//			moveViewPort(delta);
+			moveViewPort(delta);
 
 		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
@@ -242,9 +242,6 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();
 		// DEBUG
-
-		float ves[] = { 150,370,280,360,280,180,150,260 };
-		mObjectEngine.addObject(new LHPolygonObject(mWorld, ves));
 	}
 
 	@Override
