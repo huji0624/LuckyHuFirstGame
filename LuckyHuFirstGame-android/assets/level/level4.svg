@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="960"
+   height="520"
    id="svg2"
    version="1.1"
    sodipodi:docname="level1.svg">
@@ -36,34 +36,31 @@
   <g>
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="180"
-       height="18"
-       x="2"
-       y="30"/>
+       id="rect2991"
+       width="160"
+       height="15"
+       x="80"
+       y="450">
+      <desc
+         id="desc2993">speed=1.5</desc>
+    </rect>
+
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2991"
-       width="120"
+       width="160"
        height="15"
-       x="100"
-       y="170">
+       x="80"
+       y="50">
       <desc
-         id="desc2993">speed=2</desc>
+         id="desc2993">speed=1.5</desc>
     </rect>
-	<polygon points="100,400 300,410 170,550 100,580" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
-
-	<circle cx="50" cy="650" r="20" stroke="black" stroke-width="2" fill="white" ><desc>type=w</desc></circle>
-	<circle cx="200" cy="650" r="20" stroke="black" stroke-width="2" fill="black" ><desc>type=b</desc></circle>
-
-	<circle cx="50" cy="750" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
-  <path id="path1" d="M50,750 L300,750" style="fill:none;stroke:red;stroke-width:2"/>
-
-	<circle cx="50" cy="850" r="40" stroke="black" stroke-width="2" fill="red" ><desc>type=t;t=circle1</desc></circle>
-	<circle id="circle1" cx="250" cy="850" r="40" stroke="black" stroke-width="2" fill="red" />
+    
+	<polygon points="0,50 130,150 130,350 0,450" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+  <polygon points="320,50 320,450 190,350 190,150" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
 
   <polyline
-       points="0,0 320,0 320,960 0,960 0,0"
+       points="0,0 320,0 320,520 0,520 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>

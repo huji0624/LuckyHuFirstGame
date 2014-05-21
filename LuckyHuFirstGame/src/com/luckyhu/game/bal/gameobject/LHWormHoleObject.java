@@ -82,7 +82,7 @@ public class LHWormHoleObject extends LHBallGameObject{
 		mSpriteA.setPosition(circleA.x-circleA.radius, circleA.y-circleA.radius);
 		mSpriteA.setSize(circleA.radius*2, circleA.radius*2);
 		mSpriteB.setPosition(circleB.x-circleB.radius, circleB.y-circleB.radius);
-		mSpriteB.setSize(circleA.radius*2, circleA.radius*2);
+		mSpriteB.setSize(circleB.radius*2, circleB.radius*2);
 	}
 	
 	public Vector2 getOtherFixTurePosition(Circle circle){
@@ -99,11 +99,11 @@ public class LHWormHoleObject extends LHBallGameObject{
 		// TODO Auto-generated method stub
 		super.render(batch, render, delta);
 		
-		render.begin(ShapeType.Filled);
-		render.setColor(mColor);
-		render.circle(circleA.x, circleA.y, circleA.radius);
-		render.circle(circleB.x, circleB.y, circleB.radius);
-		render.end();
+//		render.begin(ShapeType.Filled);
+//		render.setColor(mColor);
+//		render.circle(circleA.x, circleA.y, circleA.radius);
+//		render.circle(circleB.x, circleB.y, circleB.radius);
+//		render.end();
 		mSpriteA.draw(batch);
 		mSpriteB.draw(batch);
 	}

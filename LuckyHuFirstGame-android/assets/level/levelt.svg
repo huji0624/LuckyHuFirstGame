@@ -37,19 +37,19 @@
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2989"
-       width="184.85791"
-       height="18.182745"
-       x="2.0203052"
-       y="29.48216"/>
+       width="180"
+       height="18"
+       x="2"
+       y="30"/>
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2991"
-       width="121.21831"
-       height="15.152288"
-       x="105.66502"
-       y="170.90353">
+       width="120"
+       height="15"
+       x="100"
+       y="170">
       <desc
-         id="desc2993">speed=3</desc>
+         id="desc2993">speed=2</desc>
     </rect>
 	<polygon points="100,400 300,410 170,550 100,580" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
 

@@ -51,7 +51,7 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handleRect(SvgRect rect) {
 		// TODO Auto-generated method stub
-		Rectangle rt = new Rectangle(rv(rect.x), size.y-rect.y, rv(rect.width), rect.height);
+		Rectangle rt = new Rectangle(rv(rect.x), size.y-rect.y-rect.height, rv(rect.width), rect.height);
 		
 		Matrix3 matrix = new Matrix3();
 		if(rect.matrix!=null){			
@@ -105,7 +105,7 @@ public class LHLevel implements SvgLevelReaderHandler{
 		}
 		
 		float cx = rv(circle.x);
-		float cy = size.y - circle.y;
+		float cy = rv(size.y - circle.y);
 		float r = rv(circle.r);
 		if (type.equals("w")) {
 			LHWhiteHoleObject wh = new LHWhiteHoleObject(mWorld, new Circle(cx, cy, r),MainBall.mainBall);
@@ -133,7 +133,7 @@ public class LHLevel implements SvgLevelReaderHandler{
 		}else if (type.equals("t")) {
 			Circle A = new Circle(cx, cy, r);
 			SvgCircle b = circle.map.getCircle(circle.desc.get("t"));
-			Circle B = new Circle(rv(b.x), size.y - b.y, rv(b.r));
+			Circle B = new Circle(rv(b.x), rv(size.y - b.y), rv(b.r));
 			LHWormHoleObject rh = new LHWormHoleObject(mWorld, A, B);
 			objects.add(rh);
 		}
