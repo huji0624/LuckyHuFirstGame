@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="350"
+   height="300"
    id="svg2"
    version="1.1"
    sodipodi:docname="level1.svg">
@@ -34,20 +34,28 @@
     </rdf:RDF>
   </metadata>
   <g>
-   <rect
+    <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2989"
-       width="150"
-       height="15"
-       x="0"
-       y="90"/>
-	<!-- <polygon points="60,400 60,150 100,150 320,400" style="fill:#cccccc;stroke:#000000;stroke-width:1"/> -->
-  <polygon points="150,90 150,200 270,280 270,200" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
-
-	<circle cx="260" cy="50" r="20" stroke="black" stroke-width="2" fill="white" ><desc>type=w</desc></circle>
+       width="180"
+       height="18"
+       x="70"
+       y="70"/>
+      <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2989"
+       width="180"
+       height="18"
+       x="70"
+       y="180"/>
+  
+	<circle cx="250" cy="115" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=60;reverse=true;path=path1</desc></circle>
+  <path id="path1" d="M250,115 L30,115 L30,40 L160,40" style="fill:none;stroke:red;stroke-width:2"/>
+  <circle cx="70" cy="160" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=60;reverse=true;path=path2</desc></circle>
+  <path id="path2" d="M70,160 L290,160 L290,240 L160,240" style="fill:none;stroke:red;stroke-width:2"/>
 
   <polyline
-       points="0,0 320,0 320,350 0,350 0,0"
+       points="0,0 320,0 320,300 0,300 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>

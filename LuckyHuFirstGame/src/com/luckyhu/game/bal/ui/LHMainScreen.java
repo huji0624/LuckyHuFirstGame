@@ -7,15 +7,12 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -23,28 +20,16 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
-import com.badlogic.gdx.scenes.scene2d.actions.DelegateAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.luckyhu.game.bal.gameobject.LHBallGameObject;
-import com.luckyhu.game.bal.gameobject.LHPolygonObject;
-import com.luckyhu.game.bal.gameobject.LHRectObject;
 import com.luckyhu.game.bal.gameobject.LHWormHoleObject;
-import com.luckyhu.game.bal.objectblocks.LHObjectBlockGenerator;
-import com.luckyhu.game.framework.game.LHGame;
 import com.luckyhu.game.framework.game.engine.LHGameObject;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngine;
 import com.luckyhu.game.framework.game.engine.LHGameObjectEngineListener;
@@ -123,7 +108,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (!gameOver&&mGuideImage==null)
 			moveViewPort(delta);
 
-		debugRender.render(mWorld, mSRender.getProjectionMatrix());
+//		debugRender.render(mWorld, mSRender.getProjectionMatrix());
 
 		if (maxDis < mMainBall.getTop()) {
 			maxDis = (int) mMainBall.getTop();
@@ -133,9 +118,11 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mStage.draw();
 	}
 
+	private float viewPortSpeed = 30;
+	
 	private void moveViewPort(float delta) {
 
-		float dis = 30 * delta;
+		float dis = viewPortSpeed * delta;
 		mOffset += dis;
 		mCamera.position.y += dis;
 		mEdgeBox.getBody().setTransform(Gdx.graphics.getWidth() / 2,
@@ -144,53 +131,29 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		genBlock();
 	}
 
-	private int blockNumber = 0;
+	private int blockNumber = 1;
+	private static final int MaxBlock = 12;
 
 	private void genBlock() {
-		if (blockNumber<0) {
+		if (blockNumber==2) {
 			return;
 		}
 //		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
-//			int MaxBlock = 8;
-
-			// old level
-			// try {
-			// // blockNumber = MathUtils.random(1, MaxBlock);
-			// @SuppressWarnings("unchecked")
-			// Class<LHObjectBlockGenerator> onwClass =
-			// (Class<LHObjectBlockGenerator>) Class
-			// .forName("com.luckyhu.game.bal.objectblocks.LHOBG"
-			// + blockNumber);
-			// LHObjectBlockGenerator gen = (LHObjectBlockGenerator) onwClass
-			// .newInstance();
-			// Array<LHBallGameObject> array = gen.generate(mWorld,
-			// mStage.getWidth(), mStage.getHeight());
-			// for (LHBallGameObject lhGameObject : array) {
-			// lhGameObject.moveBy(0, mBlockTop);
-			// }
-			// mObjectEngine.addObjects(array);
-			//
-			// mBlockTop += gen.blockSize().y;
-			// blockNumber--;
-			// if (blockNumber <= 0)
-			// blockNumber = MaxBlock;
-			// } catch (Exception e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
 
 			// new level
-			LHLevel level = LHLevelLoader.instance().loadLevel(
-					"level/leveld.svg");
+			LHLevel level = LHLevelLoader.instance().loadLevel("level/leveld.svg");
+//			LHLevel level = LHLevelLoader.instance().loadLevel("level/level"+blockNumber+".svg");
 			ArrayList<LHGameObject> array = level.objects;
 			for (LHGameObject lhGameObject : array) {
 				lhGameObject.moveBy(0, mBlockTop);
 			}
 			mObjectEngine.addObjects(array);
 			mBlockTop += level.size.y;
-			blockNumber--;
-//			if (blockNumber <= 0)
-//				blockNumber = MaxBlock;
+			blockNumber++;
+			if (blockNumber >= MaxBlock){				
+				blockNumber = 1;
+				viewPortSpeed = viewPortSpeed * 1.1f;
+			}
 //		}
 
 	}
@@ -237,6 +200,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		Gdx.input.setInputProcessor(this);
 
 		LHLevelLoader.world = mWorld;
+//		for (int i = 1; i < MaxBlock; i++) {
+//			LHLevelLoader.instance().initLevel("level/level"+i+".svg");
+//		}
 		LHLevelLoader.instance().initLevel("level/leveld.svg");
 
 		mBlockTop = Gdx.graphics.getHeight();
