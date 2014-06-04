@@ -66,10 +66,11 @@ public class LHRectObject extends LHBallGameObject {
 	@Override
 	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
-		
+		batch.begin();
 		mAngle += mAngularVelocity * delta;
 		mSprite.setRotation((float) Math.toDegrees(mAngle));
 		mSprite.draw(batch);
+		batch.end();
 	}
 
 	@Override

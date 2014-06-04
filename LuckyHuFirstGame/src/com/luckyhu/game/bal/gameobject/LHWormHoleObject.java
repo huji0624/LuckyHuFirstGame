@@ -104,8 +104,10 @@ public class LHWormHoleObject extends LHBallGameObject{
 //		render.circle(circleA.x, circleA.y, circleA.radius);
 //		render.circle(circleB.x, circleB.y, circleB.radius);
 //		render.end();
+		batch.begin();
 		mSpriteA.draw(batch);
 		mSpriteB.draw(batch);
+		batch.end();
 	}
 
 	@Override

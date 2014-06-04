@@ -46,8 +46,9 @@ public class LHCircleMoveObject extends LHCircleObject{
 				}
 			}
 		}
-		
+		batch.begin();
 		mSprite.draw(batch);
+		batch.end();
 	}
 	
 	@Override

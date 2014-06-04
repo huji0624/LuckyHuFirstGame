@@ -101,8 +101,8 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 		mBatch.begin();
 		mMapEngine.render(mBatch, delta, mOffset);
-		mObjectEngine.renderObject(mBatch, mSRender, delta);
 		mBatch.end();
+		mObjectEngine.renderObject(mBatch, mSRender, delta);
 		mMainBall.render(mBatch, mSRender, delta);
 
 		if (!gameOver&&mGuideImage==null)
@@ -138,11 +138,11 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (blockNumber==2) {
 			return;
 		}
-//		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
+		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
 
 			// new level
-			LHLevel level = LHLevelLoader.instance().loadLevel("level/level28.svg");
-//			LHLevel level = LHLevelLoader.instance().loadLevel("level/level"+blockNumber+".svg");
+//			LHLevel level = LHLevelLoader.instance().loadLevel("level/level28.svg");
+			LHLevel level = LHLevelLoader.instance().loadLevel("level/level"+blockNumber+".svg");
 			ArrayList<LHGameObject> array = level.objects;
 			for (LHGameObject lhGameObject : array) {
 				lhGameObject.moveBy(0, mBlockTop);
@@ -154,7 +154,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 				blockNumber = 1;
 				viewPortSpeed = viewPortSpeed * 1.1f;
 			}
-//		}
+		}
 
 	}
 
@@ -200,10 +200,10 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		Gdx.input.setInputProcessor(this);
 
 		LHLevelLoader.world = mWorld;
-//		for (int i = 1; i < MaxBlock; i++) {
-//			LHLevelLoader.instance().initLevel("level/level"+i+".svg");
-//		}
-		LHLevelLoader.instance().initLevel("level/level28.svg");
+		for (int i = 1; i < MaxBlock; i++) {
+			LHLevelLoader.instance().initLevel("level/level"+i+".svg");
+		}
+//		LHLevelLoader.instance().initLevel("level/level28.svg");
 
 		mBlockTop = Gdx.graphics.getHeight();
 		genBlock();

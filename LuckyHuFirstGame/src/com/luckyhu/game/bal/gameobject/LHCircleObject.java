@@ -60,8 +60,9 @@ public class LHCircleObject extends LHBallGameObject {
 	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
 		// TODO Auto-generated method stub
 		super.render(batch, render, delta);
-
+		batch.begin();
 		mSprite.draw(batch);
+		batch.end();
 	}
 
 	@Override

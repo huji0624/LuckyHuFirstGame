@@ -80,9 +80,9 @@ public class MainBall extends LHCircleObject {
 
 		mSprite.setRotation(mDire.angle() - 90);
 
-		batch.begin();
+//		batch.begin();
 		super.render(batch, render, delta);
-		batch.end();
+//		batch.end();
 	}
 
 	private void stopMoving() {
