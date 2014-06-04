@@ -25,7 +25,7 @@ public class MainBall extends LHCircleObject {
 
 	public MainBall(World world) {
 		super(world, new Circle(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 18),
+				Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 19),
 				"data/main.png", BodyType.DynamicBody);
 		this.tag = 624;
 		if (world!=null) {
