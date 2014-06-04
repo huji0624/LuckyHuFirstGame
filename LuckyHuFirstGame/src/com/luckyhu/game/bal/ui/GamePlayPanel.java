@@ -45,9 +45,19 @@ public class GamePlayPanel extends Group implements Disposable {
 		Preferences pre = Gdx.app.getPreferences("record");
 		int best = pre.getInteger("best");
 		
-		Label label = new Label(shownew?("Best "+best+"(new)"):("Best "+best), new LabelStyle(new BitmapFont(), Color.BLACK));
+		Label label = new Label(best+"", new LabelStyle(new BitmapFont(), Color.BLACK));
 		label.setPosition(getWidth()/2-label.getWidth()/2, getHeight()-50);
 		addActor(label);
+		
+		Label labelbes = new Label("Best", new LabelStyle(new BitmapFont(), Color.BLUE));
+		labelbes.setPosition(label.getX()-labelbes.getWidth()-5, label.getY());
+		addActor(labelbes);
+		
+		if (shownew) {
+			Label labelnew = new Label("New!", new LabelStyle(new BitmapFont(), Color.RED));
+			labelnew.setPosition(label.getX()+label.getWidth()+5, label.getY());
+			addActor(labelnew);
+		}
 		
 		addButton("data/play", new ClickListener(){
 			@Override
