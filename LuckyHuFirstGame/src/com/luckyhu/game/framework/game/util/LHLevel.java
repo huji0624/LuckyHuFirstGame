@@ -43,15 +43,15 @@ public class LHLevel implements SvgLevelReaderHandler{
 	@Override
 	public void handleSvg(Svg svg) {
 		// TODO Auto-generated method stub
-		size = new Vector2(svg.width, svg.height);
-		ratio = Gdx.graphics.getWidth() / size.x;
+		ratio = Gdx.graphics.getWidth() / svg.width;
 		LHLogger.logD("ratio:"+ratio);
+		size = new Vector2(svg.width, rv(svg.height));
 	}
 	
 	@Override
 	public void handleRect(SvgRect rect) {
 		// TODO Auto-generated method stub
-		Rectangle rt = new Rectangle(rv(rect.x), size.y-rect.y-rect.height, rv(rect.width), rect.height);
+		Rectangle rt = new Rectangle(rv(rect.x), rv(size.y-rect.y-rect.height), rv(rect.width), rv(rect.height));
 		
 		Matrix3 matrix = new Matrix3();
 		if(rect.matrix!=null){			
@@ -123,7 +123,7 @@ public class LHLevel implements SvgLevelReaderHandler{
 			SvgPath spath = circle.map.getPath(circle.desc.get("path"));
 			Vector2 path[] = new Vector2[spath.d.length/2];
 			for (int i = 0; i < path.length; i++) {
-				path[i] = new Vector2(rv(spath.d[i*2]), size.y - spath.d[i*2+1]);
+				path[i] = new Vector2(rv(spath.d[i*2]), rv(size.y - spath.d[i*2+1]));
 			}
 			if (circle.desc.get("reverse").equals("false")) {
 				reverse = false;

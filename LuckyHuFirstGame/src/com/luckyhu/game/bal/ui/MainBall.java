@@ -43,6 +43,8 @@ public class MainBall extends LHCircleObject {
 	public Body getBody() {
 		return mBody;
 	}
+	
+	private static double SPEED = Gdx.graphics.getWidth()*0.22;
 
 	@Override
 	public void render(SpriteBatch batch, ShapeRenderer render, float delta) {
@@ -55,7 +57,7 @@ public class MainBall extends LHCircleObject {
 				mPath.valueAt(to, mLoc);
 				mDire = new Vector2(to.x - circle.x, to.y - circle.y);
 				moveTo(to.x, to.y);
-				mLoc += delta * 70;
+				mLoc += delta * SPEED;
 
 				Music music = LHGameCache.loadMusic("data/walk3.wav");
 				if (music!=null&&music.isPlaying() == false) {

@@ -120,7 +120,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mStage.draw();
 	}
 
-	private float viewPortSpeed = 30;
+	private float viewPortSpeed = Gdx.graphics.getWidth()/10;
 	
 	private void moveViewPort(float delta) {
 
@@ -140,7 +140,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		if (blockNumber==2) {
 			return;
 		}
-		while (mBlockTop - mOffset < mStage.getHeight() * 2) {
+		while (mBlockTop - mOffset < mStage.getHeight() /3*2) {
 
 			// new level
 //			LHLevel level = LHLevelLoader.instance().loadLevel("level/level28.svg");
@@ -189,13 +189,18 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mEdgeBox = new LHEdgeBox(mWorld);
 
 		mStage = new Stage();
-		mLabel = new Label("", new LabelStyle(new BitmapFont(), Color.WHITE));
-		mLabel.setPosition(mStage.getWidth() - 50,
-				mStage.getHeight() - mLabel.getHeight() - 10);
+		BitmapFont font = new BitmapFont();
+		font.setScale(Gdx.graphics.getDensity());
+		mLabel = new Label("", new LabelStyle(font, Color.WHITE));
+		mLabel.setPosition(mStage.getWidth() - mStage.getWidth()/6,
+				mStage.getHeight() - mLabel.getHeight() - mStage.getHeight()/45);
 		mStage.addActor(mLabel);
 		
 		Image image = new Image(LHGameCache.loadTexture("data/guide.png"));
-		image.setPosition(mStage.getWidth()/2-image.getWidth()/2, mStage.getHeight()/2-image.getHeight()/2);
+		float width = mStage.getWidth()*0.85f;
+		float height = image.getHeight()*width/image.getWidth();
+		image.setSize(width,height);
+		image.setPosition(mStage.getWidth()/2-width/2, mStage.getHeight()/2-height/2);
 		mStage.addActor(image);
 		mGuideImage = image;
 
@@ -299,7 +304,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		
 		MoveToAction scoreMove = new MoveToAction();
 		scoreMove.setDuration(0.3f);
-		scoreMove.setPosition(mStage.getWidth()/2 - mLabel.getWidth()/2, mLabel.getY());
+		scoreMove.setPosition(mStage.getWidth()/2 - mLabel.getWidth(), mStage.getHeight()/2+action.getY()/2+mLabel.getHeight()/2+mPanel.getHeight()/2);
 		mLabel.addAction(scoreMove);
 		
 	}

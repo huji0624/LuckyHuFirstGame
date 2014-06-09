@@ -31,7 +31,7 @@ public class GamePlayPanel extends Group implements Disposable {
 	 */
 	public GamePlayPanel(float x,float y,boolean shownew) {
 		super();
-		float width = Gdx.graphics.getWidth()-40;
+		float width = Gdx.graphics.getWidth()/5*4;
 		float height = Gdx.graphics.getHeight()/3;
 		mPanel = new Texture("data/panel.png");
 		NinePatch nine = new NinePatch(mPanel,10,10,10,10);
@@ -45,17 +45,22 @@ public class GamePlayPanel extends Group implements Disposable {
 		Preferences pre = Gdx.app.getPreferences("record");
 		int best = pre.getInteger("best");
 		
-		Label label = new Label(best+"", new LabelStyle(new BitmapFont(), Color.BLACK));
-		label.setPosition(getWidth()/2-label.getWidth()/2, getHeight()-50);
+		float dy = height/4*1.3f;
+		
+		BitmapFont font = new BitmapFont();
+		font.setScale(Gdx.graphics.getDensity()*1.5f);
+		Label label = new Label(best+"", new LabelStyle(font, Color.BLACK));
+		label.setPosition(getWidth()/2-label.getWidth()/2, getHeight()-dy);
 		addActor(label);
 		
-		Label labelbes = new Label("Best", new LabelStyle(new BitmapFont(), Color.BLUE));
-		labelbes.setPosition(label.getX()-labelbes.getWidth()-5, label.getY());
+		float dx = width/10;
+		Label labelbes = new Label("Best", new LabelStyle(font, Color.BLUE));
+		labelbes.setPosition(label.getX()-labelbes.getWidth()-dx, label.getY());
 		addActor(labelbes);
 		
 		if (shownew) {
-			Label labelnew = new Label("New!", new LabelStyle(new BitmapFont(), Color.RED));
-			labelnew.setPosition(label.getX()+label.getWidth()+5, label.getY());
+			Label labelnew = new Label("New!", new LabelStyle(font, Color.RED));
+			labelnew.setPosition(label.getX()+label.getWidth()+dx, label.getY());
 			addActor(labelnew);
 		}
 		
@@ -85,8 +90,8 @@ public class GamePlayPanel extends Group implements Disposable {
 		style.pressedOffsetY = 5;
 		Button button = new Button(style);
 		button.addListener(listener);
-		float bw = 64;
-		float bh = 64;
+		float bw = Gdx.graphics.getWidth()/5;
+		float bh = bw;
 		button.setBounds(x-bw/2, 0,bw, bh);
 		addActor(button);
 	}
