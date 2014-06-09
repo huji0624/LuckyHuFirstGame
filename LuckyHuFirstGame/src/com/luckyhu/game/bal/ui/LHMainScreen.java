@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -23,7 +22,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -53,7 +55,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 	private World mWorld;
 
-	private Box2DDebugRenderer debugRender;
+//	private Box2DDebugRenderer debugRender;
 
 	private Stage mStage;
 	private GamePlayPanel mPanel;
@@ -179,7 +181,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 		mWorld = new World(new Vector2(0, 0), true);
 		mWorld.setContactListener(this);
-		debugRender = new Box2DDebugRenderer();
+//		debugRender = new Box2DDebugRenderer();
 
 		mMainBall = new MainBall(mWorld);
 		mMainBall.setMainBallDelegate(this);
@@ -254,7 +256,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	}
 
 	private void gameOver() {
-
+		mMainBall.stopMoving();
 		LHGameCache.loadSound("data/hit.ogg").play();
 		
 		gameOver = true;
@@ -294,6 +296,12 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		action.setPosition(mPanel.getX(),
 				mStage.getHeight() / 2 - mPanel.getHeight() / 2);
 		mPanel.addAction(action);
+		
+		MoveToAction scoreMove = new MoveToAction();
+		scoreMove.setDuration(0.3f);
+		scoreMove.setPosition(mStage.getWidth()/2 - mLabel.getWidth()/2, mLabel.getY());
+		mLabel.addAction(scoreMove);
+		
 	}
 
 	@Override

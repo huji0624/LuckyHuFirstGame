@@ -5,6 +5,5 @@
 	<classpathentry kind="con" path="org.robovm.eclipse.ROBOVM_COCOA_TOUCH_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/LuckyHuFirstGame"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-robovm.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/admob-ios"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -85,7 +85,7 @@ public class MainBall extends LHCircleObject {
 //		batch.end();
 	}
 
-	private void stopMoving() {
+	public void stopMoving() {
 		if(mPath.size()==0)
 			return;
 		else if (mPath.size()==1) {

@@ -67,16 +67,16 @@ public class GamePlayPanel extends Group implements Disposable {
 				LHGameCache.loadSound("data/click.wav").play();
 				LHGame.setCurrentSceen(new LHMainScreen());
 			}
-		}, getWidth()/4);
+		}, getWidth()/2);
 		
-		addButton("data/rank", new ClickListener(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				// TODO Auto-generated method stub
-				super.clicked(event, x, y);
-				LHGame.adImp.hideAd();
-			}
-		}, getWidth()/4*3);
+//		addButton("data/rank", new ClickListener(){
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				// TODO Auto-generated method stub
+//				super.clicked(event, x, y);
+//				LHGame.adImp.hideAd();
+//			}
+//		}, getWidth()/4*3);
 	}
 	
 	private void addButton(String path,ClickListener listener,float x){
