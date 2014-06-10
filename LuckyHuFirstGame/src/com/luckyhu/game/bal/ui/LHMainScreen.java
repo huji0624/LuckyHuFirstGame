@@ -134,13 +134,13 @@ public class LHMainScreen extends InputAdapter implements Screen,
 	}
 
 	private int blockNumber = 1;
-	private static final int MaxBlock = 12;
+	private static final int MaxBlock = 30;
 
 	private void genBlock() {
-		if (blockNumber==2) {
-			return;
-		}
-		while (mBlockTop - mOffset < mStage.getHeight() /3*2) {
+//		if (blockNumber==2) {
+//			return;
+//		}
+		while (mBlockTop - mOffset <= mStage.getHeight()) {
 
 			// new level
 //			LHLevel level = LHLevelLoader.instance().loadLevel("level/level28.svg");
@@ -212,7 +212,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		}
 //		LHLevelLoader.instance().initLevel("level/level28.svg");
 
-		mBlockTop = Gdx.graphics.getHeight();
+		mBlockTop = Gdx.graphics.getHeight()/2;
 		genBlock();
 		// DEBUG
 	}
