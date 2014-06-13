@@ -3,6 +3,7 @@ package com.luckyhu.game.framework.game.util;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -24,7 +25,16 @@ public class LHGameCache {
 		}
 	}
 	
+	private static String transformAudio(String name){
+		if(Gdx.app.getType().equals(ApplicationType.iOS)){
+			return "audio/"+name+".aac";
+		}else{
+			return "audio/"+name+".ogg";
+		}
+	}
+	
 	public static void initSound(String path){
+		path = transformAudio(path);
 		if(soundCache.containsKey(path)){
 			return;
 		}
@@ -34,11 +44,13 @@ public class LHGameCache {
 	}
 	
 	public static Sound loadSound(String path){
+		path = transformAudio(path);
 		initSound(path);
 		return soundCache.get(path);
 	}
 	
 	public static void initMusic(String path){
+		path = transformAudio(path);
 		if(musicCache.containsKey(path)){
 			return;
 		}
@@ -47,6 +59,7 @@ public class LHGameCache {
 	}
 	
 	public static Music loadMusic(String path){
+		path = transformAudio(path);
 		initMusic(path);
 		return musicCache.get(path);
 	}

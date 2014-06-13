@@ -252,7 +252,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 						public void run() {
 							// TODO Auto-generated method stub
 							mMainBall.moveTo(po.x, po.y);
-							LHGameCache.loadSound("data/transport.ogg").play();
+							LHGameCache.loadSound("transport").play();
 						}
 					});
 				}
@@ -262,7 +262,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 	private void gameOver() {
 		mMainBall.stopMoving();
-		LHGameCache.loadSound("data/hit.ogg").play();
+		LHGameCache.loadSound("hit").play();
 		
 		gameOver = true;
 		Gdx.input.setInputProcessor(mStage);

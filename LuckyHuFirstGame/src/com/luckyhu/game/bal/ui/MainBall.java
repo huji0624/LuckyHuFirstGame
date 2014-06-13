@@ -59,7 +59,7 @@ public class MainBall extends LHCircleObject {
 				moveTo(to.x, to.y);
 				mLoc += delta * SPEED;
 
-				Music music = LHGameCache.loadMusic("data/walk3.wav");
+				Music music = LHGameCache.loadMusic("walk3");
 				if (music!=null&&music.isPlaying() == false) {
 					music.setLooping(true);
 					music.play();
@@ -95,7 +95,7 @@ public class MainBall extends LHCircleObject {
 			return;
 		}
 		
-		Music music = LHGameCache.loadMusic("data/walk3.wav");
+		Music music = LHGameCache.loadMusic("walk3");
 		mLoc = 0;
 		mPath.clear();
 		mDelegate.mainBallStopMoving();

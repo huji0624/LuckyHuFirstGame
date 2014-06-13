@@ -69,7 +69,7 @@ public class GamePlayPanel extends Group implements Disposable {
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
 				super.clicked(event, x, y);
-				LHGameCache.loadSound("data/click.wav").play();
+				LHGameCache.loadSound("click").play();
 				LHGame.setCurrentSceen(new LHMainScreen());
 			}
 		}, getWidth()/2);
