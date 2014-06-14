@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="380"
+   height="300"
    id="svg2"
    version="1.1"
    sodipodi:docname="level1.svg">
@@ -36,44 +36,30 @@
   <g>
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="30"
-       height="120"
-       x="80"
-       y="30"/>
+       id="rect2991"
+       width="120"
+       height="15"
+       x="10"
+       y="120">
+      <desc
+         id="desc2993">speed=2</desc>
+    </rect>
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="30"
-       height="120"
-       x="200"
-       y="30"/>
-    <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="30"
-       height="120"
-       x="30"
-       y="230"/>
-      <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="30"
-       height="120"
-       x="150"
-       y="230"/>
-    <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="30"
-       height="120"
-       x="260"
-       y="230"/>
-	<circle cx="30" cy="190" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
-  <path id="path1" d="M30,190 L290,190" style="fill:none;stroke:red;stroke-width:2"/>
+       id="rect2991"
+       width="120"
+       height="15"
+       x="190"
+       y="170">
+      <desc
+         id="desc2993">speed=2</desc>
+    </rect>
+	
+	<circle cx="160" cy="50" r="20" stroke="black" stroke-width="2" fill="white" ><desc>type=w</desc></circle>
+	<circle cx="160" cy="250" r="20" stroke="black" stroke-width="2" fill="black" ><desc>type=b</desc></circle>
 
   <polyline
-       points="0,0 320,0 320,380 0,380 0,0"
+       points="0,0 320,0 320,300 0,300 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>

@@ -13,3 +13,5 @@ TODO:
 解决android和ios采用不同音频文件的问题
 
 修复bug
+
+替换平台icon及启动美术资源

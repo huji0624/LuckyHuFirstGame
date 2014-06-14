@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="220"
+   height="350"
    id="svg2"
    version="1.1"
    sodipodi:docname="level1.svg">
@@ -37,35 +37,23 @@
     <rect
        style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2989"
-       width="230"
-       height="18"
-       x="40"
-       y="150"/>
-    <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="130"
-       height="18"
+       width="240"
+       height="20"
        x="0"
        y="60"/>
-    <rect
-       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="130"
-       height="18"
-       x="190"
-       y="60"/>
+     <rect
+     style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect2989"
+     width="240"
+     height="20"
+     x="80"
+     y="300"/>
 
-	<circle cx="290" cy="115" r="20" stroke="black" stroke-width="2" fill="white" ><desc>type=w</desc></circle>
-	
-	<circle cx="160" cy="30" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
-  <path id="path1" d="M160,30 L160,115 L80,115 L220,115 L160,115 L160,30" style="fill:none;stroke:red;stroke-width:2"/>
-
-	<circle cx="35" cy="115" r="30" stroke="black" stroke-width="2" fill="red" ><desc>type=t;t=circle1</desc></circle>
-	<circle id="circle1" cx="240" cy="115" r="10" stroke="black" stroke-width="2" fill="red" />
+	<circle cx="50" cy="110" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=80;reverse=true;path=path1</desc></circle>
+  <path id="path1" d="M50,110 L290,110 L290,180 L160,180 L290,260 L40,260 L160,180 L50,110" style="fill:none;stroke:red;stroke-width:2"/>
 
   <polyline
-       points="0,0 320,0 320,220 0,220 0,0"
+       points="0,0 320,0 320,350 0,350 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>

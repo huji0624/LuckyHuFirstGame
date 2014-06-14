@@ -34,11 +34,10 @@ public class LHGameCache {
 	}
 	
 	public static void initSound(String path){
-		path = transformAudio(path);
 		if(soundCache.containsKey(path)){
 			return;
 		}
-		
+		path = transformAudio(path);
 		Sound newSound = Gdx.audio.newSound(Gdx.files.internal(path));
 		soundCache.put(path, newSound);
 	}
@@ -50,10 +49,10 @@ public class LHGameCache {
 	}
 	
 	public static void initMusic(String path){
-		path = transformAudio(path);
 		if(musicCache.containsKey(path)){
 			return;
 		}
+		path = transformAudio(path);
 		Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(path));
 		musicCache.put(path, newMusic);
 	}

@@ -68,11 +68,19 @@
        width="200"
        height="20"
        x="60"
-       y="135">
-       <desc>
-        speed=1.1
-       </desc>
-     </rect>
+       y="135"/>
+
+	<circle cx="110" cy="180" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
+  <path id="path1" d="M110,180 L25,180 L25,80 L295,80 L295,180 L110,180" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="110" cy="80" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path2</desc></circle>
+  <path id="path2" d="M110,80 L295,80 L295,180 L25,180 L25,80 L110,80" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="220" cy="180" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path3</desc></circle>
+  <path id="path3" d="M220,180 L25,180 L25,80 L295,80 L295,180 L220,180" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="220" cy="80" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path4</desc></circle>
+  <path id="path4" d="M220,80 L295,80 L295,180 L25,180 L25,80 L220,80" style="fill:none;stroke:red;stroke-width:2"/>
 
   <polyline
        points="0,0 320,0 320,290 0,290 0,0"

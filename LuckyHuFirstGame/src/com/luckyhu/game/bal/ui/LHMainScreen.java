@@ -190,7 +190,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 		mStage = new Stage();
 		BitmapFont font = new BitmapFont();
-		font.setScale(Gdx.graphics.getDensity());
+		font.setScale(Gdx.graphics.getDensity()*1.5f);
 		mLabel = new Label("", new LabelStyle(font, Color.WHITE));
 		mLabel.setPosition(mStage.getWidth() - mStage.getWidth()/6,
 				mStage.getHeight() - mLabel.getHeight() - mStage.getHeight()/45);
@@ -285,9 +285,9 @@ public class LHMainScreen extends InputAdapter implements Screen,
 
 		Preferences pre = Gdx.app.getPreferences("record");
 		int best = pre.getInteger("best");
-		boolean shownew = mOffset > best ? true : false;
+		boolean shownew = maxDis > best ? true : false;
 		if (shownew) {
-			pre.putInteger("best", (int) mOffset);
+			pre.putInteger("best", (int) maxDis);
 			pre.flush();
 		}
 
@@ -302,11 +302,18 @@ public class LHMainScreen extends InputAdapter implements Screen,
 				mStage.getHeight() / 2 - mPanel.getHeight() / 2);
 		mPanel.addAction(action);
 		
-		MoveToAction scoreMove = new MoveToAction();
-		scoreMove.setDuration(0.3f);
-		scoreMove.setPosition(mStage.getWidth()/2 - mLabel.getWidth(), mStage.getHeight()/2+action.getY()/2+mLabel.getHeight()/2+mPanel.getHeight()/2);
-		mLabel.addAction(scoreMove);
+//		MoveToAction scoreMove = new MoveToAction();
+//		scoreMove.setDuration(0.3f);
+//		scoreMove.setPosition(mStage.getWidth()/2 - mLabel.getWidth()*mLabel.getScaleX()/2, mStage.getHeight()/2+action.getY()/2+mLabel.getHeight()/2+mPanel.getHeight()/2);
+//		mLabel.addAction(scoreMove);
+		mLabel.remove();
 		
+		BitmapFont font = new BitmapFont();
+		font.setScale(Gdx.graphics.getDensity()*2.0f);
+		Label label = new Label(""+(int)maxDis, new LabelStyle(font, Color.GREEN));
+		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,
+				mStage.getHeight()/2+action.getY()/5+label.getHeight()/2+mPanel.getHeight()/2);
+		mStage.addActor(label);
 	}
 
 	@Override
