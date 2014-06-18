@@ -67,7 +67,7 @@ public class MainActivity extends AndroidApplication implements LHADable {
 		View libgdxView = initializeForView(game, cfg);
 		layout.addView(libgdxView);
 		
-		adView = new AdView(this, AdSize.BANNER, "test");
+		adView = new AdView(this, AdSize.BANNER, "a153a14e5305ecd");
 		AdRequest request = new AdRequest();
 		request.addTestDevice(AdRequest.TEST_EMULATOR);
 		adView.loadAd(request);
@@ -76,7 +76,7 @@ public class MainActivity extends AndroidApplication implements LHADable {
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 		adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		adParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		adParams.addRule(RelativeLayout.CENTER_VERTICAL);
 		layout.addView(adView, adParams);
 
 		setContentView(layout);
