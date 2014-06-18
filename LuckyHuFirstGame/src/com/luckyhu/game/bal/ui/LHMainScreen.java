@@ -120,7 +120,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		mStage.draw();
 	}
 
-	private float viewPortSpeed = Gdx.graphics.getWidth()/10;
+	private float viewPortSpeed = Gdx.graphics.getWidth()/20;
 	
 	private void moveViewPort(float delta) {
 
