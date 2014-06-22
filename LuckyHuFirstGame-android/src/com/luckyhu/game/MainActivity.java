@@ -37,7 +37,7 @@ public class MainActivity extends AndroidApplication implements LHADable {
 				break;
 			}
 			case HIDE_ADS: {
-				adView.setVisibility(View.GONE);
+				adView.setVisibility(View.INVISIBLE);
 				break;
 			}
 			}
@@ -71,11 +71,11 @@ public class MainActivity extends AndroidApplication implements LHADable {
 		AdRequest request = new AdRequest();
 		request.addTestDevice(AdRequest.TEST_EMULATOR);
 		adView.loadAd(request);
-		adView.setVisibility(View.GONE);
+		adView.setVisibility(View.INVISIBLE);
 		RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		adParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		adParams.addRule(RelativeLayout.CENTER_VERTICAL);
 		layout.addView(adView, adParams);
 

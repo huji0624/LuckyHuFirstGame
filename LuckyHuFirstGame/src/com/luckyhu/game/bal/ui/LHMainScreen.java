@@ -311,8 +311,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		BitmapFont font = new BitmapFont();
 		font.setScale(Gdx.graphics.getDensity()*2.0f);
 		Label label = new Label(""+(int)maxDis, new LabelStyle(font, Color.GREEN));
-		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,
-				mStage.getHeight()/2+action.getY()/5+label.getHeight()/2+mPanel.getHeight()/2);
+		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,mStage.getHeight() / 2 + mPanel.getHeight() / 3);
 		mStage.addActor(label);
 	}
 
