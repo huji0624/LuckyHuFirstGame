@@ -68,6 +68,10 @@ public class LHStartScreen implements Screen,MainBallDelegate{
 		action.setPosition(name.getX(),mPanel.getY()+mPanel.getHeight()+5);
 		name.addAction(action);
 		
+		Label contact = new Label("huji624@qq.com", new LabelStyle(new BitmapFont(), Color.WHITE));
+		contact.setPosition(mStage.getWidth()/2-contact.getWidth()/2, contact.getHeight());
+		mStage.addActor(contact);
+		
 		mBatch = new SpriteBatch();
 		mSRender = new ShapeRenderer();
 		mMainBall = new MainBall(null);
