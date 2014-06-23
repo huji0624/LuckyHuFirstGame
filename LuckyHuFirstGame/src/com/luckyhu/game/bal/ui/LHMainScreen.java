@@ -21,8 +21,11 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RemoveAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
@@ -154,10 +157,25 @@ public class LHMainScreen extends InputAdapter implements Screen,
 			blockNumber++;
 			if (blockNumber >= MaxBlock){				
 				blockNumber = 1;
-				viewPortSpeed = viewPortSpeed * 1.1f;
+				viewPortSpeed = viewPortSpeed * 1.2f;
+				showSpeedUp();
 			}
 		}
 
+	}
+	
+	private void showSpeedUp(){
+		BitmapFont font = new BitmapFont();
+		font.setScale(Gdx.graphics.getDensity()*2.0f);
+		Label label = new Label("Speed Up!", new LabelStyle(font, Color.GREEN));
+		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,mStage.getHeight() / 2);
+		mStage.addActor(label);
+		
+		RemoveActorAction rm = new RemoveActorAction();
+		rm.setRemoveActor(label);
+		DelayAction dl = new DelayAction(2.0f);
+		dl.setAction(rm);
+		label.addAction(dl);
 	}
 
 	@Override
