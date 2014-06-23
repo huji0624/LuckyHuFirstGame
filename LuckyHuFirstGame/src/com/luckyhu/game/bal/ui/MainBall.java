@@ -22,6 +22,7 @@ public class MainBall extends LHCircleObject {
 	private PolyLinePath mPath;
 	private MainBallDelegate mDelegate;
 	public boolean drawPath = true;
+	private boolean isPlaying = false;
 
 	public MainBall(World world) {
 		super(world, new Circle(Gdx.graphics.getWidth() / 2,
@@ -60,9 +61,10 @@ public class MainBall extends LHCircleObject {
 				mLoc += delta * SPEED;
 
 				Music music = LHGameCache.loadMusic("walk3");
-				if (music!=null&&music.isPlaying() == false) {
+				if (music!=null&&isPlaying == false) {
 					music.setLooping(true);
 					music.play();
+					isPlaying = true;
 				}
 
 				if (mLoc >= mPath.getLength()) {
@@ -99,8 +101,9 @@ public class MainBall extends LHCircleObject {
 		mLoc = 0;
 		mPath.clear();
 		mDelegate.mainBallStopMoving();
-		if (music.isPlaying()) {
+		if (isPlaying) {
 			music.pause();
+			isPlaying = false;
 		}
 	}
 
