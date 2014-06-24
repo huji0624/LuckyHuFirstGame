@@ -23,12 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RemoveAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -329,7 +325,7 @@ public class LHMainScreen extends InputAdapter implements Screen,
 		BitmapFont font = new BitmapFont();
 		font.setScale(Gdx.graphics.getDensity()*2.0f);
 		Label label = new Label(""+(int)maxDis, new LabelStyle(font, Color.GREEN));
-		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,mStage.getHeight() / 2 + mPanel.getHeight() / 3);
+		label.setPosition(mStage.getWidth()/2 - label.getWidth()*label.getScaleX()/2,mStage.getHeight() / 2 + mPanel.getHeight() / 3.5f);
 		mStage.addActor(label);
 	}
 
