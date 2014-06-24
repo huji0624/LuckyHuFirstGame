@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="300"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="level1.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g>
+ 
+	<circle cx="50" cy="50" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
+  <path id="path1" d="M30,50 L290,50" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="50" cy="100" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path2</desc></circle>
+  <path id="path2" d="M90,100 L30,100 L290,100" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="50" cy="150" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path3</desc></circle>
+  <path id="path3" d="M150,150 L30,150 L290,150" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="50" cy="200" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path4</desc></circle>
+  <path id="path4" d="M210,200 L30,200 L290,200" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <circle cx="50" cy="250" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path5</desc></circle>
+  <path id="path5" d="M270,250 L30,250 L290,250" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <polyline
+       points="0,0 320,0 320,300 0,300 0,0"
+       style="fill:none;stroke:red;stroke-width:2"/>
+  </g>
+</svg>
