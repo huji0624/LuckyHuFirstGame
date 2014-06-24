@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.luckyhu.game.bal.gameobject.LHCircleObject;
 import com.luckyhu.game.framework.game.util.LHGameCache;
+import com.luckyhu.game.framework.game.util.LHLogger;
 import com.luckyhu.game.framework.game.util.PolyLinePath;
 
 public class MainBall extends LHCircleObject {

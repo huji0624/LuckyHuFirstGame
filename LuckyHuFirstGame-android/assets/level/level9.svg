@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="320"
-   height="300"
+   height="460"
    id="svg2"
    version="1.1"
    sodipodi:docname="level1.svg">
@@ -34,24 +34,33 @@
     </rdf:RDF>
   </metadata>
   <g>
- 
-	<circle cx="50" cy="50" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path1</desc></circle>
-  <path id="path1" d="M30,50 L290,50" style="fill:none;stroke:red;stroke-width:2"/>
 
-  <circle cx="50" cy="100" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path2</desc></circle>
-  <path id="path2" d="M90,100 L30,100 L290,100" style="fill:none;stroke:red;stroke-width:2"/>
-
-  <circle cx="50" cy="150" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path3</desc></circle>
-  <path id="path3" d="M150,150 L30,150 L290,150" style="fill:none;stroke:red;stroke-width:2"/>
-
-  <circle cx="50" cy="200" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path4</desc></circle>
-  <path id="path4" d="M210,200 L30,200 L290,200" style="fill:none;stroke:red;stroke-width:2"/>
-
-  <circle cx="50" cy="250" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=30;reverse=true;path=path5</desc></circle>
-  <path id="path5" d="M270,250 L30,250 L290,250" style="fill:none;stroke:red;stroke-width:2"/>
+    <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2991"
+       width="100"
+       height="15"
+       x="20"
+       y="200">
+      <desc
+         id="desc2993">speed=1.5</desc>
+    </rect>
+    <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2991"
+       width="100"
+       height="15"
+       x="200"
+       y="190">
+      <desc
+         id="desc2993">speed=1</desc>
+    </rect>
+	<polygon points="40,50 260,50 210,150 90,150" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+  <polygon points="50,250 120,250 170,350 20,350" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+  <polygon points="175,250 310,250 310,350 225,350" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
 
   <polyline
-       points="0,0 320,0 320,300 0,300 0,0"
+       points="0,0 320,0 320,460 0,460 0,0"
        style="fill:none;stroke:red;stroke-width:2"/>
   </g>
 </svg>
