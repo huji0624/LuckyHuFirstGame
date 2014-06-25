@@ -60,7 +60,7 @@ public class LHStartScreen implements Screen,MainBallDelegate{
 		
 		BitmapFont font = new BitmapFont();
 		font.setScale(3*Gdx.graphics.getDensity());
-		Label name = new Label("Move On", new LabelStyle(font, Color.WHITE));
+		Label name = new Label("Ji Move On", new LabelStyle(font, Color.WHITE));
 		name.setPosition(mStage.getWidth()/2-name.getWidth()/2, mStage.getHeight()+name.getHeight());
 		mStage.addActor(name);
 		MoveToAction action = new MoveToAction();

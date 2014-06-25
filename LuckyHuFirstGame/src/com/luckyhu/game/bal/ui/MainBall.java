@@ -2,6 +2,7 @@ package com.luckyhu.game.bal.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -36,6 +37,10 @@ public class MainBall extends LHCircleObject {
 		mainBall = this;
 
 		mPath = new PolyLinePath();
+		
+//		Sound music = LHGameCache.loadSound("walk3");
+//		music.loop();
+//		music.pause();
 	}
 
 	public void setMainBallDelegate(MainBallDelegate delegate) {
@@ -62,9 +67,12 @@ public class MainBall extends LHCircleObject {
 				mLoc += delta * SPEED;
 
 				Music music = LHGameCache.loadMusic("walk3");
+//				Sound music = LHGameCache.loadSound("walk3");
 				if (music!=null&&isPlaying == false) {
 					music.setLooping(true);
 					music.play();
+//					music.loop();
+//					music.resume();
 					isPlaying = true;
 				}
 
@@ -99,6 +107,7 @@ public class MainBall extends LHCircleObject {
 		}
 		
 		Music music = LHGameCache.loadMusic("walk3");
+//		Sound music = LHGameCache.loadSound("walk3");
 		mLoc = 0;
 		mPath.clear();
 		mDelegate.mainBallStopMoving();

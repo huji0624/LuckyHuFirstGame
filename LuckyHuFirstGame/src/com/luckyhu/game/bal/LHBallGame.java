@@ -12,7 +12,7 @@ public class LHBallGame extends LHGame {
 		LHGameCache.initSound("hit");
 		LHGameCache.initSound("click");
 		LHGameCache.initSound("transport");
-		LHGameCache.initMusic("walk3");
+		LHGameCache.initSound("walk3");
 		setCurrentSceen(new LHStartScreen());
 	}
 
