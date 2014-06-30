@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="300"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="level1.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g>
+    <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2989"
+       width="180"
+       height="18"
+       x="70"
+       y="70"/>
+      <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2989"
+       width="180"
+       height="18"
+       x="70"
+       y="180"/>
+  
+	<circle cx="250" cy="115" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=60;reverse=true;path=path1</desc></circle>
+  <path id="path1" d="M250,115 L30,115 L30,40 L160,40" style="fill:none;stroke:red;stroke-width:2"/>
+  <circle cx="70" cy="160" r="20" stroke="black" stroke-width="2" fill="orange" ><desc>type=m;speed=60;reverse=true;path=path2</desc></circle>
+  <path id="path2" d="M70,160 L290,160 L290,240 L160,240" style="fill:none;stroke:red;stroke-width:2"/>
+
+  <polyline
+       points="0,0 320,0 320,300 0,300 0,0"
+       style="fill:none;stroke:red;stroke-width:2"/>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="460"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="level1.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g>
+
+    <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2991"
+       width="100"
+       height="15"
+       x="20"
+       y="200">
+      <desc
+         id="desc2993">speed=1.5</desc>
+    </rect>
+    <rect
+       style="fill:#8d60c6;fill-opacity:1;fill-rule:nonzero;stroke:#0080d8;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2991"
+       width="100"
+       height="15"
+       x="200"
+       y="190">
+      <desc
+         id="desc2993">speed=1</desc>
+    </rect>
+	<polygon points="40,50 260,50 210,150 90,150" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+  <polygon points="50,250 120,250 170,350 20,350" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+  <polygon points="175,250 310,250 310,350 225,350" style="fill:#cccccc;stroke:#000000;stroke-width:1"/>
+
+  <polyline
+       points="0,0 320,0 320,460 0,460 0,0"
+       style="fill:none;stroke:red;stroke-width:2"/>
+  </g>
+</svg>
